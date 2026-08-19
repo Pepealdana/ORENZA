@@ -1,0 +1,119 @@
+.page {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+}
+
+.welcome {
+  margin-bottom: var(--space-4);
+}
+
+.greeting {
+  margin-bottom: var(--space-1);
+
+  color: var(--color-gray-dark);
+
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.title {
+  color: var(--color-primary);
+
+  font-family: var(--font-heading);
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.description {
+  max-width: 680px;
+  margin-top: var(--space-1);
+
+  color: var(--color-gray-dark);
+
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/*
+ * Bloque principal del Dashboard
+ */
+.dashboardGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3);
+}
+
+/*
+ * Cada sección mantiene su propia jerarquía
+ */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.sectionTitle {
+  color: var(--color-primary);
+
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+/*
+ * Listas de contenido
+ */
+.competencies {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-2);
+}
+
+.activities,
+.resources {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-2);
+}
+
+/*
+ * Tablet
+ */
+@media (min-width: 768px) {
+  .competencies {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .activities,
+  .resources {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/*
+ * Escritorio
+ */
+@media (min-width: 1024px) {
+  .dashboardGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+  }
+
+  .progressSection {
+    grid-column: 1 / -1;
+  }
+
+  .competenciesSection {
+    grid-column: 1 / -1;
+  }
+
+  .activitiesSection {
+    grid-column: 1;
+  }
+
+  .resourcesSection {
+    grid-column: 2;
+  }
+}

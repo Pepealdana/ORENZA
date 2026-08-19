@@ -55,7 +55,7 @@ function BottomNavigation() {
             }
           >
             <Icon
-              size={22}
+              size={20}
               strokeWidth={1.8}
               aria-hidden="true"
             />

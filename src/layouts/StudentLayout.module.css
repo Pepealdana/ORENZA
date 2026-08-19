@@ -15,7 +15,7 @@
   padding:
     var(--space-3)
     var(--space-2)
-    calc(var(--space-7) + 64px);
+    calc(var(--space-7) + 80px);
 }
 
 @media (min-width: 1024px) {
