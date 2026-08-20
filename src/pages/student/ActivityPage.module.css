@@ -1,0 +1,455 @@
+.page {
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+
+  padding-bottom: var(--space-7);
+}
+
+
+/* ========================================
+   VOLVER
+   ======================================== */
+
+.backButton {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 4px;
+
+  margin-bottom: var(--space-3);
+  padding: 8px 0;
+
+  color: var(--color-primary);
+
+  background: transparent;
+
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+
+.backButton:hover {
+  color: var(--color-accent);
+}
+
+
+/* ========================================
+   ENCABEZADO
+   ======================================== */
+
+.header {
+  margin-bottom: var(--space-4);
+}
+
+
+.eyebrow {
+  margin-bottom: 6px;
+
+  color: var(--color-accent);
+
+  font-size: 0.75rem;
+  font-weight: 700;
+
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+
+.header h1 {
+  margin: 0;
+
+  color: var(--color-primary);
+
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 4vw, 2.1rem);
+  line-height: 1.25;
+}
+
+
+.description {
+  max-width: 650px;
+
+  margin-top: 10px;
+
+  color: var(--color-gray-dark);
+
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 8px;
+
+  margin-top: var(--space-2);
+}
+
+
+.meta span {
+  padding: 5px 10px;
+
+  color: var(--color-primary);
+
+  background-color: var(--color-gray-light);
+
+  border-radius: var(--radius-chip);
+
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+
+/* ========================================
+   PROGRESO
+   ======================================== */
+
+.progressArea {
+  margin-bottom: var(--space-3);
+}
+
+
+.progressHeader {
+  display: flex;
+  justify-content: space-between;
+
+  margin-bottom: 6px;
+
+  color: var(--color-gray-dark);
+
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+
+.progressTrack {
+  width: 100%;
+  height: 7px;
+
+  overflow: hidden;
+
+  background-color: var(--color-gray-medium);
+
+  border-radius: var(--radius-chip);
+}
+
+
+.progressBar {
+  height: 100%;
+
+  background-color: var(--color-accent);
+
+  border-radius: inherit;
+
+  transition:
+    width var(--transition-normal);
+}
+
+
+/* ========================================
+   TARJETA DEL PASO
+   ======================================== */
+
+.stepCard {
+  padding: var(--space-4);
+
+  background-color: var(--color-white);
+
+  border: 1px solid var(--color-gray-medium);
+  border-radius: var(--radius-card);
+
+  box-shadow: var(--shadow-1);
+}
+
+
+.stepType {
+  margin-bottom: var(--space-2);
+
+  color: var(--color-gray-dark);
+
+  font-size: 0.75rem;
+  font-weight: 600;
+
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+
+.stepCard h2 {
+  margin-bottom: var(--space-3);
+
+  color: var(--color-primary);
+
+  font-family: var(--font-heading);
+  font-size: clamp(1.2rem, 3vw, 1.5rem);
+  line-height: 1.35;
+}
+
+
+/* ========================================
+   TEXTAREA
+   ======================================== */
+
+.textarea {
+  width: 100%;
+
+  min-height: 150px;
+
+  padding: var(--space-2);
+
+  color: var(--color-text-primary);
+
+  background-color: var(--color-gray-light);
+
+  border: 1px solid var(--color-gray-medium);
+  border-radius: var(--radius-input);
+
+  outline: none;
+
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+
+  resize: vertical;
+
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+
+.textarea:focus {
+  border-color: var(--color-accent);
+
+  box-shadow:
+    0 0 0 3px
+    rgba(0, 180, 179, 0.12);
+}
+
+
+.textarea::placeholder {
+  color: var(--color-gray-dark);
+}
+
+
+/* ========================================
+   OPCIONES
+   ======================================== */
+
+.options {
+  display: flex;
+  flex-direction: column;
+
+  gap: 10px;
+}
+
+
+.option {
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+
+  gap: var(--space-2);
+
+  padding: 14px;
+
+  color: var(--color-text-primary);
+
+  background-color: var(--color-white);
+
+  border: 1px solid var(--color-gray-medium);
+  border-radius: var(--radius-button);
+
+  text-align: left;
+
+  transition:
+    border-color var(--transition-fast),
+    background-color var(--transition-fast);
+}
+
+
+.option:hover {
+  border-color: var(--color-accent);
+
+  background-color: var(--color-gray-light);
+}
+
+
+.optionSelected {
+  border-color: var(--color-accent);
+
+  background-color: rgba(
+    0,
+    180,
+    179,
+    0.08
+  );
+}
+
+
+.optionIndicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  width: 26px;
+  height: 26px;
+
+  color: var(--color-white);
+
+  background-color: var(--color-gray-light);
+
+  border: 1px solid var(--color-gray-medium);
+  border-radius: 50%;
+
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+
+.optionSelected .optionIndicator {
+  background-color: var(--color-accent);
+
+  border-color: var(--color-accent);
+}
+
+
+/* ========================================
+   NAVEGACIÓN
+   ======================================== */
+
+.navigation {
+  display: flex;
+  justify-content: space-between;
+
+  gap: var(--space-2);
+
+  margin-top: var(--space-3);
+}
+
+
+.primaryButton,
+.secondaryButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 44px;
+
+  padding: 10px 18px;
+
+  border-radius: var(--radius-button);
+
+  font-size: 0.875rem;
+  font-weight: 600;
+
+  transition:
+    background-color var(--transition-fast),
+    opacity var(--transition-fast);
+}
+
+
+.primaryButton {
+  gap: 5px;
+
+  color: var(--color-white);
+
+  background-color: var(--color-primary);
+}
+
+
+.primaryButton:hover {
+  background-color: var(--color-accent);
+}
+
+
+.secondaryButton {
+  gap: 5px;
+
+  color: var(--color-primary);
+
+  background-color: var(--color-white);
+
+  border: 1px solid var(--color-gray-medium);
+}
+
+
+.secondaryButton:hover:not(:disabled) {
+  background-color: var(--color-gray-light);
+}
+
+
+.secondaryButton:disabled {
+  cursor: not-allowed;
+
+  opacity: 0.45;
+}
+
+
+/* ========================================
+   MENSAJE
+   ======================================== */
+
+.supportMessage {
+  margin-top: var(--space-3);
+
+  color: var(--color-gray-dark);
+
+  font-size: 0.8rem;
+  line-height: 1.5;
+
+  text-align: center;
+}
+
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 600px) {
+  .page {
+    padding-bottom: var(--space-6);
+  }
+
+
+  .stepCard {
+    padding: var(--space-2);
+  }
+
+
+  .header h1 {
+    font-size: 1.45rem;
+  }
+
+
+  .description {
+    font-size: 0.85rem;
+  }
+
+
+  .stepCard h2 {
+    font-size: 1.15rem;
+  }
+
+
+  .navigation {
+    position: sticky;
+    bottom: 0;
+
+    margin-inline: -16px;
+    padding: 12px 16px;
+
+    background-color: var(--color-gray-light);
+  }
+
+
+  .primaryButton,
+  .secondaryButton {
+    flex: 1;
+  }
+}

@@ -1,0 +1,103 @@
+.page {
+  width: 100%;
+  max-width: 900px;
+  margin-inline: auto;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+
+  margin-bottom: var(--space-3);
+
+  color: var(--color-primary);
+
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.backLink:hover {
+  text-decoration: underline;
+}
+
+.backLink:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: var(--radius-button);
+}
+
+.header {
+  margin-bottom: var(--space-4);
+}
+
+.eyebrow {
+  margin-bottom: var(--space-1);
+
+  color: var(--color-gray-dark);
+
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.title {
+  color: var(--color-primary);
+
+  font-family: var(--font-heading);
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.description {
+  max-width: 680px;
+  margin-top: var(--space-1);
+
+  color: var(--color-gray-dark);
+
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.progressCard {
+  width: 100%;
+  padding: var(--space-3);
+
+  background-color: var(--color-white);
+  border: 1px solid var(--color-gray-medium);
+  border-radius: var(--radius-card);
+
+  box-shadow: var(--shadow-1);
+}
+
+.progressHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+
+  margin-bottom: var(--space-2);
+}
+
+.progressHeader h2 {
+  color: var(--color-text-primary);
+
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.percentage {
+  color: var(--color-primary);
+
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+@media (min-width: 768px) {
+  .progressCard {
+    padding: var(--space-4);
+  }
+}

@@ -4,7 +4,7 @@
   margin-inline: auto;
 }
 
-.welcome {
+.header {
   margin-bottom: var(--space-4);
 }
 
@@ -21,13 +21,13 @@
   color: var(--color-primary);
 
   font-family: var(--font-heading);
-  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  font-size: clamp(1.75rem, 4vw, 2.4rem);
   font-weight: 700;
   line-height: 1.2;
 }
 
 .description {
-  max-width: 680px;
+  max-width: 700px;
   margin-top: var(--space-1);
 
   color: var(--color-gray-dark);
@@ -36,84 +36,63 @@
   line-height: 1.6;
 }
 
-/*
- * Bloque principal del Dashboard
- */
-.dashboardGrid {
+.section {
+  margin-top: var(--space-4);
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-2);
+
+  margin-bottom: var(--space-2);
+}
+
+.eyebrow {
+  margin-bottom: 4px;
+
+  color: var(--color-primary);
+
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.sectionHeader h2 {
+  color: var(--color-text-primary);
+
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--space-3);
 }
 
-/*
- * Cada sección mantiene su propia jerarquía
- */
-.section {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-}
-
-.sectionTitle {
-  color: var(--color-primary);
-
-  font-family: var(--font-heading);
-  font-size: 1.25rem;
-  font-weight: 600;
-}
-
-/*
- * Listas de contenido
- */
-.competencies {
+.list {
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--space-2);
 }
 
-.activities,
-.resources {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--space-2);
-}
-
-/*
- * Tablet
- */
 @media (min-width: 768px) {
-  .competencies {
-    grid-template-columns: repeat(2, 1fr);
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .activities,
-  .resources {
-    grid-template-columns: repeat(2, 1fr);
+  .list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-/*
- * Escritorio
- */
 @media (min-width: 1024px) {
-  .dashboardGrid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    align-items: start;
-  }
-
-  .progressSection {
-    grid-column: 1 / -1;
-  }
-
-  .competenciesSection {
-    grid-column: 1 / -1;
-  }
-
-  .activitiesSection {
-    grid-column: 1;
-  }
-
-  .resourcesSection {
-    grid-column: 2;
+  .section {
+    margin-top: var(--space-5);
   }
 }

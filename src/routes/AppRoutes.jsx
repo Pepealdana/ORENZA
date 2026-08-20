@@ -19,7 +19,9 @@ import ForgotPasswordPage from '../pages/auth/ForgotPasswordPage';
 
 import DashboardPage from '../pages/student/DashboardPage';
 import HomePage from '../pages/student/HomePage';
+import JourneyPage from '../pages/student/JourneyPage';
 import CompetenciesPage from '../pages/student/CompetenciesPage';
+import CompetencyDetailPage from '../pages/student/CompetencyDetailPage';
 import ActivitiesPage from '../pages/student/ActivitiesPage';
 import ResourcesPage from '../pages/student/ResourcesPage';
 import ProfilePage from '../pages/student/ProfilePage';
@@ -27,6 +29,7 @@ import SettingsPage from '../pages/student/SettingsPage';
 
 import CounselorDashboardPage from '../pages/counselor/CounselorDashboardPage';
 import AdminDashboardPage from '../pages/admin/AdminDashboardPage';
+import ActivityPage from '../pages/student/ActivityPage';
 
 function AppRoutes() {
   return (
@@ -38,11 +41,17 @@ function AppRoutes() {
             ======================================== */}
 
         <Route element={<PublicLayout />}>
-          <Route path="/" element={<SplashPage />} />
+
+          <Route
+            path="/"
+            element={<SplashPage />}
+          />
+
           <Route
             path="/conocer-orenza"
             element={<AboutPage />}
           />
+
         </Route>
 
 
@@ -50,7 +59,10 @@ function AppRoutes() {
             AUTENTICACIÓN
             ======================================== */}
 
-        <Route path="/login" element={<LoginPage />} />
+        <Route
+          path="/login"
+          element={<LoginPage />}
+        />
 
         <Route
           path="/registro"
@@ -71,40 +83,95 @@ function AppRoutes() {
           path="/estudiante"
           element={<StudentLayout />}
         >
+
           <Route
             path="dashboard"
             element={<DashboardPage />}
           />
+
 
           <Route
             path="inicio"
             element={<HomePage />}
           />
 
+        <Route
+             path="actividades/:activityId"
+             element={<ActivityPage />}
+        />
+
+          {/* ======================================
+              MI RECORRIDO
+              ====================================== */}
+
+          <Route
+            path="recorrido"
+            element={<JourneyPage />}
+          />
+
+
+          {/* ======================================
+              COMPETENCIAS
+              ====================================== */}
+
           <Route
             path="competencias"
             element={<CompetenciesPage />}
           />
 
-          <Route
-            path="actividades"
-            element={<ActivitiesPage />}
-          />
+
+          {/* Detalle de una competencia */}
 
           <Route
-            path="recursos"
-            element={<ResourcesPage />}
+            path="competencias/:competencyId"
+            element={<CompetencyDetailPage />}
           />
+
+
+{/* ======================================
+    ACTIVIDADES
+    ====================================== */}
+
+<Route
+  path="actividades"
+  element={<ActivitiesPage />}
+/>
+
+<Route
+  path="actividades/:activityId"
+  element={<ActivityPage />}
+/>
+
+
+{/* ======================================
+    RECURSOS
+    ====================================== */}
+
+<Route
+  path="recursos"
+  element={<ResourcesPage />}
+/>
+
+
+          {/* ======================================
+              PERFIL
+              ====================================== */}
 
           <Route
             path="perfil"
             element={<ProfilePage />}
           />
 
+
+          {/* ======================================
+              CONFIGURACIÓN
+              ====================================== */}
+
           <Route
             path="configuracion"
             element={<SettingsPage />}
           />
+
         </Route>
 
 
@@ -116,10 +183,12 @@ function AppRoutes() {
           path="/orientador"
           element={<CounselorLayout />}
         >
+
           <Route
             index
             element={<CounselorDashboardPage />}
           />
+
         </Route>
 
 
@@ -131,10 +200,12 @@ function AppRoutes() {
           path="/administrador"
           element={<AdminLayout />}
         >
+
           <Route
             index
             element={<AdminDashboardPage />}
           />
+
         </Route>
 
 
@@ -144,7 +215,12 @@ function AppRoutes() {
 
         <Route
           path="*"
-          element={<Navigate to="/" replace />}
+          element={
+            <Navigate
+              to="/"
+              replace
+            />
+          }
         />
 
       </Routes>
