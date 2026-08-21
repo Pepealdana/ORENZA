@@ -5,12 +5,6 @@ const studentData = {
 
   grade: '10°',
 
-  streak: {
-    current: 7,
-    longest: 12,
-    lastActivityDate: '2026-08-18',
-  },
-
   emotionalCheckIns: [
     {
       id: 'checkin-001',
