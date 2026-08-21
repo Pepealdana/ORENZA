@@ -25,7 +25,10 @@ import styles from './ActivityPage.module.css';
 
 function ActivityPage() {
   const navigate = useNavigate();
-  const { activityId } = useParams();
+
+  const {
+    activityId,
+  } = useParams();
 
 
   /*
@@ -65,7 +68,9 @@ function ActivityPage() {
 
   if (!activity) {
     return (
-      <section className={styles.page}>
+      <section
+        className={styles.page}
+      >
 
         <h1>
           Actividad no encontrada
@@ -137,7 +142,7 @@ function ActivityPage() {
   const handleNext = () => {
 
     /*
-     * Si todavía existen pasos,
+     * Si todavía hay pasos,
      * avanzamos al siguiente.
      */
 
@@ -157,10 +162,12 @@ function ActivityPage() {
      * ACTIVIDAD COMPLETADA
      * ======================================
      *
-     * Llegamos al último paso.
+     * Guardamos únicamente los datos
+     * propios de la experiencia realizada.
      *
-     * Creamos un registro de la experiencia
-     * realizada por el estudiante.
+     * El título, descripción, competencias,
+     * dificultad y demás información de la
+     * actividad permanecen en activities.js.
      */
 
     const completedActivity = {
@@ -170,9 +177,6 @@ function ActivityPage() {
 
       activityId:
         activity.id,
-
-      title:
-        activity.title,
 
       completedAt:
         getLocalDateString(),
@@ -244,7 +248,9 @@ function ActivityPage() {
    */
 
   return (
-    <section className={styles.page}>
+    <section
+      className={styles.page}
+    >
 
 
       {/* ======================================
@@ -253,7 +259,11 @@ function ActivityPage() {
 
       <button
         type="button"
-        className={styles.backButton}
+
+        className={
+          styles.backButton
+        }
+
         onClick={() =>
           navigate(
             '/estudiante/actividades'
@@ -275,9 +285,15 @@ function ActivityPage() {
           ENCABEZADO
           ====================================== */}
 
-      <header className={styles.header}>
+      <header
+        className={styles.header}
+      >
 
-        <p className={styles.eyebrow}>
+        <p
+          className={
+            styles.eyebrow
+          }
+        >
 
           {getActivityTypeLabel(
             activity.type
@@ -291,12 +307,20 @@ function ActivityPage() {
         </h1>
 
 
-        <p className={styles.description}>
+        <p
+          className={
+            styles.description
+          }
+        >
           {activity.description}
         </p>
 
 
-        <div className={styles.meta}>
+        <div
+          className={
+            styles.meta
+          }
+        >
 
           <span>
             {activity.estimatedTime} min

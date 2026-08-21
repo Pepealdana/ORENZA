@@ -105,11 +105,15 @@ function DashboardPage() {
 
   /*
    * ========================================
-   * ACTIVIDADES COMPLETADAS
+   * ACTIVIDADES RECIENTES
    * ========================================
    *
-   * Las actividades recientes se obtienen
-   * desde localStorage.
+   * La fuente de verdad es activityStorage.
+   *
+   * activities.js contiene la información
+   * de las actividades.
+   *
+   * No utilizamos studentData.recentActivities.
    */
 
   const completedActivities =
@@ -117,8 +121,9 @@ function DashboardPage() {
 
 
   /*
-   * Ordenamos las experiencias desde la
-   * más reciente hasta la más antigua.
+   * Ordenamos las experiencias por fecha
+   * de finalización, de la más reciente
+   * a la más antigua.
    */
 
   const recentActivities =
@@ -133,6 +138,11 @@ function DashboardPage() {
       .map(
         (completedActivity) => {
 
+          /*
+           * Buscamos la actividad original
+           * en el catálogo.
+           */
+
           const activity =
             activities.find(
               (item) =>
@@ -140,9 +150,25 @@ function DashboardPage() {
                 completedActivity.activityId
             );
 
+
+          /*
+           * Si la actividad ya no existe
+           * en activities.js, no mostramos
+           * ese registro.
+           */
+
           if (!activity) {
             return null;
           }
+
+
+          /*
+           * Construimos solamente los datos
+           * que necesita ActivityCard.
+           *
+           * El título procede de activities.js,
+           * NO de localStorage.
+           */
 
           return {
             id:
