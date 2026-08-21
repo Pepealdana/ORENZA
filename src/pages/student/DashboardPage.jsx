@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import studentData from '../../data/studentData';
+import activities from '../../data/activities';
 
 import EmotionalCheckIn from '../../components/dashboard/EmotionalCheckIn/EmotionalCheckIn';
 import StreakCard from '../../components/dashboard/StreakCard/StreakCard';
@@ -26,7 +27,16 @@ import {
   calculateCurrentStreak,
 } from '../../utils/streakUtils';
 
+import {
+  getCompletedActivities,
+} from '../../utils/activityStorage';
+
+import {
+  getAllCompetencyStats,
+} from '../../utils/competencyUtils';
+
 import styles from './DashboardPage.module.css';
+
 
 function DashboardPage() {
   const navigate = useNavigate();
@@ -35,7 +45,6 @@ function DashboardPage() {
     name,
     today,
     competencies,
-    recentActivities,
     recommendedResources,
   } = studentData;
 
@@ -53,19 +62,11 @@ function DashboardPage() {
     getTodayCheckIn();
 
 
-  /*
-   * Registro emocional del día actual.
-   */
-
   const [todayCheckIn, setTodayCheckIn] =
     useState(
       storedTodayCheckIn
     );
 
-
-  /*
-   * Historial completo de check-ins.
-   */
 
   const [checkIns, setCheckIns] =
     useState(
@@ -89,6 +90,83 @@ function DashboardPage() {
 
   /*
    * ========================================
+   * COMPETENCIAS
+   * ========================================
+   *
+   * El progreso se calcula a partir de
+   * las actividades realmente completadas.
+   */
+
+  const competencyStats =
+    getAllCompetencyStats(
+      competencies
+    );
+
+
+  /*
+   * ========================================
+   * ACTIVIDADES COMPLETADAS
+   * ========================================
+   *
+   * Las actividades recientes se obtienen
+   * desde localStorage.
+   */
+
+  const completedActivities =
+    getCompletedActivities();
+
+
+  /*
+   * Ordenamos las experiencias desde la
+   * más reciente hasta la más antigua.
+   */
+
+  const recentActivities =
+    [...completedActivities]
+      .sort(
+        (a, b) =>
+          b.completedAt.localeCompare(
+            a.completedAt
+          )
+      )
+      .slice(0, 5)
+      .map(
+        (completedActivity) => {
+
+          const activity =
+            activities.find(
+              (item) =>
+                item.id ===
+                completedActivity.activityId
+            );
+
+          if (!activity) {
+            return null;
+          }
+
+          return {
+            id:
+              completedActivity.id,
+
+            title:
+              activity.title,
+
+            status:
+              'completed',
+
+            date:
+              completedActivity.completedAt,
+
+            competency:
+              activity.competencies,
+          };
+        }
+      )
+      .filter(Boolean);
+
+
+  /*
+   * ========================================
    * GUARDAR CHECK-IN EMOCIONAL
    * ========================================
    */
@@ -98,70 +176,54 @@ function DashboardPage() {
     emotion,
   }) => {
 
-    /*
-     * Utilizamos la fecha local del dispositivo.
-     *
-     * No utilizamos toISOString(), porque
-     * convertiría la fecha a UTC.
-     */
-
     const today =
       getLocalDateString();
 
 
-    /*
-     * Creamos el nuevo registro.
-     */
-
     const checkIn = {
-      id: `checkin-${Date.now()}`,
-      date: today,
-      mood: mood.id,
-      emotion: emotion.id,
-      intensity: null,
+      id:
+        `checkin-${Date.now()}`,
+
+      date:
+        today,
+
+      mood:
+        mood.id,
+
+      emotion:
+        emotion.id,
+
+      intensity:
+        null,
     };
 
-
-    /*
-     * Guardamos el registro.
-     */
 
     const savedCheckIns =
       saveCheckIn(
         checkIn
       );
 
+
     if (!savedCheckIns) {
       return;
     }
 
-
-    /*
-     * Actualizamos el registro del día.
-     */
 
     setTodayCheckIn(
       checkIn
     );
 
 
-    /*
-     * Actualizamos el historial completo.
-     */
-
     setCheckIns(
       savedCheckIns
     );
 
 
-    /*
-     * Recalculamos la racha.
-     */
-
     const updatedStreak =
       calculateCurrentStreak(
         savedCheckIns
       );
+
 
     setCurrentStreak(
       updatedStreak
@@ -350,7 +412,7 @@ function DashboardPage() {
 
         <div className={styles.grid}>
 
-          {competencies.map(
+          {competencyStats.map(
             (competency) => (
 
               <CompetencyCard
@@ -364,6 +426,14 @@ function DashboardPage() {
 
                 progress={
                   competency.progress
+                }
+
+                completedCount={
+                  competency.completedCount
+                }
+
+                totalActivities={
+                  competency.totalActivities
                 }
 
                 to={
@@ -404,28 +474,39 @@ function DashboardPage() {
 
         <div className={styles.list}>
 
-          {recentActivities.map(
-            (activity) => (
+          {recentActivities.length > 0 ? (
 
-              <ActivityCard
-                key={
-                  activity.id
-                }
+            recentActivities.map(
+              (activity) => (
 
-                title={
-                  activity.title
-                }
+                <ActivityCard
+                  key={
+                    activity.id
+                  }
 
-                status={
-                  activity.status
-                }
+                  title={
+                    activity.title
+                  }
 
-                date={
-                  activity.date
-                }
-              />
+                  status={
+                    activity.status
+                  }
 
+                  date={
+                    activity.date
+                  }
+                />
+
+              )
             )
+
+          ) : (
+
+            <p>
+              Todavía no has explorado
+              ninguna actividad.
+            </p>
+
           )}
 
         </div>
@@ -485,5 +566,6 @@ function DashboardPage() {
     </section>
   );
 }
+
 
 export default DashboardPage;

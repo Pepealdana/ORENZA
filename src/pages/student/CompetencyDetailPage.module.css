@@ -1,33 +1,491 @@
-.navigation {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-2);
+.page {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
 
-  margin-top: var(--space-4);
+  padding-bottom: var(--space-7);
 }
 
-.navigationLink {
+
+/* ========================================
+   VOLVER
+   ======================================== */
+
+.backLink {
   display: inline-flex;
   align-items: center;
 
-  min-height: 44px;
-  padding: 0 var(--space-2);
+  margin-bottom: var(--space-3);
 
   color: var(--color-primary);
 
   font-size: 0.9rem;
   font-weight: 600;
+
   text-decoration: none;
 
-  border-radius: var(--radius-button);
+  transition:
+    color var(--transition-fast);
 }
+
+
+.backLink:hover {
+  color: var(--color-accent);
+}
+
+
+/* ========================================
+   ENCABEZADO
+   ======================================== */
+
+.header {
+  margin-bottom: var(--space-4);
+}
+
+
+.eyebrow {
+  margin-bottom: 6px;
+
+  color: var(--color-gray-dark);
+
+  font-size: 0.75rem;
+  font-weight: 600;
+
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+
+.title {
+  margin: 0;
+
+  color: var(--color-primary);
+
+  font-family: var(--font-heading);
+
+  font-size: clamp(
+    1.7rem,
+    4vw,
+    2.4rem
+  );
+
+  line-height: 1.2;
+}
+
+
+.description {
+  max-width: 700px;
+
+  margin-top: 10px;
+
+  color: var(--color-gray-dark);
+
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+
+/* ========================================
+   PROGRESO
+   ======================================== */
+
+.progressCard {
+  margin-bottom: var(--space-5);
+
+  padding: var(--space-3);
+
+  background-color: var(--color-white);
+
+  border: 1px solid
+    var(--color-gray-medium);
+
+  border-radius: var(--radius-card);
+
+  box-shadow: var(--shadow-1);
+}
+
+
+.progressHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: var(--space-2);
+
+  margin-bottom: var(--space-2);
+}
+
+
+.progressHeader h2 {
+  margin: 0;
+
+  color: var(--color-primary);
+
+  font-family: var(--font-heading);
+
+  font-size: 1.15rem;
+}
+
+
+.percentage {
+  color: var(--color-primary);
+
+  font-family: var(--font-heading);
+
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+
+.progressText {
+  margin-top: 10px;
+
+  color: var(--color-gray-dark);
+
+  font-size: 0.85rem;
+}
+
+
+/* ========================================
+   ACTIVIDADES
+   ======================================== */
+
+.activitiesSection {
+  margin-bottom: var(--space-5);
+}
+
+
+.sectionHeader {
+  margin-bottom: var(--space-2);
+}
+
+
+.sectionHeader h2 {
+  margin: 0;
+
+  color: var(--color-primary);
+
+  font-family: var(--font-heading);
+
+  font-size: 1.3rem;
+}
+
+
+.sectionDescription {
+  max-width: 650px;
+
+  margin-top: 6px;
+
+  color: var(--color-gray-dark);
+
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+
+/* ========================================
+   LISTA DE ACTIVIDADES
+   ======================================== */
+
+.activityList {
+  display: flex;
+  flex-direction: column;
+
+  gap: 12px;
+}
+
+
+.activityCard {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+
+  gap: var(--space-3);
+
+  padding: var(--space-3);
+
+  background-color: var(--color-white);
+
+  border: 1px solid
+    var(--color-gray-medium);
+
+  border-radius: var(--radius-card);
+
+  box-shadow: var(--shadow-1);
+
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+
+.activityCard:hover {
+  transform: translateY(-1px);
+
+  box-shadow: var(--shadow-2);
+}
+
+
+.activityContent {
+  flex: 1;
+  min-width: 0;
+}
+
+
+.activityTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 10px;
+
+  margin-bottom: 10px;
+}
+
+
+.activityType {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 5px 10px;
+
+  color: var(--color-primary);
+
+  background-color: var(--color-gray-light);
+
+  border-radius: var(--radius-chip);
+
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+
+.completedBadge {
+  color: var(--color-accent);
+
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+
+.activityCard h3 {
+  margin: 0;
+
+  color: var(--color-primary);
+
+  font-family: var(--font-heading);
+
+  font-size: 1.05rem;
+}
+
+
+.activityDescription {
+  margin-top: 6px;
+
+  color: var(--color-gray-dark);
+
+  font-size: 0.85rem;
+
+  line-height: 1.5;
+}
+
+
+.activityMeta {
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+
+  margin-top: 12px;
+
+  color: var(--color-gray-dark);
+
+  font-size: 0.75rem;
+}
+
+
+/* ========================================
+   BOTÓN DE ACTIVIDAD
+   ======================================== */
+
+.activityButton {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  align-self: center;
+
+  flex-shrink: 0;
+
+  min-width: 150px;
+
+  padding: 11px 16px;
+
+  color: var(--color-white);
+
+  background-color:
+    var(--color-primary);
+
+  border-radius:
+    var(--radius-button);
+
+  font-size: 0.8rem;
+  font-weight: 600;
+
+  text-align: center;
+  text-decoration: none;
+
+  transition:
+    background-color var(--transition-fast);
+}
+
+
+.activityButton:hover {
+  background-color:
+    var(--color-accent);
+}
+
+
+/* ========================================
+   ESTADO VACÍO
+   ======================================== */
+
+.emptyState {
+  padding: var(--space-4);
+
+  background-color:
+    var(--color-gray-light);
+
+  border-radius:
+    var(--radius-card);
+
+  text-align: center;
+}
+
+
+.emptyState h3 {
+  margin: 0;
+
+  color: var(--color-primary);
+
+  font-family: var(--font-heading);
+
+  font-size: 1rem;
+}
+
+
+.emptyState p {
+  max-width: 500px;
+
+  margin: 8px auto 0;
+
+  color: var(--color-gray-dark);
+
+  font-size: 0.85rem;
+
+  line-height: 1.5;
+}
+
+
+/* ========================================
+   NAVEGACIÓN
+   ======================================== */
+
+.navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-top: var(--space-4);
+}
+
+
+.navigationLink {
+  color: var(--color-primary);
+
+  font-size: 0.85rem;
+  font-weight: 600;
+
+  text-decoration: none;
+}
+
 
 .navigationLink:hover {
-  background-color: var(--color-gray-light);
+  color: var(--color-accent);
 }
 
-.navigationLink:focus-visible {
-  outline: 3px solid var(--color-accent);
-  outline-offset: 2px;
+
+/* ========================================
+   COMPETENCIA NO ENCONTRADA
+   ======================================== */
+
+.page > h1 {
+  color: var(--color-primary);
+
+  font-family: var(--font-heading);
+}
+
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 700px) {
+
+  .page {
+    padding-bottom: var(--space-6);
+  }
+
+
+  .activityCard {
+    flex-direction: column;
+  }
+
+
+  .activityButton {
+    width: 100%;
+  }
+
+
+  .activityTop {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+
+  .progressHeader {
+    align-items: flex-start;
+  }
+
+
+  .percentage {
+    font-size: 1.3rem;
+  }
+
+}
+
+
+@media (max-width: 480px) {
+
+  .title {
+    font-size: 1.6rem;
+  }
+
+
+  .description {
+    font-size: 0.85rem;
+  }
+
+
+  .progressCard {
+    padding: var(--space-2);
+  }
+
+
+  .activityCard {
+    padding: var(--space-2);
+  }
+
 }

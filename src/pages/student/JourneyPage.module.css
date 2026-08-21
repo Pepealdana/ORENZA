@@ -91,3 +91,243 @@
   .activityContent p {
     font-size: 0.72rem;
   }
+
+  /* ========================================
+   EXPERIENCIAS EXPLORADAS
+   ======================================== */
+
+.activityHistory {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+
+.activityHistoryItem {
+  display: grid;
+
+  grid-template-columns:
+    42px
+    1fr
+    auto;
+
+  align-items: start;
+
+  gap: var(--space-2);
+
+  padding: var(--space-3);
+
+  background-color: var(--color-white);
+
+  border: 1px solid var(--color-gray-medium);
+  border-radius: var(--radius-card);
+
+  box-shadow: var(--shadow-1);
+}
+
+
+.activityHistoryIcon {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 40px;
+  height: 40px;
+
+  color: var(--color-accent);
+
+  background-color: var(--color-gray-light);
+
+  border-radius: 50%;
+}
+
+
+.activityHistoryContent {
+  min-width: 0;
+}
+
+
+.activityHistoryDate {
+  margin-bottom: 4px;
+
+  color: var(--color-gray-dark);
+
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+
+.activityHistoryContent h3 {
+  margin: 0;
+
+  color: var(--color-primary);
+
+  font-family: var(--font-heading);
+
+  font-size: 1rem;
+}
+
+
+.activityHistoryContent > p {
+  margin-top: 5px;
+
+  color: var(--color-gray-dark);
+
+  font-size: 0.82rem;
+
+  line-height: 1.5;
+}
+
+
+.activityHistoryMeta {
+  display: flex;
+
+  align-items: center;
+
+  margin-top: 10px;
+}
+
+
+.activityHistoryMeta span {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 5px;
+
+  color: var(--color-gray-dark);
+
+  font-size: 0.72rem;
+}
+
+
+.activityHistoryButton {
+  align-self: center;
+
+  padding: 9px 14px;
+
+  color: var(--color-primary);
+
+  background-color: var(--color-gray-light);
+
+  border: 1px solid var(--color-gray-medium);
+
+  border-radius: var(--radius-button);
+
+  font-size: 0.78rem;
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+
+.activityHistoryButton:hover {
+  color: var(--color-white);
+
+  background-color: var(--color-primary);
+}
+
+
+/* ========================================
+   BOTÓN DEL ESTADO VACÍO
+   ======================================== */
+
+.actionButton {
+  margin-top: var(--space-2);
+
+  padding: 10px 18px;
+
+  color: var(--color-white);
+
+  background-color: var(--color-primary);
+
+  border-radius: var(--radius-button);
+
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+
+.actionButton:hover {
+  background-color: var(--color-accent);
+}
+
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 700px) {
+
+  .summary {
+    display: grid;
+
+    grid-template-columns:
+      1fr
+      1fr;
+
+    gap: var(--space-2);
+  }
+
+
+  .summaryDivider {
+    display: none;
+  }
+
+
+  .activityHistoryItem {
+    grid-template-columns:
+      40px
+      1fr;
+  }
+
+
+  .activityHistoryButton {
+    grid-column: 2;
+
+    justify-self: start;
+  }
+
+}
+
+
+@media (max-width: 480px) {
+
+  .summary {
+    padding: var(--space-2);
+  }
+
+
+  .summaryNumber {
+    font-size: 1.5rem;
+  }
+
+
+  .summaryLabel {
+    font-size: 0.7rem;
+  }
+
+
+  .activityHistoryItem {
+    padding: var(--space-2);
+  }
+
+
+  .activityHistoryContent h3 {
+    font-size: 0.92rem;
+  }
+
+
+  .activityHistoryContent > p {
+    font-size: 0.75rem;
+  }
+
+
+  .activityHistoryButton {
+    width: 100%;
+
+    text-align: center;
+  }
+
+}

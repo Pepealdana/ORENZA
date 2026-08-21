@@ -4,6 +4,7 @@ import {
   CalendarDays,
   CheckCircle2,
   ChevronLeft,
+  Clock3,
   Heart,
   Sparkles,
 } from 'lucide-react';
@@ -26,9 +27,9 @@ import styles from './JourneyPage.module.css';
 
 
 /*
- * =========================================
+ * ========================================
  * EMOCIONES
- * =========================================
+ * ========================================
  */
 
 const emotionData = {
@@ -74,14 +75,20 @@ const emotionData = {
 };
 
 
+/*
+ * ========================================
+ * PÁGINA
+ * ========================================
+ */
+
 function JourneyPage() {
   const navigate = useNavigate();
 
 
   /*
-   * =========================================
+   * ========================================
    * REGISTROS EMOCIONALES
-   * =========================================
+   * ========================================
    */
 
   const checkIns =
@@ -89,9 +96,9 @@ function JourneyPage() {
 
 
   /*
-   * =========================================
-   * ACTIVIDADES EXPLORADAS
-   * =========================================
+   * ========================================
+   * EXPERIENCIAS REALIZADAS
+   * ========================================
    */
 
   const completedActivities =
@@ -99,9 +106,9 @@ function JourneyPage() {
 
 
   /*
-   * =========================================
+   * ========================================
    * RACHA
-   * =========================================
+   * ========================================
    */
 
   const currentStreak =
@@ -111,47 +118,45 @@ function JourneyPage() {
 
 
   /*
-   * =========================================
-   * CHECK-INS ORDENADOS
-   * =========================================
+   * ========================================
+   * REGISTROS EMOCIONALES ORDENADOS
+   * ========================================
    */
 
   const recentCheckIns =
     useMemo(() => {
-
       return [...checkIns]
-        .sort((a, b) =>
-          b.date.localeCompare(
-            a.date
-          )
+        .sort(
+          (a, b) =>
+            b.date.localeCompare(
+              a.date
+            )
         );
-
     }, [checkIns]);
 
 
   /*
-   * =========================================
-   * ACTIVIDADES ORDENADAS
-   * =========================================
+   * ========================================
+   * EXPERIENCIAS ORDENADAS
+   * ========================================
    */
 
   const recentActivities =
     useMemo(() => {
-
       return [...completedActivities]
-        .sort((a, b) =>
-          b.completedAt.localeCompare(
-            a.completedAt
-          )
+        .sort(
+          (a, b) =>
+            b.completedAt.localeCompare(
+              a.completedAt
+            )
         );
-
     }, [completedActivities]);
 
 
   /*
-   * =========================================
+   * ========================================
    * ÚLTIMA EMOCIÓN
-   * =========================================
+   * ========================================
    */
 
   const latestEmotion =
@@ -166,7 +171,6 @@ function JourneyPage() {
     <section
       className={styles.page}
     >
-
 
       {/* ======================================
           ENCABEZADO
@@ -195,15 +199,11 @@ function JourneyPage() {
 
 
         <div
-          className={
-            styles.headerContent
-          }
+          className={styles.headerContent}
         >
 
           <div
-            className={
-              styles.headerIcon
-            }
+            className={styles.headerIcon}
           >
 
             <Heart
@@ -217,9 +217,7 @@ function JourneyPage() {
           <div>
 
             <p
-              className={
-                styles.eyebrow
-              }
+              className={styles.eyebrow}
             >
               Mi recorrido
             </p>
@@ -231,13 +229,12 @@ function JourneyPage() {
 
 
             <p
-              className={
-                styles.description
-              }
+              className={styles.description}
             >
               Aquí puedes mirar los momentos
               que has dedicado a reconocerte,
-              explorar y descubrir cosas de ti.
+              explorar lo que sientes y descubrir
+              algo nuevo sobre ti.
             </p>
 
           </div>
@@ -256,24 +253,17 @@ function JourneyPage() {
       >
 
         <div
-          className={
-            styles.summaryItem
-          }
+          className={styles.summaryItem}
         >
 
           <span
-            className={
-              styles.summaryNumber
-            }
+            className={styles.summaryNumber}
           >
             {currentStreak}
           </span>
 
-
           <span
-            className={
-              styles.summaryLabel
-            }
+            className={styles.summaryLabel}
           >
             {currentStreak === 1
               ? 'día de continuidad'
@@ -284,31 +274,22 @@ function JourneyPage() {
 
 
         <div
-          className={
-            styles.summaryDivider
-          }
+          className={styles.summaryDivider}
         />
 
 
         <div
-          className={
-            styles.summaryItem
-          }
+          className={styles.summaryItem}
         >
 
           <span
-            className={
-              styles.summaryNumber
-            }
+            className={styles.summaryNumber}
           >
             {checkIns.length}
           </span>
 
-
           <span
-            className={
-              styles.summaryLabel
-            }
+            className={styles.summaryLabel}
           >
             {checkIns.length === 1
               ? 'momento registrado'
@@ -319,33 +300,24 @@ function JourneyPage() {
 
 
         <div
-          className={
-            styles.summaryDivider
-          }
+          className={styles.summaryDivider}
         />
 
 
         <div
-          className={
-            styles.summaryItem
-          }
+          className={styles.summaryItem}
         >
 
           <span
-            className={
-              styles.summaryNumber
-            }
+            className={styles.summaryNumber}
           >
-            {completedActivities.length}
+            {recentActivities.length}
           </span>
 
-
           <span
-            className={
-              styles.summaryLabel
-            }
+            className={styles.summaryLabel}
           >
-            {completedActivities.length === 1
+            {recentActivities.length === 1
               ? 'experiencia explorada'
               : 'experiencias exploradas'}
           </span>
@@ -356,7 +328,7 @@ function JourneyPage() {
 
 
       {/* ======================================
-          ÚLTIMA EMOCIÓN
+          ÚLTIMO MOMENTO EMOCIONAL
           ====================================== */}
 
       {latestEmotion && (
@@ -366,21 +338,16 @@ function JourneyPage() {
         >
 
           <div
-            className={
-              styles.sectionHeading
-            }
+            className={styles.sectionHeading}
           >
 
             <div>
 
               <p
-                className={
-                  styles.eyebrow
-                }
+                className={styles.eyebrow}
               >
                 Tu momento más reciente
               </p>
-
 
               <h2>
                 Lo que reconociste en ti
@@ -392,15 +359,11 @@ function JourneyPage() {
 
 
           <article
-            className={
-              styles.latestCard
-            }
+            className={styles.latestCard}
           >
 
             <div
-              className={
-                styles.latestEmoji
-              }
+              className={styles.latestEmoji}
             >
               {latestEmotion.emoji}
             </div>
@@ -411,7 +374,6 @@ function JourneyPage() {
               <h3>
                 {latestEmotion.label}
               </h3>
-
 
               <p>
                 {formatLongDate(
@@ -429,7 +391,7 @@ function JourneyPage() {
 
 
       {/* ======================================
-          ACTIVIDADES EXPLORADAS
+          EXPERIENCIAS EXPLORADAS
           ====================================== */}
 
       <section
@@ -437,25 +399,19 @@ function JourneyPage() {
       >
 
         <div
-          className={
-            styles.sectionHeading
-          }
+          className={styles.sectionHeading}
         >
 
           <div>
 
             <p
-              className={
-                styles.eyebrow
-              }
+              className={styles.eyebrow}
             >
               Lo que has explorado
             </p>
 
-
             <h2>
-              Experiencias que forman parte
-              de tu recorrido
+              Experiencias que forman parte de tu recorrido
             </h2>
 
           </div>
@@ -466,9 +422,7 @@ function JourneyPage() {
         {recentActivities.length === 0 ? (
 
           <div
-            className={
-              styles.emptyState
-            }
+            className={styles.emptyState}
           >
 
             <Sparkles
@@ -476,26 +430,34 @@ function JourneyPage() {
               aria-hidden="true"
             />
 
-
             <h3>
-              Tu recorrido está comenzando
+              Todavía no has explorado una experiencia
             </h3>
 
-
             <p>
-              Cuando explores una actividad,
-              aparecerá aquí como parte de
-              tu experiencia.
+              Cuando encuentres una actividad que
+              te llame la atención, puedes dedicar
+              unos minutos a explorarla.
             </p>
+
+            <button
+              type="button"
+              className={styles.actionButton}
+              onClick={() =>
+                navigate(
+                  '/estudiante/actividades'
+                )
+              }
+            >
+              Explorar actividades
+            </button>
 
           </div>
 
         ) : (
 
           <div
-            className={
-              styles.activityHistory
-            }
+            className={styles.activityHistory}
           >
 
             {recentActivities.map(
@@ -510,7 +472,7 @@ function JourneyPage() {
 
                   <div
                     className={
-                      styles.activityIcon
+                      styles.activityHistoryIcon
                     }
                   >
 
@@ -524,9 +486,20 @@ function JourneyPage() {
 
                   <div
                     className={
-                      styles.activityContent
+                      styles.activityHistoryContent
                     }
                   >
+
+                    <p
+                      className={
+                        styles.activityHistoryDate
+                      }
+                    >
+                      {formatLongDate(
+                        activity.completedAt
+                      )}
+                    </p>
+
 
                     <h3>
                       {activity.title}
@@ -534,13 +507,47 @@ function JourneyPage() {
 
 
                     <p>
-                      Explorada el{' '}
-                      {formatLongDate(
-                        activity.completedAt
-                      )}
+                      Dedicarse un momento para
+                      explorarte también forma parte
+                      de conocerte.
                     </p>
 
+
+                    <div
+                      className={
+                        styles.activityHistoryMeta
+                      }
+                    >
+
+                      <span>
+
+                        <Clock3
+                          size={14}
+                          aria-hidden="true"
+                        />
+
+                        Experiencia realizada
+
+                      </span>
+
+                    </div>
+
                   </div>
+
+
+                  <button
+                    type="button"
+                    className={
+                      styles.activityHistoryButton
+                    }
+                    onClick={() =>
+                      navigate(
+                        `/estudiante/actividades/${activity.activityId}`
+                      )
+                    }
+                  >
+                    Volver a explorar
+                  </button>
 
                 </article>
 
@@ -563,25 +570,19 @@ function JourneyPage() {
       >
 
         <div
-          className={
-            styles.sectionHeading
-          }
+          className={styles.sectionHeading}
         >
 
           <div>
 
             <p
-              className={
-                styles.eyebrow
-              }
+              className={styles.eyebrow}
             >
-              Tu historia
+              Tu historia emocional
             </p>
 
-
             <h2>
-              Momentos que has compartido
-              contigo
+              Momentos que has compartido contigo
             </h2>
 
           </div>
@@ -592,9 +593,7 @@ function JourneyPage() {
         {recentCheckIns.length === 0 ? (
 
           <div
-            className={
-              styles.emptyState
-            }
+            className={styles.emptyState}
           >
 
             <CalendarDays
@@ -602,11 +601,9 @@ function JourneyPage() {
               aria-hidden="true"
             />
 
-
             <h3>
               Todavía no hay registros
             </h3>
-
 
             <p>
               Cuando quieras, vuelve al inicio
@@ -619,9 +616,7 @@ function JourneyPage() {
         ) : (
 
           <div
-            className={
-              styles.history
-            }
+            className={styles.history}
           >
 
             {recentCheckIns.map(
@@ -631,6 +626,7 @@ function JourneyPage() {
                   emotionData[
                     checkIn.emotion
                   ];
+
 
                 return (
 
@@ -657,7 +653,8 @@ function JourneyPage() {
                         styles.historyEmoji
                       }
                     >
-                      {emotion?.emoji || '•'}
+                      {emotion?.emoji ||
+                        '•'}
                     </div>
 
 
@@ -671,7 +668,6 @@ function JourneyPage() {
                         {emotion?.label ||
                           'Emoción registrada'}
                       </h3>
-
 
                       <p>
                         Reconociste cómo te
@@ -698,9 +694,7 @@ function JourneyPage() {
           ====================================== */}
 
       <section
-        className={
-          styles.reflection
-        }
+        className={styles.reflection}
       >
 
         <Heart
@@ -708,12 +702,12 @@ function JourneyPage() {
           aria-hidden="true"
         />
 
-
         <p>
           No necesitas sentir algo específico
           para que tu experiencia sea válida.
-          Observarte también es parte de
-          conocerte.
+          Observarte, preguntarte y descubrir
+          nuevas cosas sobre ti también es parte
+          del recorrido.
         </p>
 
       </section>
@@ -724,15 +718,14 @@ function JourneyPage() {
 
 
 /*
- * =========================================
- * FECHA CORTA
- * =========================================
+ * ========================================
+ * FECHAS
+ * ========================================
  */
 
 function formatShortDate(
   dateString
 ) {
-
   const parts =
     dateString.split('-');
 
@@ -746,27 +739,18 @@ function formatShortDate(
 }
 
 
-/*
- * =========================================
- * FECHA LARGA
- * =========================================
- */
-
 function formatLongDate(
   dateString
 ) {
-
   const [
     year,
     month,
     day,
   ] = dateString.split('-');
 
-
   const date = new Date(
     `${year}-${month}-${day}T12:00:00`
   );
-
 
   return date.toLocaleDateString(
     'es-CO',
