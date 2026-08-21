@@ -31,6 +31,7 @@ import CounselorDashboardPage from '../pages/counselor/CounselorDashboardPage';
 import AdminDashboardPage from '../pages/admin/AdminDashboardPage';
 import ActivityPage from '../pages/student/ActivityPage';
 
+
 function AppRoutes() {
   return (
     <BrowserRouter>
@@ -84,21 +85,25 @@ function AppRoutes() {
           element={<StudentLayout />}
         >
 
+          {/* ======================================
+              DASHBOARD
+              ====================================== */}
+
           <Route
             path="dashboard"
             element={<DashboardPage />}
           />
 
 
+          {/* ======================================
+              INICIO
+              ====================================== */}
+
           <Route
             path="inicio"
             element={<HomePage />}
           />
 
-        <Route
-             path="actividades/:activityId"
-             element={<ActivityPage />}
-        />
 
           {/* ======================================
               MI RECORRIDO
@@ -128,29 +133,29 @@ function AppRoutes() {
           />
 
 
-{/* ======================================
-    ACTIVIDADES
-    ====================================== */}
+          {/* ======================================
+              ACTIVIDADES
+              ====================================== */}
 
-<Route
-  path="actividades"
-  element={<ActivitiesPage />}
-/>
+          <Route
+            path="actividades"
+            element={<ActivitiesPage />}
+          />
 
-<Route
-  path="actividades/:activityId"
-  element={<ActivityPage />}
-/>
+          <Route
+            path="actividades/:activityId"
+            element={<ActivityPage />}
+          />
 
 
-{/* ======================================
-    RECURSOS
-    ====================================== */}
+          {/* ======================================
+              RECURSOS
+              ====================================== */}
 
-<Route
-  path="recursos"
-  element={<ResourcesPage />}
-/>
+          <Route
+            path="recursos"
+            element={<ResourcesPage />}
+          />
 
 
           {/* ======================================
@@ -227,5 +232,6 @@ function AppRoutes() {
     </BrowserRouter>
   );
 }
+
 
 export default AppRoutes;

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import studentData from '../../data/studentData';
 import activities from '../../data/activities';
+import resources from '../../data/resources';
 
 import EmotionalCheckIn from '../../components/dashboard/EmotionalCheckIn/EmotionalCheckIn';
 import StreakCard from '../../components/dashboard/StreakCard/StreakCard';
@@ -45,7 +46,6 @@ function DashboardPage() {
     name,
     today,
     competencies,
-    recommendedResources,
   } = studentData;
 
 
@@ -565,7 +565,7 @@ function DashboardPage() {
 
         <div className={styles.list}>
 
-          {recommendedResources.map(
+          {resources.map(
             (resource) => (
 
               <ResourceCard

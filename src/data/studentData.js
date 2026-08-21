@@ -154,24 +154,6 @@ const studentData = {
         'Fortalece la comunicación, el respeto, los límites y los vínculos con otras personas.',
     },
   ],
-
-  recommendedResources: [
-    {
-      id: 'resource-001',
-
-      title: 'Conocer mis fortalezas',
-
-      type: 'Lectura',
-    },
-
-    {
-      id: 'resource-002',
-
-      title: 'Comunicación asertiva',
-
-      type: 'Guía',
-    },
-  ],
 };
 
 export default studentData;
