@@ -4,6 +4,7 @@ import { Activity, ArrowRight, BookOpen, CheckCircle2, Mail, Settings, UserRound
 import studentData from '../../data/studentData';
 import { getCompletedActivities } from '../../utils/activityStorage';
 import styles from './ProfilePage.module.css';
+import perfilIllustration from '../../assets/illustrations/perfil.svg';
 
 function ProfilePage() {
   const completedCount = getCompletedActivities().length;
@@ -16,6 +17,10 @@ function ProfilePage() {
         <h1>Mi perfil</h1>
         <p>Consulta tus datos básicos y reconoce el camino que has construido en ORENZA.</p>
       </header>
+
+      <div className={styles.heroVisual}>
+        <img src={perfilIllustration} alt="" aria-hidden="true" />
+      </div>
 
       <section className={styles.profileCard} aria-labelledby="profile-name">
         <div className={styles.avatar} aria-hidden="true"><UserRound size={34} strokeWidth={1.7} /></div>
