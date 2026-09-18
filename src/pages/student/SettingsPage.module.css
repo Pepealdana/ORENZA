@@ -14,3 +14,7 @@
 .info { display: flex; align-items: flex-start; gap: 9px; margin-top: var(--space-2); padding: 12px 14px; color: var(--color-gray-dark); background: var(--color-info-soft); border-radius: var(--radius-button); } .info svg { flex: 0 0 auto; color: var(--color-info); } .info p { font-size: .76rem; line-height: 1.5; }
 .back { display: inline-flex; margin-top: var(--space-2); color: var(--color-primary); font-size: .82rem; font-weight: 600; } .back:hover { color: var(--color-accent); text-decoration: underline; }
 @media (max-width: 480px) { .option { grid-template-columns: 40px minmax(0,1fr) auto; padding-inline: 12px; } .icon { width: 36px; height: 36px; } .copy small { font-size: .72rem; } }
+
+.heroVisual{margin:0 0 var(--space-3);overflow:hidden;background:#F5FAFC;border-radius:var(--radius-card);border:1px solid var(--color-gray-medium)}
+.heroVisual img{display:block;width:100%;height:auto;max-height:250px;object-fit:cover}
+@media(max-width:600px){.heroVisual img{max-height:190px}}
