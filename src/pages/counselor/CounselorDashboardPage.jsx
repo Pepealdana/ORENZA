@@ -1,5 +1,6 @@
 import { BarChart3, ClipboardList, HeartHandshake, UsersRound } from 'lucide-react';
 import styles from './CounselorDashboardPage.module.css';
+import orientacionIllustration from '../../assets/illustrations/orientacion.svg';
 
 function CounselorDashboardPage() {
   return (
@@ -9,6 +10,8 @@ function CounselorDashboardPage() {
         <h1>Acompañamiento educativo</h1>
         <p>Espacio para consultar información autorizada y acompañar procesos preventivos.</p>
       </header>
+
+      <div className={styles.heroVisual}><img src={orientacionIllustration} alt="" aria-hidden="true" /></div>
 
       <section className={styles.grid}>
         <article className={styles.card}><span><UsersRound /></span><strong>Estudiantes</strong><small>Seguimiento por grupo</small></article>
