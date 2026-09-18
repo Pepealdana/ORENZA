@@ -727,3 +727,6 @@
 
   white-space: nowrap;
 }
+.heroVisual { margin: 0 0 var(--space-4); overflow: hidden; border-radius: var(--radius-card); box-shadow: var(--shadow-1); }
+.heroVisual img { display: block; width: 100%; height: auto; max-height: 360px; object-fit: cover; }
+@media (max-width: 600px) { .heroVisual { margin-bottom: var(--space-3); } .heroVisual img { max-height: 240px; } }
