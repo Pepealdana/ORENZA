@@ -2,8 +2,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
 import studentData from '../../data/studentData';
-import inicioIllustration from '../../assets/illustrations/inicio.svg';
-import recorridoIllustration from '../../assets/illustrations/recorrido.svg';
+import IdentityVisual from '../../components/visual/IdentityVisual';
 
 import styles from './HomePage.module.css';
 
@@ -22,7 +21,7 @@ function HomePage() {
           ======================================== */}
 
       <header className={styles.header}>
-        <div className={styles.headerVisual}><img src={inicioIllustration} alt="" aria-hidden="true" /></div>
+        <IdentityVisual variant="inicio" />
 
         <p className={styles.eyebrow}>
           Bienvenido a ORENZA
@@ -156,7 +155,7 @@ function HomePage() {
           ======================================== */}
 
       <section className={styles.highlight}>
-        <div className={styles.highlightVisual}><img src={recorridoIllustration} alt="" aria-hidden="true" /></div>
+        <IdentityVisual variant="recorrido" size="compact" />
 
         <div>
 
