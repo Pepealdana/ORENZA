@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="600" viewBox="0 0 900 600">
+<rect width="900" height="600" rx="32" fill="#F5FAFC"/>
+<circle cx="110" cy="100" r="95" fill="#DFF4F3"/>
+<circle cx="790" cy="500" r="120" fill="#EAF2FB"/>
+<path d="M45 500 C130 380 175 430 240 500 M660 520 C735 390 805 420 875 510" fill="none" stroke="#8BC9A0" stroke-width="24" stroke-linecap="round"/>
+<circle cx="450" cy="255" r="78" fill="#00A5A4" opacity=".16"/>
+<circle cx="450" cy="225" r="52" fill="#F0C9A8"/>
+<path d="M382 218 C390 135 510 135 520 218 C493 190 413 190 382 218Z" fill="#24364B"/>
+<path d="M355 410 C365 315 535 315 545 410 L545 455 L355 455Z" fill="#00A5A4"/>
+<circle cx="425" cy="230" r="6" fill="#24364B"/><circle cx="475" cy="230" r="6" fill="#24364B"/>
+<path d="M430 260 Q450 274 470 260" fill="none" stroke="#8A5A44" stroke-width="5" stroke-linecap="round"/>
+<rect x="90" y="54" width="270" height="68" rx="20" fill="#FFFFFF" opacity=".9"/>
+<text x="225" y="97" text-anchor="middle" font-family="Arial,sans-serif" font-size="25" font-weight="700" fill="#1C2E4A">Tu historia también importa</text>
+<path d="M450 475 Q500 450 560 475" fill="none" stroke="#FFC107" stroke-width="10" stroke-linecap="round"/>
+</svg>
