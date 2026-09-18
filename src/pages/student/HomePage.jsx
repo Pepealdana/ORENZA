@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 
 import studentData from '../../data/studentData';
 import inicioIllustration from '../../assets/illustrations/inicio.svg';
@@ -7,10 +8,11 @@ import recorridoIllustration from '../../assets/illustrations/recorrido.svg';
 import styles from './HomePage.module.css';
 
 function HomePage() {
+  const { user } = useAuth();
   const {
-    name,
     today,
   } = studentData;
+  const name = user?.name || studentData.name;
 
   return (
     <section className={styles.page}>
