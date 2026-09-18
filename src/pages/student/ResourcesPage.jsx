@@ -2,6 +2,7 @@ import { BookOpen } from 'lucide-react';
 import resources from '../../data/resources';
 import ResourceCard from '../../components/dashboard/ResourceCard/ResourceCard';
 import styles from './ResourcesPage.module.css';
+import recursosIllustration from '../../assets/illustrations/recursos.svg';
 
 function ResourcesPage() {
   return (
@@ -14,6 +15,10 @@ function ResourcesPage() {
           <p className={styles.description}>Encuentra materiales que pueden ayudarte a seguir reflexionando y fortaleciendo tus habilidades socioemocionales.</p>
         </div>
       </header>
+
+      <div className={styles.heroVisual}>
+        <img src={recursosIllustration} alt="" aria-hidden="true" />
+      </div>
 
       <section className={styles.section}>
         <div className={styles.sectionHeader}>
