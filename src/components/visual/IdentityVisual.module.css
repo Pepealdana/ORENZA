@@ -1,17 +1,56 @@
 .visual {
   width: 100%;
-  aspect-ratio: 4 / 3;
+  min-height: 220px;
   flex: 0 0 auto;
   overflow: hidden;
-  background-color: #f5fafc;
-  background-repeat: no-repeat;
-  background-size: 300% 300%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8fbfc;
   border: 1px solid var(--color-gray-medium);
   border-radius: var(--radius-card);
   box-shadow: var(--shadow-1);
 }
-.hero { width: 100%; }
-.compact { width: 190px; flex: 0 0 190px; }
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 460px;
+  object-fit: contain;
+}
+
+.hero {
+  width: 100%;
+}
+
+.compact {
+  width: 190px;
+  min-height: 150px;
+  flex: 0 0 190px;
+}
+
+.compact .image {
+  max-height: 190px;
+}
+
 @media (max-width: 700px) {
-  .compact { width: 100%; flex-basis: auto; }
+  .visual {
+    min-height: 180px;
+    border-radius: 16px;
+  }
+
+  .image {
+    max-height: 360px;
+  }
+
+  .compact {
+    width: 100%;
+    min-height: 180px;
+    flex-basis: auto;
+  }
+
+  .compact .image {
+    max-height: 300px;
+  }
 }
