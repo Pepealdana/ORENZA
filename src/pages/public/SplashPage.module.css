@@ -44,3 +44,7 @@
 .description{font-size:.86rem}
 .features article{padding:14px}
 }
+
+.heroVisual{width:min(100%,760px);margin:var(--space-3) auto 0;overflow:hidden;border-radius:var(--radius-card);background:#F5FAFC;border:1px solid var(--color-gray-medium)}
+.heroVisual img{display:block;width:100%;height:auto;max-height:300px;object-fit:cover}
+@media(max-width:600px){.heroVisual img{max-height:190px}}
