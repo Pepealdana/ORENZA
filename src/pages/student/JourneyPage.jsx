@@ -245,6 +245,10 @@ function JourneyPage() {
 
       </header>
 
+      <div className={styles.heroVisual}>
+        <img src={recorridoIllustration} alt="" aria-hidden="true" />
+      </div>
+
 
       {/* ======================================
           RESUMEN
