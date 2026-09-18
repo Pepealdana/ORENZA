@@ -16,6 +16,8 @@ function ResourcesPage() {
         </div>
       </header>
 
+      <div className={styles.heroVisual}><img src={recursosIllustration} alt="" aria-hidden="true" /></div>
+
       <div className={styles.heroVisual}>
         <img src={recursosIllustration} alt="" aria-hidden="true" />
       </div>
