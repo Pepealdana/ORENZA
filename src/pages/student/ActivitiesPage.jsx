@@ -194,6 +194,8 @@ function ActivitiesPage() {
 
       </header>
 
+      <div className={styles.heroVisual}><img src={actividadesIllustration} alt="" aria-hidden="true" /></div>
+
       <div className={styles.heroVisual}>
         <img src={actividadesIllustration} alt="" aria-hidden="true" />
       </div>
