@@ -32,3 +32,12 @@
 .footer { margin-top: var(--space-3); padding-top: var(--space-2); border-top: 1px solid var(--color-gray-medium); text-align: center; color: var(--color-gray-dark); font-size: .82rem; }
 .footer .link { margin-left: 4px; }
 .note { margin-top: var(--space-2); padding: 12px 14px; color: var(--color-gray-dark); background: var(--color-primary-soft); border-radius: var(--radius-button); font-size: .76rem; line-height: 1.45; }
+
+.requirements { display: grid; gap: 5px; padding: 12px 14px; background: var(--color-gray-light); border-radius: var(--radius-button); color: var(--color-gray-dark); font-size: .74rem; }
+.requirements p { margin-bottom: 2px; font-weight: 600; color: var(--color-text-primary); }
+.requirements span { display: flex; align-items: center; gap: 6px; }
+.requirements svg { color: var(--color-gray-dark); }
+.requirements .valid { color: var(--color-success); }
+.requirements .valid svg { color: var(--color-success); }
+.checkbox { display: flex; align-items: flex-start; gap: 9px; color: var(--color-gray-dark); font-size: .76rem; line-height: 1.45; cursor: pointer; }
+.checkbox input { width: 18px; height: 18px; margin: 0; flex: 0 0 auto; accent-color: var(--color-primary); }
