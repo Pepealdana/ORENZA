@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { CircleUserRound, LogOut } from 'lucide-react';
+import { CircleUserRound, LogOut, Settings, UserRound } from 'lucide-react';
 
 import orenzaLogo from '../../../assets/orenza_hor.png';
 import { useAuth } from '../../../context/AuthContext';
@@ -26,12 +26,41 @@ function Header() {
         </Link>
 
         {isStudentArea && (
-          <Link to="/estudiante/perfil" className={styles.profileLink} aria-label="Ver mi perfil">
-            <span>Mi espacio</span>
-            <span className={styles.avatar} aria-hidden="true">
-              <CircleUserRound size={21} strokeWidth={1.8} />
-            </span>
-          </Link>
+          <details className={styles.profileMenu}>
+            <summary className={styles.profileLink} aria-label="Abrir menú de Mi espacio">
+              <span>Mi espacio</span>
+              <span className={styles.avatar} aria-hidden="true">
+                <CircleUserRound size={21} strokeWidth={1.8} />
+              </span>
+            </summary>
+
+            <div className={styles.menuPanel}>
+              <div className={styles.menuHeader}>
+                <span className={styles.menuAvatar} aria-hidden="true">
+                  <UserRound size={20} strokeWidth={1.8} />
+                </span>
+                <div>
+                  <strong>{user?.name || 'Mi espacio'}</strong>
+                  <span>{user?.email || 'Cuenta personal'}</span>
+                </div>
+              </div>
+
+              <Link to="/estudiante/perfil" className={styles.menuItem}>
+                <UserRound size={18} strokeWidth={1.8} />
+                <span>Mi perfil</span>
+              </Link>
+
+              <Link to="/estudiante/configuracion" className={styles.menuItem}>
+                <Settings size={18} strokeWidth={1.8} />
+                <span>Configuración</span>
+              </Link>
+
+              <button type="button" className={styles.logoutItem} onClick={logout}>
+                <LogOut size={18} strokeWidth={1.8} />
+                <span>Cerrar sesión</span>
+              </button>
+            </div>
+          </details>
         )}
 
         {!isStudentArea && user && (
