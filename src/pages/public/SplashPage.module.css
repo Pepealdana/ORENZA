@@ -1,280 +1,46 @@
-.page {
-  width: 100%;
-  min-width: 0;
-  min-height: 100vh;
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  overflow-x: hidden;
-  background:
-    radial-gradient(circle at 15% 10%, rgba(0,180,179,.12), transparent 28rem),
-    radial-gradient(circle at 85% 90%, rgba(31,78,121,.12), transparent 30rem),
-    var(--color-gray-light);
+.page{width:100%;max-width:100%;min-width:0;min-height:100vh;padding:24px;display:flex;flex-direction:column;justify-content:center;align-items:stretch;overflow-x:clip;background:radial-gradient(circle at 15% 10%,rgba(0,180,179,.12),transparent 28rem),radial-gradient(circle at 85% 90%,rgba(31,78,121,.12),transparent 30rem),var(--color-gray-light)}
+.hero{width:100%;max-width:760px;min-width:0;margin:0 auto;text-align:center}
+.brand{display:flex;justify-content:center;width:100%;min-width:0;margin-bottom:24px}
+.brand img{display:block;width:min(270px,100%);height:auto;max-height:76px;object-fit:contain}
+.eyebrow{max-width:100%;color:var(--color-accent);font-size:.74rem;font-weight:700;letter-spacing:.09em;line-height:1.4;text-transform:uppercase;overflow-wrap:anywhere}
+.hero h1{max-width:100%;margin-top:8px;font-size:clamp(2rem,6vw,3.5rem);line-height:1.15;overflow-wrap:anywhere;text-wrap:balance}
+.description{width:100%;max-width:620px;min-width:0;margin:16px auto 0;color:var(--color-gray-dark);font-size:1rem;line-height:1.65;overflow-wrap:anywhere;text-wrap:balance}
+.actions{display:flex;justify-content:center;width:100%;min-width:0;gap:12px;margin-top:28px}
+.primary,.secondary{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 20px;border-radius:var(--radius-button);font-size:.88rem;font-weight:700}
+.primary{color:var(--color-white);background:var(--color-primary);box-shadow:var(--shadow-1)}
+.primary:hover{background:var(--color-primary-dark)}
+.secondary{color:var(--color-primary);background:var(--color-white);border:1px solid var(--color-gray-medium)}
+.secondary:hover{background:var(--color-primary-soft)}
+.about{display:inline-flex;max-width:100%;margin-top:18px;color:var(--color-primary);font-size:.82rem;font-weight:600}
+.about:hover{text-decoration:underline}
+.features{width:100%;max-width:960px;min-width:0;margin:56px auto 0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.features article{width:100%;min-width:0;padding:20px;background:rgba(255,255,255,.82);border:1px solid var(--color-gray-medium);border-radius:var(--radius-card);box-shadow:var(--shadow-1)}
+.features span{display:grid;place-items:center;width:42px;height:42px;margin-bottom:12px;color:var(--color-primary);background:var(--color-primary-soft);border-radius:12px}
+.features strong{display:block;color:var(--color-text-primary);font-family:var(--font-heading);font-size:.92rem;line-height:1.3;overflow-wrap:anywhere}
+.features p{margin-top:5px;color:var(--color-gray-dark);font-size:.78rem;line-height:1.45;overflow-wrap:anywhere}
+@media(max-width:700px){
+.page{width:100%;max-width:100%;min-height:100svh;padding:24px 16px 28px;justify-content:flex-start;overflow-x:clip}
+.hero,.features{width:100%;max-width:none}
+.hero{flex:0 0 auto;margin-top:clamp(20px,7vh,52px)}
+.brand{margin-bottom:20px}
+.brand img{width:min(230px,78vw);max-height:64px}
+.eyebrow{font-size:.68rem;letter-spacing:.065em}
+.hero h1{margin-top:8px;font-size:clamp(1.8rem,8.7vw,2.35rem);line-height:1.13}
+.description{max-width:34rem;margin-top:14px;font-size:.92rem;line-height:1.55}
+.actions{flex-direction:column;gap:12px;margin-top:24px}
+.primary,.secondary{width:100%}
+.about{margin-top:16px}
+.features{grid-template-columns:1fr;gap:12px;margin-top:32px}
+.features article{width:100%;display:grid;grid-template-columns:42px minmax(0,1fr);column-gap:12px;align-items:start;padding:16px}
+.features span{grid-row:span 2;margin:0}
+.features strong{font-size:.88rem}
+.features p{font-size:.76rem}
 }
-
-.hero {
-  width: 100%;
-  max-width: 760px;
-  min-width: 0;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.brand {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  min-width: 0;
-  margin-bottom: 24px;
-}
-
-.brand img {
-  display: block;
-  width: min(270px, 100%);
-  height: auto;
-  max-height: 76px;
-  object-fit: contain;
-}
-
-.eyebrow {
-  max-width: 100%;
-  color: var(--color-accent);
-  font-size: .74rem;
-  font-weight: 700;
-  letter-spacing: .09em;
-  line-height: 1.4;
-  text-transform: uppercase;
-  overflow-wrap: anywhere;
-}
-
-.hero h1 {
-  max-width: 100%;
-  margin-top: 8px;
-  font-size: clamp(2rem, 6vw, 3.5rem);
-  line-height: 1.15;
-  overflow-wrap: anywhere;
-  text-wrap: balance;
-}
-
-.description {
-  width: 100%;
-  max-width: 620px;
-  min-width: 0;
-  margin: 16px auto 0;
-  color: var(--color-gray-dark);
-  font-size: 1rem;
-  line-height: 1.65;
-  overflow-wrap: anywhere;
-  text-wrap: balance;
-}
-
-.actions {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  min-width: 0;
-  gap: 12px;
-  margin-top: 28px;
-}
-
-.primary,
-.secondary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  min-height: 48px;
-  padding: 0 20px;
-  border-radius: var(--radius-button);
-  font-size: .88rem;
-  font-weight: 700;
-}
-
-.primary {
-  color: var(--color-white);
-  background: var(--color-primary);
-  box-shadow: var(--shadow-1);
-}
-
-.primary:hover {
-  background: var(--color-primary-dark);
-}
-
-.secondary {
-  color: var(--color-primary);
-  background: var(--color-white);
-  border: 1px solid var(--color-gray-medium);
-}
-
-.secondary:hover {
-  background: var(--color-primary-soft);
-}
-
-.about {
-  display: inline-flex;
-  max-width: 100%;
-  margin-top: 18px;
-  color: var(--color-primary);
-  font-size: .82rem;
-  font-weight: 600;
-}
-
-.about:hover {
-  text-decoration: underline;
-}
-
-.features {
-  width: 100%;
-  max-width: 960px;
-  min-width: 0;
-  margin: 56px auto 0;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
-}
-
-.features article {
-  min-width: 0;
-  padding: 20px;
-  background: rgba(255,255,255,.82);
-  border: 1px solid var(--color-gray-medium);
-  border-radius: var(--radius-card);
-  box-shadow: var(--shadow-1);
-}
-
-.features span {
-  display: grid;
-  place-items: center;
-  width: 42px;
-  height: 42px;
-  margin-bottom: 12px;
-  color: var(--color-primary);
-  background: var(--color-primary-soft);
-  border-radius: 12px;
-}
-
-.features strong {
-  display: block;
-  color: var(--color-text-primary);
-  font-family: var(--font-heading);
-  font-size: .92rem;
-  line-height: 1.3;
-  overflow-wrap: anywhere;
-}
-
-.features p {
-  margin-top: 5px;
-  color: var(--color-gray-dark);
-  font-size: .78rem;
-  line-height: 1.45;
-  overflow-wrap: anywhere;
-}
-
-@media (max-width: 700px) {
-  .page {
-    min-height: 100svh;
-    padding: 24px 16px 28px;
-    justify-content: flex-start;
-  }
-
-  .hero {
-    flex: 0 0 auto;
-    margin-top: clamp(20px, 7vh, 52px);
-  }
-
-  .brand {
-    margin-bottom: 20px;
-  }
-
-  .brand img {
-    width: min(230px, 78vw);
-    max-height: 64px;
-  }
-
-  .eyebrow {
-    font-size: .68rem;
-    letter-spacing: .065em;
-  }
-
-  .hero h1 {
-    margin-top: 8px;
-    font-size: clamp(1.8rem, 8.7vw, 2.35rem);
-    line-height: 1.13;
-  }
-
-  .description {
-    max-width: 34rem;
-    margin-top: 14px;
-    font-size: .92rem;
-    line-height: 1.55;
-  }
-
-  .actions {
-    flex-direction: column;
-    gap: 12px;
-    margin-top: 24px;
-  }
-
-  .primary,
-  .secondary {
-    width: 100%;
-  }
-
-  .about {
-    margin-top: 16px;
-  }
-
-  .features {
-    grid-template-columns: 1fr;
-    gap: 12px;
-    margin-top: 32px;
-  }
-
-  .features article {
-    display: grid;
-    grid-template-columns: 42px minmax(0, 1fr);
-    column-gap: 12px;
-    align-items: start;
-    padding: 16px;
-  }
-
-  .features span {
-    grid-row: span 2;
-    margin: 0;
-  }
-
-  .features strong {
-    font-size: .88rem;
-  }
-
-  .features p {
-    font-size: .76rem;
-  }
-}
-
-@media (max-width: 380px) {
-  .page {
-    padding-inline: 12px;
-  }
-
-  .hero {
-    margin-top: 18px;
-  }
-
-  .brand img {
-    width: min(210px, 76vw);
-  }
-
-  .hero h1 {
-    font-size: 1.82rem;
-  }
-
-  .description {
-    font-size: .86rem;
-  }
-
-  .features article {
-    padding: 14px;
-  }
+@media(max-width:380px){
+.page{padding-inline:12px}
+.hero{margin-top:18px}
+.brand img{width:min(210px,76vw)}
+.hero h1{font-size:1.82rem}
+.description{font-size:.86rem}
+.features article{padding:14px}
 }
