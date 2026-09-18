@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom';
 import ProgressBar from '../../ui/ProgressBar/ProgressBar';
 import styles from './CompetencyCard.module.css';
 
-function CompetencyCard({ name, progress, completedCount = 0, totalActivities = 0, to }) {
+function CompetencyCard({ name, progress, completedCount = 0, totalActivities = 0, to, icon }) {
   return (
     <article className={styles.card}>
-      <div className={styles.icon}><Target size={20} strokeWidth={1.8} aria-hidden="true" /></div>
+      <div className={styles.icon}>{icon ? <img src={icon} alt="" aria-hidden="true" /> : <Target size={20} strokeWidth={1.8} aria-hidden="true" />}</div>
       <div className={styles.header}>
         <h3>{name}</h3>
         <span className={styles.percentage}>{progress}%</span>
