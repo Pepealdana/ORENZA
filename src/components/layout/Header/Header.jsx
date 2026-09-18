@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { CircleUserRound } from 'lucide-react';
 
-import orenzaLogo from '../../../assets/orenza_logo.png';
+import orenzaLogo from '../../../assets/orenza_hor.png';
 import styles from './Header.module.css';
 
 function Header() {
