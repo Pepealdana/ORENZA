@@ -1,14 +1,16 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight, HeartHandshake, Sparkles, UserRound } from 'lucide-react';
 
-import orenzaLogo from '../../assets/orenza_logo.png';
+import orenzaLogo from '../../assets/orenza_hor.png';
 import styles from './SplashPage.module.css';
 
 function SplashPage() {
   return (
     <main className={styles.page}>
       <section className={styles.hero}>
-        <div className={styles.brand}><img src={orenzaLogo} alt="ORENZA" /></div>
+        <div className={styles.brand}>
+          <img src={orenzaLogo} alt="ORENZA" />
+        </div>
         <p className={styles.eyebrow}>Acompañamiento socioemocional</p>
         <h1>Conócete. Explora. Crece.</h1>
         <p className={styles.description}>
