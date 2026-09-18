@@ -5,7 +5,7 @@ import studentData from '../../data/studentData';
 import { useAuth } from '../../context/AuthContext';
 import { getCompletedActivities } from '../../utils/activityStorage';
 import styles from './ProfilePage.module.css';
-import perfilIllustration from '../../assets/illustrations/perfil.svg';
+import IdentityVisual from '../../components/visual/IdentityVisual';
 
 function ProfilePage() {
   const { user } = useAuth();
@@ -20,11 +20,7 @@ function ProfilePage() {
         <p>Consulta tus datos básicos y reconoce el camino que has construido en ORENZA.</p>
       </header>
 
-      <div className={styles.heroVisual}><img src={perfilIllustration} alt="" aria-hidden="true" /></div>
-
-      <div className={styles.heroVisual}>
-        <img src={perfilIllustration} alt="" aria-hidden="true" />
-      </div>
+      <IdentityVisual variant="perfil" />
 
       <section className={styles.profileCard} aria-labelledby="profile-name">
         <div className={styles.avatar} aria-hidden="true"><UserRound size={34} strokeWidth={1.7} /></div>
