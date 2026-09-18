@@ -1,18 +1,26 @@
 :root {
-  /* ================================
-     ORENZA — COLORES INSTITUCIONALES
-     ================================ */
+  /* ========================================
+     ORENZA — DESIGN TOKENS
+     Sistema visual basado en 8 px
+     ======================================== */
 
+  /* Colores institucionales */
   --color-primary: #1F4E79;
+  --color-primary-dark: #173B5D;
+  --color-primary-soft: #EAF2F8;
   --color-secondary: #4CAF50;
+  --color-secondary-soft: #EAF6EC;
   --color-accent: #00B4B3;
+  --color-accent-soft: #E6F7F7;
   --color-gold: #FFC107;
+  --color-gold-soft: #FFF7D6;
 
   --color-white: #FFFFFF;
   --color-gray-light: #F5F7FA;
   --color-gray-medium: #D6DCE5;
   --color-gray-dark: #5F6B7A;
   --color-text-primary: #1C2E4A;
+  --color-text-secondary: #4B5A6A;
 
   /* Estados */
   --color-success: #4CAF50;
@@ -20,20 +28,11 @@
   --color-warning: #FFC107;
   --color-error: #E53935;
 
-
-  /* ================================
-     ORENZA — TIPOGRAFÍA
-     ================================ */
-
+  /* Tipografía */
   --font-heading: "Poppins", sans-serif;
   --font-body: "Inter", sans-serif;
 
-
-  /* ================================
-     ORENZA — ESPACIADO
-     Sistema base de 8 px
-     ================================ */
-
+  /* Espaciado — base 8 px */
   --space-1: 8px;
   --space-2: 16px;
   --space-3: 24px;
@@ -42,42 +41,26 @@
   --space-6: 48px;
   --space-7: 64px;
 
-
-  /* ================================
-     ORENZA — BORDER RADIUS
-     ================================ */
-
+  /* Radios */
   --radius-button: 12px;
   --radius-input: 12px;
   --radius-card: 20px;
   --radius-modal: 24px;
   --radius-chip: 999px;
 
-
-  /* ================================
-     ORENZA — SOMBRAS
-     ================================ */
-
+  /* Sombras */
   --shadow-1: 0 2px 8px rgba(28, 46, 74, 0.08);
   --shadow-2: 0 8px 24px rgba(28, 46, 74, 0.12);
   --shadow-3: 0 12px 32px rgba(28, 46, 74, 0.16);
 
-
-  /* ================================
-     ORENZA — TRANSICIONES
-     ================================ */
-
+  /* Transiciones */
   --transition-fast: 150ms ease;
   --transition-normal: 250ms ease;
   --transition-slow: 300ms ease;
 
-
-  /* ================================
-     ORENZA — LAYOUT
-     ================================ */
-
+  /* Layout */
   --container-max-width: 1440px;
-
   --header-height-mobile: 64px;
   --header-height-desktop: 72px;
+  --sidebar-width: 248px;
 }
