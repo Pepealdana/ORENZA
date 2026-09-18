@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, HeartHandshake, Sparkles, UserRound } from 'lucide-react';
 
 import orenzaLogo from '../../assets/orenza_hor.png';
+import inicioIllustration from '../../assets/illustrations/inicio.svg';
 import styles from './SplashPage.module.css';
 
 function SplashPage() {
@@ -11,6 +12,7 @@ function SplashPage() {
         <div className={styles.brand}>
           <img src={orenzaLogo} alt="ORENZA" />
         </div>
+        <div className={styles.heroVisual}><img src={inicioIllustration} alt="" aria-hidden="true" /></div>
         <p className={styles.eyebrow}>Acompañamiento socioemocional</p>
         <h1>Conócete. Explora. Crece.</h1>
         <p className={styles.description}>
