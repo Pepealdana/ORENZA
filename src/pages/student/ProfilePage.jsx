@@ -20,6 +20,8 @@ function ProfilePage() {
         <p>Consulta tus datos básicos y reconoce el camino que has construido en ORENZA.</p>
       </header>
 
+      <div className={styles.heroVisual}><img src={perfilIllustration} alt="" aria-hidden="true" /></div>
+
       <div className={styles.heroVisual}>
         <img src={perfilIllustration} alt="" aria-hidden="true" />
       </div>
