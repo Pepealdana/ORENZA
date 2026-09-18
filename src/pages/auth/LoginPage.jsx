@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AlertCircle, Eye, EyeOff, LockKeyhole, Mail } from 'lucide-react';
 import orenzaLogo from '../../assets/orenza_logo.png';
+import loginIllustration from '../../assets/illustrations/login-illustration.svg';
 import Button from '../../components/ui/Button/Button';
 import { useAuth } from '../../context/AuthContext';
 import styles from './AuthPage.module.css';
@@ -30,9 +31,13 @@ function LoginPage() {
 
     try {
       const user = await login({ email: email.trim(), password });
-      const destination = location.state?.from?.pathname || (
-        user.role === 'student' ? '/estudiante/inicio' : '/'
-      );
+      const destinationByRole = {
+        student: '/estudiante/inicio',
+        counselor: '/orientador',
+        admin: '/administrador',
+        teacher: '/',
+      };
+      const destination = location.state?.from?.pathname || destinationByRole[user.role] || '/';
       navigate(destination, { replace: true });
     } catch (requestError) {
       setError(requestError.message || 'No fue posible iniciar sesión.');
@@ -45,6 +50,9 @@ function LoginPage() {
     <main className={styles.page}>
       <section className={styles.card} aria-labelledby="login-title">
         <div className={styles.brand}><img src={orenzaLogo} alt="ORENZA" /></div>
+        <div className={styles.illustration}>
+          <img src={loginIllustration} alt="" aria-hidden="true" />
+        </div>
         <header className={styles.header}>
           <p className={styles.eyebrow}>Tu espacio personal</p>
           <h1 id="login-title" className={styles.title}>Iniciar sesión</h1>

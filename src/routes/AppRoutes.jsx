@@ -68,14 +68,22 @@ function AppRoutes() {
 
         <Route
           path="/orientador"
-          element={<CounselorLayout />}
+          element={
+            <ProtectedRoute roles={['counselor']}>
+              <CounselorLayout />
+            </ProtectedRoute>
+          }
         >
           <Route index element={<CounselorDashboardPage />} />
         </Route>
 
         <Route
           path="/administrador"
-          element={<AdminLayout />}
+          element={
+            <ProtectedRoute roles={['admin']}>
+              <AdminLayout />
+            </ProtectedRoute>
+          }
         >
           <Route index element={<AdminDashboardPage />} />
         </Route>

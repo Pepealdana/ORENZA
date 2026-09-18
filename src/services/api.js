@@ -49,6 +49,16 @@ export const api = {
     method: 'POST',
     body: JSON.stringify(payload),
   }),
+  getAdminStats: () => request('/admin/stats'),
+  getAdminUsers: () => request('/admin/users'),
+  createAdminUser: (payload) => request('/admin/users', {
+    method: 'POST',
+    body: JSON.stringify(payload),
+  }),
+  updateAdminUser: (id, payload) => request(`/admin/users/${id}`, {
+    method: 'PATCH',
+    body: JSON.stringify(payload),
+  }),
 };
 
 export { API_URL };
