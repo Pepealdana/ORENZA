@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AlertCircle, Check, Eye, EyeOff, LockKeyhole, Mail, UserRound } from 'lucide-react';
 import orenzaLogo from '../../assets/orenza_logo.png';
+import registerIllustration from '../../assets/illustrations/register-illustration.svg';
 import Button from '../../components/ui/Button/Button';
 import { useAuth } from '../../context/AuthContext';
 import styles from './AuthPage.module.css';
@@ -53,6 +54,7 @@ function RegisterPage() {
     <main className={styles.page}>
       <section className={styles.card} aria-labelledby="register-title">
         <div className={styles.brand}><img src={orenzaLogo} alt="ORENZA" /></div>
+        <div className={styles.illustration}><img src={registerIllustration} alt="" aria-hidden="true" /></div>
         <header className={styles.header}>
           <p className={styles.eyebrow}>Comienza tu recorrido</p>
           <h1 id="register-title" className={styles.title}>Crear cuenta</h1>
