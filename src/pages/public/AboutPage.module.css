@@ -1,0 +1,20 @@
+.page { min-height: 100vh; padding: 24px 16px 48px; background: var(--color-gray-light); }
+.header, .intro, .grid, .footer { width: min(100%, 980px); margin-inline: auto; }
+.header { display: flex; align-items: center; gap: 18px; padding-bottom: 24px; border-bottom: 1px solid var(--color-gray-medium); }
+.header img { height: 42px; width: auto; margin-left: auto; }
+.header p { color: var(--color-gray-dark); font-size: .78rem; }
+.back { display: inline-flex; align-items: center; gap: 6px; color: var(--color-primary); font-size: .82rem; font-weight: 600; }
+.back:hover { text-decoration: underline; }
+.intro { padding: 56px 0 32px; }
+.eyebrow { color: var(--color-accent); font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.intro h1 { margin-top: 6px; font-size: clamp(1.9rem, 5vw, 2.8rem); }
+.intro > p:last-child { max-width: 700px; margin-top: 12px; color: var(--color-gray-dark); line-height: 1.65; }
+.grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.grid article { padding: 24px; background: var(--color-white); border: 1px solid var(--color-gray-medium); border-radius: var(--radius-card); box-shadow: var(--shadow-1); }
+.grid span { display: grid; place-items: center; width: 44px; height: 44px; color: var(--color-primary); background: var(--color-primary-soft); border-radius: 12px; }
+.grid h2 { margin-top: 16px; color: var(--color-text-primary); font-size: 1.05rem; }
+.grid p { margin-top: 7px; color: var(--color-gray-dark); font-size: .84rem; line-height: 1.55; }
+.footer { margin-top: 24px; }
+.cta { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 20px; color: var(--color-white); background: var(--color-primary); border-radius: var(--radius-button); font-size: .86rem; font-weight: 700; }
+.cta:hover { background: var(--color-primary-dark); }
+@media (max-width: 650px) { .header { align-items: flex-start; flex-wrap: wrap; } .header img { order: -1; margin-left: 0; } .header p { width: 100%; } .intro { padding-top: 36px; } .grid { grid-template-columns: 1fr; } }
