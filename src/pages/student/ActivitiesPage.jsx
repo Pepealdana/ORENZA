@@ -17,7 +17,7 @@ import {
 } from '../../utils/activityStorage';
 
 import styles from './ActivitiesPage.module.css';
-import actividadesIllustration from '../../assets/illustrations/actividades.svg';
+import IdentityVisual from '../../components/visual/IdentityVisual';
 
 
 /*
@@ -194,11 +194,7 @@ function ActivitiesPage() {
 
       </header>
 
-      <div className={styles.heroVisual}><img src={actividadesIllustration} alt="" aria-hidden="true" /></div>
-
-      <div className={styles.heroVisual}>
-        <img src={actividadesIllustration} alt="" aria-hidden="true" />
-      </div>
+      <IdentityVisual variant="actividades" />
 
 
       {/* ======================================
