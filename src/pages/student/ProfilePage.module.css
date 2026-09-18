@@ -23,3 +23,6 @@
 .continueCard:hover { transform: translateY(-2px); background: var(--color-primary-dark); } .continueCard h2 { margin-top: 4px; color: var(--color-white); font-size: 1.1rem; } .continueCard p { margin-top: 5px; color: rgba(255,255,255,.82); font-size: .82rem; }
 @media (max-width: 700px) { .stats { grid-template-columns: 1fr; } .stat { min-height: 0; } .profileCard { align-items: flex-start; } }
 @media (max-width: 480px) { .profileCard { padding: var(--space-2); } .avatar { width: 60px; height: 60px; flex-basis: 60px; } .notice { padding: var(--space-2); } .noticeIcon { width: 36px; height: 36px; flex-basis: 36px; } }
+.heroVisual { margin: 0 0 var(--space-4); overflow: hidden; border-radius: var(--radius-card); box-shadow: var(--shadow-1); }
+.heroVisual img { display: block; width: 100%; height: auto; max-height: 300px; object-fit: cover; }
+@media (max-width: 480px) { .heroVisual { margin-bottom: var(--space-3); } .heroVisual img { max-height: 220px; } }
