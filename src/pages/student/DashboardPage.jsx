@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 import studentData from '../../data/studentData';
@@ -42,12 +43,14 @@ import dashboardWelcome from '../../assets/illustrations/dashboard-welcome.svg';
 
 function DashboardPage() {
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   const {
-    name,
     today,
     competencies,
   } = studentData;
+
+  const name = user?.name || studentData.name;
 
 
   /*
