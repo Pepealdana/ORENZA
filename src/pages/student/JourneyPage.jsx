@@ -24,6 +24,8 @@ import {
 } from '../../utils/streakUtils';
 
 import styles from './JourneyPage.module.css';
+import recorridoIllustration from '../../assets/illustrations/recorrido.svg';
+import bienestarIcon from '../../assets/illustrations/bienestar.svg';
 
 
 /*
