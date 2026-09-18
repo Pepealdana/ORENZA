@@ -38,7 +38,7 @@ import {
 } from '../../utils/competencyUtils';
 
 import styles from './DashboardPage.module.css';
-import dashboardWelcome from '../../assets/illustrations/dashboard-welcome.svg';
+import IdentityVisual from '../../components/visual/IdentityVisual';
 
 
 function DashboardPage() {
@@ -270,7 +270,7 @@ function DashboardPage() {
           ======================================== */}
 
       <header className={styles.header}>
-        <div className={styles.welcomeVisual}><img src={dashboardWelcome} alt="" aria-hidden="true" /></div>
+        <IdentityVisual variant="bienvenida" />
 
         <p className={styles.greeting}>
           Hola, {name}
