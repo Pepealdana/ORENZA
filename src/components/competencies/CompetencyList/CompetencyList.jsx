@@ -4,6 +4,7 @@ import styles from './CompetencyList.module.css';
 
 function CompetencyList({
   competencies,
+  iconMap = {},
 }) {
   return (
     <div className={styles.list}>
@@ -13,6 +14,8 @@ function CompetencyList({
 
           <CompetencyCard
             key={competency.id}
+
+            icon={iconMap[competency.id]}
 
             name={
               competency.name
