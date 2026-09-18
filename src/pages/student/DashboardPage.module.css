@@ -13,3 +13,7 @@
 @media (min-width:768px) { .grid { grid-template-columns: repeat(2,minmax(0,1fr)); } .list { grid-template-columns: repeat(2,minmax(0,1fr)); } .header { padding: var(--space-5); } }
 @media (min-width:1024px) { .section { margin-top: var(--space-5); } }
 @media (max-width:480px) { .header { padding: var(--space-3); } .description { font-size: .82rem; } }
+
+
+.welcomeVisual { width:100%; margin-bottom:var(--space-3); overflow:hidden; border-radius:var(--radius-card); background:var(--color-primary-soft); }
+.welcomeVisual img { display:block; width:100%; height:auto; max-height:240px; object-fit:cover; }
