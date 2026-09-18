@@ -10,6 +10,8 @@ import StudentLayout from '../layouts/StudentLayout';
 import CounselorLayout from '../layouts/CounselorLayout';
 import AdminLayout from '../layouts/AdminLayout';
 
+import ProtectedRoute from './ProtectedRoute';
+
 import SplashPage from '../pages/public/SplashPage';
 import AboutPage from '../pages/public/AboutPage';
 
@@ -31,207 +33,57 @@ import CounselorDashboardPage from '../pages/counselor/CounselorDashboardPage';
 import AdminDashboardPage from '../pages/admin/AdminDashboardPage';
 import ActivityPage from '../pages/student/ActivityPage';
 
-
 function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>
-
-        {/* ========================================
-            ZONA PÚBLICA
-            ======================================== */}
-
         <Route element={<PublicLayout />}>
-
-          <Route
-            path="/"
-            element={<SplashPage />}
-          />
-
-          <Route
-            path="/conocer-orenza"
-            element={<AboutPage />}
-          />
-
+          <Route path="/" element={<SplashPage />} />
+          <Route path="/conocer-orenza" element={<AboutPage />} />
         </Route>
 
-
-        {/* ========================================
-            AUTENTICACIÓN
-            ======================================== */}
-
-        <Route
-          path="/login"
-          element={<LoginPage />}
-        />
-
-        <Route
-          path="/registro"
-          element={<RegisterPage />}
-        />
-
-        <Route
-          path="/recuperar-contrasena"
-          element={<ForgotPasswordPage />}
-        />
-
-
-        {/* ========================================
-            ESTUDIANTE
-            ======================================== */}
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/registro" element={<RegisterPage />} />
+        <Route path="/recuperar-contrasena" element={<ForgotPasswordPage />} />
 
         <Route
           path="/estudiante"
-          element={<StudentLayout />}
+          element={
+            <ProtectedRoute roles={['student']}>
+              <StudentLayout />
+            </ProtectedRoute>
+          }
         >
-
-          {/* ======================================
-              DASHBOARD
-              ====================================== */}
-
-          <Route
-            path="dashboard"
-            element={<DashboardPage />}
-          />
-
-
-          {/* ======================================
-              INICIO
-              ====================================== */}
-
-          <Route
-            path="inicio"
-            element={<HomePage />}
-          />
-
-
-          {/* ======================================
-              MI RECORRIDO
-              ====================================== */}
-
-          <Route
-            path="recorrido"
-            element={<JourneyPage />}
-          />
-
-
-          {/* ======================================
-              COMPETENCIAS
-              ====================================== */}
-
-          <Route
-            path="competencias"
-            element={<CompetenciesPage />}
-          />
-
-
-          {/* Detalle de una competencia */}
-
-          <Route
-            path="competencias/:competencyId"
-            element={<CompetencyDetailPage />}
-          />
-
-
-          {/* ======================================
-              ACTIVIDADES
-              ====================================== */}
-
-          <Route
-            path="actividades"
-            element={<ActivitiesPage />}
-          />
-
-          <Route
-            path="actividades/:activityId"
-            element={<ActivityPage />}
-          />
-
-
-          {/* ======================================
-              RECURSOS
-              ====================================== */}
-
-          <Route
-            path="recursos"
-            element={<ResourcesPage />}
-          />
-
-
-          {/* ======================================
-              PERFIL
-              ====================================== */}
-
-          <Route
-            path="perfil"
-            element={<ProfilePage />}
-          />
-
-
-          {/* ======================================
-              CONFIGURACIÓN
-              ====================================== */}
-
-          <Route
-            path="configuracion"
-            element={<SettingsPage />}
-          />
-
+          <Route path="dashboard" element={<DashboardPage />} />
+          <Route path="inicio" element={<HomePage />} />
+          <Route path="recorrido" element={<JourneyPage />} />
+          <Route path="competencias" element={<CompetenciesPage />} />
+          <Route path="competencias/:competencyId" element={<CompetencyDetailPage />} />
+          <Route path="actividades" element={<ActivitiesPage />} />
+          <Route path="actividades/:activityId" element={<ActivityPage />} />
+          <Route path="recursos" element={<ResourcesPage />} />
+          <Route path="perfil" element={<ProfilePage />} />
+          <Route path="configuracion" element={<SettingsPage />} />
         </Route>
-
-
-        {/* ========================================
-            ORIENTADOR
-            ======================================== */}
 
         <Route
           path="/orientador"
           element={<CounselorLayout />}
         >
-
-          <Route
-            index
-            element={<CounselorDashboardPage />}
-          />
-
+          <Route index element={<CounselorDashboardPage />} />
         </Route>
-
-
-        {/* ========================================
-            ADMINISTRADOR
-            ======================================== */}
 
         <Route
           path="/administrador"
           element={<AdminLayout />}
         >
-
-          <Route
-            index
-            element={<AdminDashboardPage />}
-          />
-
+          <Route index element={<AdminDashboardPage />} />
         </Route>
 
-
-        {/* ========================================
-            RUTA DESCONOCIDA
-            ======================================== */}
-
-        <Route
-          path="*"
-          element={
-            <Navigate
-              to="/"
-              replace
-            />
-          }
-        />
-
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   );
 }
-
 
 export default AppRoutes;
