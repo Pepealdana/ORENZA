@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Accessibility, Bell, Check, ChevronRight, LockKeyhole, Palette, ShieldCheck } from 'lucide-react';
 
 import styles from './SettingsPage.module.css';
+import configuracionIllustration from '../../assets/illustrations/configuracion.svg';
 
 const initialOptions = { notifications: true, reducedMotion: false };
 
@@ -18,6 +19,8 @@ function SettingsPage() {
         <h1>Configuración</h1>
         <p>Administra tus preferencias y opciones personales de ORENZA.</p>
       </header>
+
+      <div className={styles.heroVisual}><img src={configuracionIllustration} alt="" aria-hidden="true" /></div>
 
       <section className={styles.group} aria-labelledby="preferences-title">
         <div className={styles.groupHeading}><p>Preferencias</p><h2 id="preferences-title">Tu experiencia</h2></div>
