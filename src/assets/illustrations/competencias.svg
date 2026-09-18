@@ -1,16 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="900" height="600" viewBox="0 0 900 600">
-<rect width="900" height="600" rx="32" fill="#F5FAFC"/>
-<circle cx="110" cy="100" r="95" fill="#DFF4F3"/>
-<circle cx="790" cy="500" r="120" fill="#EAF2FB"/>
-<path d="M45 500 C130 380 175 430 240 500 M660 520 C735 390 805 420 875 510" fill="none" stroke="#8BC9A0" stroke-width="24" stroke-linecap="round"/>
-<circle cx="450" cy="255" r="78" fill="#4CAF50" opacity=".16"/>
-<circle cx="450" cy="225" r="52" fill="#F0C9A8"/>
-<path d="M382 218 C390 135 510 135 520 218 C493 190 413 190 382 218Z" fill="#24364B"/>
-<path d="M355 410 C365 315 535 315 545 410 L545 455 L355 455Z" fill="#4CAF50"/>
-<circle cx="425" cy="230" r="6" fill="#24364B"/><circle cx="475" cy="230" r="6" fill="#24364B"/>
-<path d="M430 260 Q450 274 470 260" fill="none" stroke="#8A5A44" stroke-width="5" stroke-linecap="round"/>
-<rect x="90" y="54" width="270" height="68" rx="20" fill="#FFFFFF" opacity=".9"/>
-<text x="225" y="97" text-anchor="middle" font-family="Arial,sans-serif" font-size="25" font-weight="700" fill="#1C2E4A">Descubre tus fortalezas</text>
-<path d="M450 475 Q500 450 560 475" fill="none" stroke="#FFC107" stroke-width="10" stroke-linecap="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520" role="img" aria-labelledby="title desc">
+  <title id="title">Mapa de competencias personales</title>
+  <desc id="desc">Ilustración de una brújula central conectada con distintas áreas de crecimiento personal.</desc>
+
+  <rect width="1200" height="520" rx="32" fill="#F5FAFC"/>
+  <circle cx="120" cy="105" r="105" fill="#DFF4F3"/>
+  <circle cx="1080" cy="405" r="135" fill="#EAF2FB"/>
+  <circle cx="1030" cy="85" r="55" fill="#FFF6D9"/>
+  <circle cx="190" cy="420" r="58" fill="#E8F4EA"/>
+
+  <path d="M70 405 C170 335 245 355 325 410"
+        fill="none" stroke="#8BC9A0" stroke-width="20" stroke-linecap="round"/>
+  <path d="M875 410 C950 350 1030 350 1135 410"
+        fill="none" stroke="#8BC9A0" stroke-width="20" stroke-linecap="round"/>
+
+  <rect x="70" y="62" width="330" height="68" rx="22" fill="#FFFFFF" opacity=".96"/>
+  <text x="235" y="105" text-anchor="middle" font-family="Poppins,Arial,sans-serif" font-size="25" font-weight="700" fill="#1C2E4A">Descubre tus fortalezas</text>
+
+  <g stroke="#D4E5EC" stroke-width="5" stroke-linecap="round">
+    <path d="M600 260 L395 145"/>
+    <path d="M600 260 L805 145"/>
+    <path d="M600 260 L395 375"/>
+    <path d="M600 260 L805 375"/>
+  </g>
+
+  <g>
+    <circle cx="395" cy="145" r="54" fill="#EAF7F6"/>
+    <circle cx="805" cy="145" r="54" fill="#EAF2FB"/>
+    <circle cx="395" cy="375" r="54" fill="#E8F4EA"/>
+    <circle cx="805" cy="375" r="54" fill="#FFF6D9"/>
+
+    <circle cx="395" cy="145" r="27" fill="#00B4B3" opacity=".16"/>
+    <circle cx="805" cy="145" r="27" fill="#1F4E79" opacity=".12"/>
+    <circle cx="395" cy="375" r="27" fill="#4CAF50" opacity=".16"/>
+    <circle cx="805" cy="375" r="27" fill="#FFC107" opacity=".2"/>
+
+    <path d="M383 145 Q395 130 407 145 Q395 160 383 145Z" fill="#00B4B3"/>
+    <circle cx="805" cy="145" r="11" fill="none" stroke="#1F4E79" stroke-width="5"/>
+    <circle cx="805" cy="145" r="4" fill="#1F4E79"/>
+    <path d="M382 380 Q395 352 408 380 Q395 391 382 380Z" fill="#4CAF50"/>
+    <path d="M793 375 L805 363 L817 375 L805 387Z" fill="#D99A00"/>
+  </g>
+
+  <g font-family="Poppins,Arial,sans-serif" font-size="17" font-weight="600" fill="#1C2E4A">
+    <text x="395" y="216" text-anchor="middle">Emocional</text>
+    <text x="805" y="216" text-anchor="middle">Cognitiva</text>
+    <text x="395" y="446" text-anchor="middle">Social</text>
+    <text x="805" y="446" text-anchor="middle">Personal</text>
+  </g>
+
+  <g>
+    <circle cx="600" cy="260" r="106" fill="#FFFFFF" stroke="#DDEAF2" stroke-width="5"/>
+    <circle cx="600" cy="260" r="78" fill="#EAF7F6"/>
+    <circle cx="600" cy="260" r="48" fill="none" stroke="#1F4E79" stroke-width="9"/>
+    <path d="M600 205 L620 260 L600 315 L580 260 Z" fill="#00B4B3"/>
+    <circle cx="600" cy="260" r="9" fill="#FFC107"/>
+    <path d="M600 195 L600 181 M600 325 L600 339 M535 260 L521 260 M665 260 L679 260"
+          stroke="#1F4E79" stroke-width="6" stroke-linecap="round" opacity=".35"/>
+  </g>
+
+  <path d="M540 477 Q600 450 660 477" fill="none" stroke="#FFC107" stroke-width="9" stroke-linecap="round"/>
 </svg>
