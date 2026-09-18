@@ -15,3 +15,7 @@
 .emptyState p { max-width: 500px; margin-top: 6px; font-size: .82rem; line-height: 1.5; }
 @media (max-width:700px) { .list { grid-template-columns:1fr; } }
 @media (max-width:480px) { .headerIcon { flex-basis:42px; width:42px; height:42px; } .title { font-size:1.55rem; } .description { font-size:.82rem; } .sectionHeader { align-items:flex-start; flex-direction:column; } }
+
+.heroVisual { margin: 0 0 var(--space-4); overflow: hidden; border-radius: var(--radius-card); box-shadow: var(--shadow-1); }
+.heroVisual img { display: block; width: 100%; height: auto; max-height: 320px; object-fit: cover; }
+@media (max-width: 480px) { .heroVisual { margin-bottom: var(--space-3); } .heroVisual img { max-height: 220px; } }
