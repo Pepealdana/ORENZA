@@ -3,6 +3,7 @@ import { ArrowLeft, BookOpen, Heart, Route, Sparkles } from 'lucide-react';
 
 import orenzaLogo from '../../assets/orenza_logo.png';
 import styles from './AboutPage.module.css';
+import inicioIllustration from '../../assets/illustrations/inicio.svg';
 
 function AboutPage() {
   return (
@@ -12,6 +13,8 @@ function AboutPage() {
         <img src={orenzaLogo} alt="ORENZA" />
         <p>Una herramienta digital de acompañamiento socioemocional.</p>
       </header>
+
+      <div className={styles.heroVisual}><img src={inicioIllustration} alt="" aria-hidden="true" /></div>
 
       <section className={styles.intro}>
         <p className={styles.eyebrow}>Conocer ORENZA</p>
