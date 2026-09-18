@@ -5,33 +5,27 @@
 .navigation {
   display: flex;
   flex-direction: column;
-  gap: var(--space-1);
+  gap: 6px;
 }
 
 .link {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: var(--space-1);
-
+  gap: 12px;
   min-height: 48px;
-  padding: 0 var(--space-2);
-
+  padding: 0 14px;
   border-radius: var(--radius-button);
-
   color: var(--color-gray-dark);
-
-  font-family: var(--font-body);
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 500;
-
-  transition:
-    background-color var(--transition-fast),
-    color var(--transition-fast);
+  transition: background-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
 }
 
 .link:hover {
-  background-color: var(--color-gray-light);
+  background: var(--color-gray-light);
   color: var(--color-primary);
+  transform: translateX(2px);
 }
 
 .link:focus-visible {
@@ -40,22 +34,39 @@
 }
 
 .active {
-  background-color: rgba(31, 78, 121, 0.1);
+  background: var(--color-primary-soft);
   color: var(--color-primary);
-  font-weight: 600;
+  font-weight: 700;
+}
+
+.active::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 4px;
+  height: 24px;
+  border-radius: 0 4px 4px 0;
+  background: var(--color-primary);
 }
 
 @media (min-width: 1024px) {
   .sidebar {
     display: block;
-
-    width: 240px;
-    min-width: 240px;
+    width: var(--sidebar-width);
+    min-width: var(--sidebar-width);
     min-height: calc(100vh - var(--header-height-desktop));
-
     padding: var(--space-3) var(--space-2);
-
-    background-color: var(--color-white);
+    background: var(--color-white);
     border-right: 1px solid var(--color-gray-medium);
+  }
+
+  .navigation::before {
+    content: "TU ESPACIO";
+    display: block;
+    padding: 4px 14px 12px;
+    color: var(--color-gray-dark);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
   }
 }
