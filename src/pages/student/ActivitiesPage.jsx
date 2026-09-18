@@ -17,6 +17,7 @@ import {
 } from '../../utils/activityStorage';
 
 import styles from './ActivitiesPage.module.css';
+import actividadesIllustration from '../../assets/illustrations/actividades.svg';
 
 
 /*
@@ -192,6 +193,10 @@ function ActivitiesPage() {
         </div>
 
       </header>
+
+      <div className={styles.heroVisual}>
+        <img src={actividadesIllustration} alt="" aria-hidden="true" />
+      </div>
 
 
       {/* ======================================
