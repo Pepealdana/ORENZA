@@ -24,7 +24,7 @@ import {
 } from '../../utils/streakUtils';
 
 import styles from './JourneyPage.module.css';
-import recorridoIllustration from '../../assets/illustrations/recorrido.svg';
+import IdentityVisual from '../../components/visual/IdentityVisual';
 import bienestarIcon from '../../assets/illustrations/bienestar.svg';
 
 
@@ -245,9 +245,7 @@ function JourneyPage() {
 
       </header>
 
-      <div className={styles.heroVisual}>
-        <img src={recorridoIllustration} alt="" aria-hidden="true" />
-      </div>
+      <IdentityVisual variant="recorrido" />
 
 
       {/* ======================================
