@@ -2,11 +2,13 @@ import { Link } from 'react-router-dom';
 import { Activity, ArrowRight, BookOpen, CheckCircle2, Mail, Settings, UserRound } from 'lucide-react';
 
 import studentData from '../../data/studentData';
+import { useAuth } from '../../context/AuthContext';
 import { getCompletedActivities } from '../../utils/activityStorage';
 import styles from './ProfilePage.module.css';
 import perfilIllustration from '../../assets/illustrations/perfil.svg';
 
 function ProfilePage() {
+  const { user } = useAuth();
   const completedCount = getCompletedActivities().length;
   const competencyCount = studentData.competencies?.length ?? 0;
 
@@ -26,9 +28,9 @@ function ProfilePage() {
         <div className={styles.avatar} aria-hidden="true"><UserRound size={34} strokeWidth={1.7} /></div>
         <div className={styles.identity}>
           <p className={styles.identityLabel}>Tu cuenta</p>
-          <h2 id="profile-name">{studentData.name}</h2>
-          <p className={styles.role}>Estudiante · {studentData.grade || 'En formación'}</p>
-          {studentData.email && <p className={styles.email}><Mail size={14} aria-hidden="true" />{studentData.email}</p>}
+          <h2 id="profile-name">{user?.name || studentData.name}</h2>
+          <p className={styles.role}>Estudiante · {user?.grade || studentData.grade || 'En formación'}</p>
+          {(user?.email || studentData.email) && <p className={styles.email}><Mail size={14} aria-hidden="true" />{user?.email || studentData.email}</p>}
         </div>
         <Link className={styles.settingsLink} to="/estudiante/configuracion" aria-label="Ir a configuración" title="Configuración"><Settings size={19} /></Link>
       </section>
