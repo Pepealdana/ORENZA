@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="900" height="600" viewBox="0 0 900 600">
-<rect width="900" height="600" rx="32" fill="#F5FAFC"/>
-<circle cx="110" cy="100" r="95" fill="#DFF4F3"/>
-<circle cx="790" cy="500" r="120" fill="#EAF2FB"/>
-<path d="M45 500 C130 380 175 430 240 500 M660 520 C735 390 805 420 875 510" fill="none" stroke="#8BC9A0" stroke-width="24" stroke-linecap="round"/>
-<circle cx="450" cy="255" r="78" fill="#1F4E79" opacity=".16"/>
-<circle cx="450" cy="225" r="52" fill="#F0C9A8"/>
-<path d="M382 218 C390 135 510 135 520 218 C493 190 413 190 382 218Z" fill="#24364B"/>
-<path d="M355 410 C365 315 535 315 545 410 L545 455 L355 455Z" fill="#1F4E79"/>
-<circle cx="425" cy="230" r="6" fill="#24364B"/><circle cx="475" cy="230" r="6" fill="#24364B"/>
-<path d="M430 260 Q450 274 470 260" fill="none" stroke="#8A5A44" stroke-width="5" stroke-linecap="round"/>
-<rect x="90" y="54" width="270" height="68" rx="20" fill="#FFFFFF" opacity=".9"/>
-<text x="225" y="97" text-anchor="middle" font-family="Arial,sans-serif" font-size="25" font-weight="700" fill="#1C2E4A">Un mejor tú, cada día</text>
-<path d="M450 475 Q500 450 560 475" fill="none" stroke="#FFC107" stroke-width="10" stroke-linecap="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="600" viewBox="0 0 900 600" role="img" aria-labelledby="title desc">
+  <title id="title">Entra a tu espacio</title>
+  <desc id="desc">Acceso a tu proceso personal.</desc>
+  <rect width="900" height="600" rx="32" fill="#F5FAFC"/>
+  <circle cx="110" cy="105" r="100" fill="#DFF4F3"/>
+  <circle cx="790" cy="495" r="125" fill="#EAF2FB"/>
+  <circle cx="770" cy="115" r="55" fill="#FFF6D9"/>
+  <path d="M45 500 C135 410 210 440 280 495" fill="none" stroke="#8BC9A0" stroke-width="22" stroke-linecap="round"/>
+  <path d="M625 515 C700 420 790 425 875 495" fill="none" stroke="#8BC9A0" stroke-width="22" stroke-linecap="round"/>
+  <rect x="75" y="60" width="300" height="68" rx="21" fill="#FFFFFF" opacity=".96"/>
+  <text x="225" y="103" text-anchor="middle" font-family="Poppins,Arial,sans-serif" font-size="24" font-weight="700" fill="#1C2E4A">Entra a tu espacio</text>
+  <g transform="translate(450 270)">
+    <circle r="108" fill="#FFFFFF" stroke="#DDEAF2" stroke-width="5"/>
+    <circle r="78" fill="#EAF7F6"/>
+    <rect x="-42" y="-48" width="72" height="96" rx="12" fill="#1F4E79"/>
+<path d="M30 -28 H55 V28 H30" fill="none" stroke="#00B4B3" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="12" cy="0" r="8" fill="#FFC107"/>
+<path d="M-58 0 H8 M-8 -18 L10 0 -8 18" fill="none" stroke="#00B4B3" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <path d="M390 490 Q450 462 510 490" fill="none" stroke="#FFC107" stroke-width="9" stroke-linecap="round"/>
 </svg>
