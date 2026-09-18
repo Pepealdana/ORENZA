@@ -154,3 +154,7 @@
   .historyItem { grid-template-columns: 48px 38px 1fr; gap: 8px; padding: 10px; }
   .historyContent p { font-size: .68rem; }
 }
+
+.heroVisual { margin: 0 0 var(--space-4); overflow: hidden; border-radius: var(--radius-card); box-shadow: var(--shadow-1); }
+.heroVisual img { display: block; width: 100%; height: auto; max-height: 300px; object-fit: cover; }
+@media (max-width: 480px) { .heroVisual { margin-bottom: var(--space-3); } .heroVisual img { max-height: 220px; } }
