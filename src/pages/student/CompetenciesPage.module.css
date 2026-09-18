@@ -8,3 +8,14 @@
 .introCard p { font-size: .8rem; line-height: 1.55; }
 .introCard strong { color: var(--color-primary); }
 @media (max-width:480px) { .headerIcon { flex-basis:42px; width:42px; height:42px; } .title { font-size:1.55rem; } .description { font-size:.82rem; } .introCard { padding: var(--space-2); } }
+
+
+.competencyVisual { margin-bottom:var(--space-3); padding:var(--space-2); background:var(--color-primary-soft); border-radius:var(--radius-card); }
+.competencyVisual strong { display:block; color:var(--color-primary); font-family:var(--font-heading); font-size:.9rem; }
+.competencyVisual > div:first-child span { display:block; margin-top:4px; color:var(--color-gray-dark); font-size:.78rem; line-height:1.45; }
+.dimensionGrid { display:grid; grid-template-columns:repeat(8,minmax(0,1fr)); gap:10px; margin-top:14px; }
+.dimension { display:flex; flex-direction:column; align-items:center; gap:5px; min-width:0; text-align:center; }
+.dimension img { width:48px; height:48px; border-radius:50%; }
+.dimension span { color:var(--color-gray-dark); font-size:.64rem; line-height:1.2; }
+@media(max-width:800px) { .dimensionGrid { grid-template-columns:repeat(4,minmax(0,1fr)); } }
+@media(max-width:480px) { .dimensionGrid { gap:8px; } .dimension img { width:42px; height:42px; } .dimension span { font-size:.6rem; } }
