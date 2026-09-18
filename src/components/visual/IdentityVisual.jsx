@@ -1,27 +1,51 @@
 import styles from './IdentityVisual.module.css';
-import visualsSprite from '../../assets/orenza-visuals.webp';
 
-const positions = {
-  bienvenida: '0% 0%',
-  historia: '50% 0%',
-  inicio: '100% 0%',
-  conocete: '0% 50%',
-  recorrido: '50% 50%',
-  competencias: '100% 50%',
-  actividades: '0% 100%',
-  recursos: '50% 100%',
-  perfil: '100% 100%',
+import bienvenida from '../../assets/illustrations/screens/dashboard-welcome.png';
+import historia from '../../assets/illustrations/screens/login-illustration.png';
+import inicio from '../../assets/illustrations/screens/inicio.png';
+import conocete from '../../assets/illustrations/screens/inicio.png';
+import recorrido from '../../assets/illustrations/screens/recorrido.png';
+import competencias from '../../assets/illustrations/screens/competencias.png';
+import actividades from '../../assets/illustrations/screens/actividades.png';
+import recursos from '../../assets/illustrations/screens/recursos.png';
+import perfil from '../../assets/illustrations/screens/perfil.png';
+
+const visuals = {
+  bienvenida,
+  historia,
+  inicio,
+  conocete,
+  recorrido,
+  competencias,
+  actividades,
+  recursos,
+  perfil,
 };
 
-function IdentityVisual({ variant, size = 'hero', className = '' }) {
-  const position = positions[variant] || positions.inicio;
+function IdentityVisual({
+  variant,
+  size = 'hero',
+  className = '',
+}) {
+  const source = visuals[variant] || visuals.inicio;
 
   return (
     <div
-      className={styles.visual + ' ' + (styles[size] || '') + ' ' + className}
-      style={{ backgroundImage: 'url(' + visualsSprite + ')', backgroundPosition: position }}
+      className={[
+        styles.visual,
+        styles[size] || '',
+        className,
+      ].join(' ')}
       aria-hidden="true"
-    />
+    >
+      <img
+        src={source}
+        alt=""
+        className={styles.image}
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
   );
 }
 
