@@ -6,12 +6,13 @@ function Button({
   variant = 'primary',
   disabled = false,
   onClick,
+  className = '',
   ...props
 }) {
   return (
     <button
       type={type}
-      className={`${styles.button} ${styles[variant]}`}
+      className={`${styles.button} ${styles[variant] || ''} ${className}`.trim()}
       disabled={disabled}
       onClick={onClick}
       {...props}
