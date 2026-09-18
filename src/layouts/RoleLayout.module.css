@@ -1,0 +1,4 @@
+.layout { min-height: 100vh; background: var(--color-gray-light); }
+.main { padding: var(--space-4) var(--space-2) var(--space-6); }
+@media (min-width: 768px) { .main { padding: var(--space-5) 32px var(--space-7); } }
+@media (min-width: 1024px) { .main { padding-inline: 64px; } }
