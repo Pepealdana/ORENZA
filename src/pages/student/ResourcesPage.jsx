@@ -2,7 +2,7 @@ import { BookOpen } from 'lucide-react';
 import resources from '../../data/resources';
 import ResourceCard from '../../components/dashboard/ResourceCard/ResourceCard';
 import styles from './ResourcesPage.module.css';
-import recursosIllustration from '../../assets/illustrations/recursos.svg';
+import IdentityVisual from '../../components/visual/IdentityVisual';
 
 function ResourcesPage() {
   return (
@@ -16,11 +16,7 @@ function ResourcesPage() {
         </div>
       </header>
 
-      <div className={styles.heroVisual}><img src={recursosIllustration} alt="" aria-hidden="true" /></div>
-
-      <div className={styles.heroVisual}>
-        <img src={recursosIllustration} alt="" aria-hidden="true" />
-      </div>
+      <IdentityVisual variant="recursos" />
 
       <section className={styles.section}>
         <div className={styles.sectionHeader}>
