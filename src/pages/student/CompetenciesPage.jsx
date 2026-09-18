@@ -3,14 +3,14 @@ import studentData from '../../data/studentData';
 import CompetencyList from '../../components/competencies/CompetencyList/CompetencyList';
 import { getAllCompetencyStats } from '../../utils/competencyUtils';
 import styles from './CompetenciesPage.module.css';
-import personalIcon from '../../assets/illustrations/personal.svg';
-import emocionalIcon from '../../assets/illustrations/emocional.svg';
-import cognitivaIcon from '../../assets/illustrations/cognitiva.svg';
-import socialIcon from '../../assets/illustrations/social.svg';
-import academicaIcon from '../../assets/illustrations/academica.svg';
-import bienestarIcon from '../../assets/illustrations/bienestar.svg';
-import aprendizajeIcon from '../../assets/illustrations/aprendizaje.svg';
-import exploracionIcon from '../../assets/illustrations/exploracion.svg';
+import personalIcon from '../../assets/illustrations/icons/personal.png';
+import emocionalIcon from '../../assets/illustrations/icons/emocional.png';
+import cognitivaIcon from '../../assets/illustrations/icons/cognitiva.png';
+import socialIcon from '../../assets/illustrations/icons/social.png';
+import academicaIcon from '../../assets/illustrations/icons/academica.png';
+import bienestarIcon from '../../assets/illustrations/icons/bienestar.png';
+import aprendizajeIcon from '../../assets/illustrations/icons/aprendizaje.png';
+import exploracionIcon from '../../assets/illustrations/icons/exploracion.png';
 import IdentityVisual from '../../components/visual/IdentityVisual';
 
 const competencyIcons = {
