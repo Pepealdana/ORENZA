@@ -21,6 +21,7 @@ import {
 } from '../../utils/dateUtils';
 
 import styles from './ActivityPage.module.css';
+import actividadesIllustration from '../../assets/illustrations/actividades.svg';
 
 
 function ActivityPage() {
@@ -333,6 +334,8 @@ function ActivityPage() {
         </div>
 
       </header>
+
+      <div className={styles.heroVisual}><img src={actividadesIllustration} alt="" aria-hidden="true" /></div>
 
 
       {/* ======================================
