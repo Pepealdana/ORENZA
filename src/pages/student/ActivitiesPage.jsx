@@ -125,20 +125,9 @@ function ActivitiesPage() {
         return activities;
       }
 
-      return activities.filter(
-        (activity) => {
-
-          /*
-           * competencies es un arreglo
-           * de IDs en activities.js.
-           */
-
-          return activity.competencies?.includes(
-            selectedCompetency
-          );
-
-        }
-      );
+      return getActivitiesForCompetencies([
+        selectedCompetency,
+      ]);
 
     }, [selectedCompetency]);
 
