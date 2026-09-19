@@ -2,12 +2,13 @@ import { ArrowRight, Target } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 import ProgressBar from '../../ui/ProgressBar/ProgressBar';
+import SafeImage from '../../ui/SafeImage/SafeImage';
 import styles from './CompetencyCard.module.css';
 
-function CompetencyCard({ name, progress, completedCount = 0, totalActivities = 0, to, icon }) {
+function CompetencyCard({ name, progress, completedCount = 0, totalActivities = 0, to, icon, iconFallback }) {
   return (
     <article className={styles.card}>
-      <div className={styles.icon}>{icon ? <img src={icon} alt="" aria-hidden="true" /> : <Target size={20} strokeWidth={1.8} aria-hidden="true" />}</div>
+      <div className={styles.icon}>{icon ? <SafeImage src={icon} fallback={iconFallback} alt="" /> : <Target size={20} strokeWidth={1.8} aria-hidden="true" />}</div>
       <div className={styles.header}>
         <h3>{name}</h3>
         <span className={styles.percentage}>{progress}%</span>
