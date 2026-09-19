@@ -28,3 +28,48 @@
  .page, .header, .section, .grid, .list { min-width: 0; max-width: 100%; }
 .header { overflow: hidden; }
 .title, .description { overflow-wrap: anywhere; }
+
+
+/* ========================================
+   IDENTIDAD VISUAL — CABECERA
+   ======================================== */
+
+.header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(250px, .8fr);
+  align-items: center;
+  gap: clamp(20px, 4vw, 44px);
+}
+
+.headerCopy {
+  position: relative;
+  z-index: 2;
+  min-width: 0;
+}
+
+.headerVisual {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  min-width: 0;
+}
+
+.headerVisual > div {
+  width: 100%;
+  max-width: 340px;
+}
+
+@media (max-width: 760px) {
+  .header {
+    grid-template-columns: 1fr;
+  }
+
+  .headerVisual {
+    order: -1;
+  }
+
+  .headerVisual > div {
+    max-width: 320px;
+  }
+}
