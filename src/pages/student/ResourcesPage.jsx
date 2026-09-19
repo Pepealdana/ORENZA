@@ -27,7 +27,7 @@ function ResourcesPage() {
         {resources.length === 0 ? (
           <div className={styles.emptyState}><BookOpen size={28} aria-hidden="true" /><h3>Todavía no hay recursos</h3><p>Pronto encontrarás nuevos contenidos para continuar tu proceso.</p></div>
         ) : (
-          <div className={styles.list}>{resources.map((resource) => <ResourceCard key={resource.id} title={resource.title} type={resource.type} />)}</div>
+          <div className={styles.list}>{resources.map((resource) => <ResourceCard key={resource.id} title={resource.title} type={resource.type} resourceId={resource.id} />)}</div>
         )}
       </section>
     </section>
