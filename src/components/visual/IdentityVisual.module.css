@@ -1,59 +1,24 @@
 .visual {
   width: 100%;
-  min-height: 220px;
+  min-width: 0;
   flex: 0 0 auto;
   overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
+  display: block;
   background: #f8fbfc;
   border: 1px solid var(--color-gray-medium);
   border-radius: var(--radius-card);
   box-shadow: var(--shadow-1);
 }
-
 .image {
   display: block;
-  width: auto;
+  width: 100%;
   max-width: 100%;
   height: auto;
-  max-height: 340px;
   object-fit: contain;
 }
-
-.hero {
-  width: 100%;
-}
-
-.compact {
-  width: 190px;
-  min-height: 150px;
-  flex: 0 0 190px;
-}
-
-.compact .image {
-  max-width: 100%;
-  max-height: 160px;
-}
-
+.hero { width: 100%; }
+.compact { width: 190px; flex: 0 0 190px; }
 @media (max-width: 700px) {
-  .visual {
-    min-height: 180px;
-    border-radius: 16px;
-  }
-
-  .image {
-    max-height: 300px;
-  }
-
-  .compact {
-    width: 100%;
-    min-height: 180px;
-    flex-basis: auto;
-  }
-
-  .compact .image {
-    max-height: 240px;
-  }
+  .visual { border-radius: 16px; }
+  .compact { width: 100%; flex-basis: auto; }
 }
