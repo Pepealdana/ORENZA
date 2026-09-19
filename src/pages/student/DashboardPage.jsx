@@ -273,21 +273,24 @@ function DashboardPage() {
           ======================================== */}
 
       <header className={styles.header}>
-        <IdentityVisual variant="dashboard" />
+        <div className={styles.headerCopy}>
+          <p className={styles.greeting}>
+            Hola, {name}
+          </p>
 
-        <p className={styles.greeting}>
-          Hola, {name}
-        </p>
+          <h1 className={styles.title}>
+            Este espacio es para ti
+          </h1>
 
-        <h1 className={styles.title}>
-          Este espacio es para ti
-        </h1>
+          <p className={styles.description}>
+            Explora, conócete y descubre poco a poco todo
+            lo que puedes desarrollar en ti.
+          </p>
+        </div>
 
-        <p className={styles.description}>
-          Explora, conócete y descubre poco a poco todo
-          lo que puedes desarrollar en ti.
-        </p>
-
+        <div className={styles.headerVisual}>
+          <IdentityVisual variant="dashboard" />
+        </div>
       </header>
 
 
