@@ -3,7 +3,6 @@ import { Activity, Building2, Database, LoaderCircle, Save, Settings, ShieldChec
 import { useAuth } from '../../context/AuthContext';
 import { api } from '../../services/api';
 import styles from './AdminDashboardPage.module.css';
-import administracionIllustration from '../../assets/illustrations/administracion.svg';
 
 const emptyForm = {
   name: '',
@@ -117,7 +116,6 @@ function AdminDashboardPage() {
         </div>
       </header>
 
-      <div className={styles.heroVisual}><img src={administracionIllustration} alt="" aria-hidden="true" /></div>
 
       {error && <div className={styles.alert} role="alert">{error}</div>}
       {message && <div className={styles.success} role="status">{message}</div>}
