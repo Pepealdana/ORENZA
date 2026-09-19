@@ -125,9 +125,7 @@ function ActivitiesPage() {
         return activities;
       }
 
-      return getActivitiesForCompetencies([
-        selectedCompetency,
-      ]);
+      return getActivitiesForCompetencies(selectedCompetency);
 
     }, [selectedCompetency]);
 
@@ -385,7 +383,7 @@ function ActivitiesPage() {
               (activity) => {
 
                 const primaryCompetency =
-                  activity.competencies?.[0];
+                  activity.competencies?.primary;
 
                 const competency =
                   competencyData[
@@ -597,6 +595,38 @@ function ActivitiesPage() {
       </section>
 
     </section>
+  );
+}
+
+
+/*
+ * ========================================
+ * FILTRO DE ACTIVIDADES POR COMPETENCIA
+ * ========================================
+ */
+
+function getActivitiesForCompetencies(
+  selectedCompetency
+) {
+
+  const competencyMap = {
+    autoconocimiento: 'autoconocimiento',
+    autorregulacion: 'autorregulacion',
+    empatia: 'empatia',
+    relaciones: 'relaciones-positivas',
+  };
+
+  const target =
+    competencyMap[selectedCompetency];
+
+  if (!target) {
+    return activities;
+  }
+
+  return activities.filter(
+    (activity) =>
+      activity.competencies?.primary === target ||
+      activity.competencies?.secondary?.includes(target)
   );
 }
 
