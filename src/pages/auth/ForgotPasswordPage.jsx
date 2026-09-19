@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ArrowLeft, KeyRound, Mail } from 'lucide-react';
 import orenzaLogo from '../../assets/orenza_logo.png';
-import loginIllustration from '../../assets/illustrations/login-illustration.svg';
+import IdentityVisual from '../../components/visual/IdentityVisual';
 import Button from '../../components/ui/Button/Button';
 import styles from './AuthPage.module.css';
 
@@ -10,7 +10,7 @@ function ForgotPasswordPage() {
     <main className={styles.page}>
       <section className={styles.card} aria-labelledby="recovery-title">
         <div className={styles.brand}><img src={orenzaLogo} alt="ORENZA" /></div>
-        <div className={styles.illustration}><img src={loginIllustration} alt="" aria-hidden="true" /></div>
+        <IdentityVisual variant="historia" />
         <header className={styles.header}>
           <p className={styles.eyebrow}>Acceso seguro</p>
           <h1 id="recovery-title" className={styles.title}>Recuperar contraseña</h1>
