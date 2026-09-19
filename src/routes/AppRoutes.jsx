@@ -26,6 +26,7 @@ import CompetenciesPage from '../pages/student/CompetenciesPage';
 import CompetencyDetailPage from '../pages/student/CompetencyDetailPage';
 import ActivitiesPage from '../pages/student/ActivitiesPage';
 import ResourcesPage from '../pages/student/ResourcesPage';
+import ResourceDetailPage from '../pages/student/ResourceDetailPage';
 import ProfilePage from '../pages/student/ProfilePage';
 import SettingsPage from '../pages/student/SettingsPage';
 
@@ -62,6 +63,7 @@ function AppRoutes() {
           <Route path="actividades" element={<ActivitiesPage />} />
           <Route path="actividades/:activityId" element={<ActivityPage />} />
           <Route path="recursos" element={<ResourcesPage />} />
+          <Route path="recursos/:resourceId" element={<ResourceDetailPage />} />
           <Route path="perfil" element={<ProfilePage />} />
           <Route path="configuracion" element={<SettingsPage />} />
         </Route>
