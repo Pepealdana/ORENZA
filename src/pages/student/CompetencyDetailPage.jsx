@@ -49,8 +49,14 @@ function CompetencyDetailPage() {
     relaciones: relacionesIllustration,
   };
 
-  const competencyIllustration =
-    competencyIllustrations[competencyId];
+  const competencyIllustration = competencyIllustrations[competencyId];
+
+  const competencyIllustrationAlt = {
+    autoconocimiento: 'Ilustración de autoconocimiento de ORENZA',
+    autorregulacion: 'Ilustración de autorregulación de ORENZA',
+    empatia: 'Ilustración de empatía de ORENZA',
+    relaciones: 'Ilustración de relaciones positivas de ORENZA',
+  }[competencyId];
 
 
   /*
@@ -164,8 +170,9 @@ function CompetencyDetailPage() {
 
       <div className={styles.heroVisual}>
         <img
+          key={competencyId}
           src={competencyIllustration}
-          alt="Ilustración de la exploración de competencias socioemocionales"
+          alt={competencyIllustrationAlt}
         />
       </div>
 
