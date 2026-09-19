@@ -37,3 +37,13 @@
     padding-bottom: calc(var(--space-7) + 80px);
   }
 }
+
+
+.main > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.main img {
+  max-width: 100%;
+}
