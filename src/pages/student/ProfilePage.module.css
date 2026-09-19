@@ -41,3 +41,13 @@
   .profileCard { flex-wrap: wrap; }
   .settingsLink { margin-left: auto; }
 }
+
+
+
+/* Mobile layout correction */
+@media (max-width: 600px) {
+  .page { width: 100%; max-width: 100%; min-width: 0; }
+  .header, .profileCard, .section, .sectionTitle, .stats, .notice, .continueCard { min-width: 0; max-width: 100%; }
+  .header h1, .header > p:last-child, .identity h2, .email, .notice p, .continueCard p { overflow-wrap: anywhere; }
+}
+
