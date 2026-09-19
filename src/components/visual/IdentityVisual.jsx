@@ -1,26 +1,31 @@
 import styles from './IdentityVisual.module.css';
 
+import bienvenida from '../../assets/illustrations/screens/bienvenida.png';
+import historia from '../../assets/illustrations/screens/historia.png';
 import inicio from '../../assets/illustrations/screens/inicio.png';
-import dashboardWelcome from '../../assets/illustrations/screens/dashboard-welcome.png';
-import login from '../../assets/illustrations/screens/login-illustration.png';
-import register from '../../assets/illustrations/screens/register-illustration.png';
+import conocete from '../../assets/illustrations/screens/conocete.png';
 import recorrido from '../../assets/illustrations/screens/recorrido.png';
 import competencias from '../../assets/illustrations/screens/competencias.png';
 import actividades from '../../assets/illustrations/screens/actividades.png';
 import recursos from '../../assets/illustrations/screens/recursos.png';
 import perfil from '../../assets/illustrations/screens/perfil.png';
+import dashboardWelcome from '../../assets/illustrations/screens/dashboard-welcome.png';
+import login from '../../assets/illustrations/screens/login-illustration.png';
+import register from '../../assets/illustrations/screens/register-illustration.png';
 
 const images = {
-  bienvenida: inicio,
+  bienvenida,
   dashboard: dashboardWelcome,
-  historia: login,
+  historia,
   inicio,
+  conocete,
   recorrido,
   competencias,
   actividades,
   recursos,
   perfil,
   registro: register,
+  login,
 };
 
 function IdentityVisual({ variant, size = 'hero', className = '' }) {
