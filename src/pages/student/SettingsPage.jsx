@@ -23,8 +23,9 @@ function SettingsPage() {
 
   useEffect(() => {
     document.documentElement.dataset.theme = appearance;
+    document.documentElement.dataset.reducedMotion = String(preferences.reducedMotion);
     localStorage.setItem('orenza_appearance', appearance);
-  }, [appearance]);
+  }, [appearance, preferences.reducedMotion]);
 
   const toggle = (key) => {
     setPreferences((current) => {
