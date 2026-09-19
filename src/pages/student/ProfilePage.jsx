@@ -3,13 +3,14 @@ import { Activity, ArrowRight, BookOpen, CheckCircle2, Mail, Settings, UserRound
 
 import studentData from '../../data/studentData';
 import { useAuth } from '../../context/AuthContext';
-import { getCompletedActivities } from '../../utils/activityStorage';
+import { useStudentProgress } from '../../hooks/useStudentProgress';
 import styles from './ProfilePage.module.css';
 import IdentityVisual from '../../components/visual/IdentityVisual';
 
 function ProfilePage() {
   const { user } = useAuth();
-  const completedCount = getCompletedActivities().length;
+  const { completedActivities } = useStudentProgress();
+  const completedCount = completedActivities.length;
   const competencyCount = studentData.competencies?.length ?? 0;
 
   return (
