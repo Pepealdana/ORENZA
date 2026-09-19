@@ -457,3 +457,15 @@
 .heroVisual{margin:0 0 var(--space-3);overflow:hidden;background:#F5FAFC;border-radius:var(--radius-card);border:1px solid var(--color-gray-medium)}
 .heroVisual img{display:block;width:100%;height:auto;max-height:250px;object-fit:cover}
 @media(max-width:600px){.heroVisual img{max-height:190px}}
+
+
+
+/* Mobile layout correction */
+@media (max-width: 600px) {
+  .page { width: 100%; max-width: 100%; min-width: 0; }
+  .header, .stepCard, .progressArea, .navigation, .supportMessage { min-width: 0; max-width: 100%; }
+  .header h1, .description, .stepCard h2, .supportMessage { overflow-wrap: anywhere; }
+  .navigation { margin-inline: 0; padding: 10px 0; }
+  .primaryButton, .secondaryButton { min-width: 0; }
+}
+
