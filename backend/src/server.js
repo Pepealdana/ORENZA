@@ -6,6 +6,7 @@ import { connectDB } from './config/db.js';
 import authRoutes from './routes/auth.routes.js';
 import studentRoutes from './routes/student.routes.js';
 import adminRoutes from './routes/admin.routes.js';
+import counselorRoutes from './routes/counselor.routes.js';
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -27,6 +28,7 @@ app.get('/api/health', (_req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/student', studentRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/counselor', counselorRoutes);
 
 app.use((error, _req, res, _next) => {
   console.error(error);
