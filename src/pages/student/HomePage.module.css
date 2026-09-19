@@ -389,19 +389,40 @@
 
 }
 
-.headerVisual { width: 100%; margin-bottom: var(--space-3); overflow: hidden; border-radius: var(--radius-card); background: var(--color-primary-soft); }
-.headerVisual img { display: block; width: 100%; height: auto; max-height: 230px; object-fit: cover; }
-.highlightVisual { flex: 0 0 190px; overflow: hidden; border-radius: 16px; }
-.highlightVisual img { display: block; width: 100%; height: 150px; object-fit: cover; }
-@media (max-width:700px) { .highlightVisual { width:100%; flex-basis:auto; order:-1; } .highlightVisual img { height:160px; } }
+.headerVisual {
+  width: 100%;
+  margin-bottom: var(--space-3);
+  overflow: hidden;
+  border-radius: var(--radius-card);
+  background: var(--color-primary-soft);
+}
 
+.headerVisual img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
 
-.headerVisual { width:100%; margin-bottom:var(--space-3); overflow:hidden; border-radius:var(--radius-card); background:var(--color-primary-soft); }
-.headerVisual img { display:block; width:100%; height:auto; max-height:230px; object-fit:cover; }
-.highlightVisual { flex:0 0 190px; overflow:hidden; border-radius:16px; }
-.highlightVisual img { display:block; width:100%; height:150px; object-fit:cover; }
-@media (max-width:700px) { .highlightVisual { width:100%; flex-basis:auto; order:-1; } .highlightVisual img { height:160px; } }
+.highlightVisual {
+  flex: 0 0 190px;
+  overflow: hidden;
+  border-radius: 16px;
+}
 
+.highlightVisual img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+@media (max-width: 700px) {
+  .highlightVisual {
+    width: 100%;
+    flex-basis: auto;
+    order: -1;
+  }
+}
 
 /* Responsive hardening */
  .page, .header, .section, .actions, .actionCard, .highlight, .challenge { min-width: 0; max-width: 100%; }
