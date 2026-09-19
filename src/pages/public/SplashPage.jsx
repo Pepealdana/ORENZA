@@ -9,20 +9,25 @@ function SplashPage() {
   return (
     <main className={styles.page}>
       <section className={styles.hero}>
-        <div className={styles.brand}>
-          <img src={orenzaLogo} alt="ORENZA" />
+        <div className={styles.heroCopy}>
+          <div className={styles.brand}>
+            <img src={orenzaLogo} alt="ORENZA" />
+          </div>
+          <p className={styles.eyebrow}>Acompañamiento socioemocional</p>
+          <h1>Conócete. Explora. Crece.</h1>
+          <p className={styles.description}>
+            Un espacio digital para reconocer lo que sientes, fortalecer tus competencias y acompañar tu proceso personal.
+          </p>
+          <div className={styles.actions}>
+            <Link className={styles.primary} to="/login">Iniciar sesión <ArrowRight size={18} /></Link>
+            <Link className={styles.secondary} to="/registro">Crear cuenta</Link>
+          </div>
+          <Link className={styles.about} to="/conocer-orenza">Conocer ORENZA</Link>
         </div>
-        <IdentityVisual variant="bienvenida" />
-        <p className={styles.eyebrow}>Acompañamiento socioemocional</p>
-        <h1>Conócete. Explora. Crece.</h1>
-        <p className={styles.description}>
-          Un espacio digital para reconocer lo que sientes, fortalecer tus competencias y acompañar tu proceso personal.
-        </p>
-        <div className={styles.actions}>
-          <Link className={styles.primary} to="/login">Iniciar sesión <ArrowRight size={18} /></Link>
-          <Link className={styles.secondary} to="/registro">Crear cuenta</Link>
+
+        <div className={styles.heroVisual}>
+          <IdentityVisual variant="bienvenida" />
         </div>
-        <Link className={styles.about} to="/conocer-orenza">Conocer ORENZA</Link>
       </section>
 
       <section className={styles.features} aria-label="Qué encontrarás en ORENZA">
