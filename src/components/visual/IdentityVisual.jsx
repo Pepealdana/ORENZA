@@ -7,7 +7,6 @@ import competencias from '../../assets/illustrations/screens/competencias.png';
 import recorrido from '../../assets/illustrations/screens/recorrido.png';
 import recursos from '../../assets/illustrations/screens/recursos.png';
 import perfil from '../../assets/illustrations/screens/perfil.png';
-import conocete from '../../assets/illustrations/screens/conocete.png';
 import login from '../../assets/illustrations/screens/login-illustration.png';
 import register from '../../assets/illustrations/screens/register-illustration.png';
 
@@ -23,7 +22,7 @@ const images = {
   actividades,
   recursos,
   perfil,
-  conocete,
+  conocete: dashboardWelcome,
 };
 
 function IdentityVisual({ variant, size = 'hero', className = '' }) {
