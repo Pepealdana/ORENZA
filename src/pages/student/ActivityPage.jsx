@@ -11,6 +11,7 @@ import {
 } from 'react-router-dom';
 
 import activities from '../../data/activities';
+import { api } from '../../services/api';
 
 import {
   saveCompletedActivity,
@@ -140,7 +141,7 @@ function ActivityPage() {
    * ========================================
    */
 
-  const handleNext = () => {
+  const handleNext = async () => {
 
     /*
      * Si todavía hay pasos,
@@ -195,19 +196,19 @@ function ActivityPage() {
      * ======================================
      */
 
-    const savedActivity =
-      saveCompletedActivity(
-        completedActivity
-      );
+    try {
+      await api.saveActivityProgress({
+        activityId: activity.id,
+        status: 'completed',
+        answers: responses,
+      });
+    } catch (error) {
+      console.error('No fue posible sincronizar la actividad con el servidor:', error);
 
-
-    /*
-     * Si el almacenamiento falla,
-     * permanecemos en la actividad.
-     */
-
-    if (!savedActivity) {
-      return;
+      const savedActivity = saveCompletedActivity(completedActivity);
+      if (!savedActivity) {
+        return;
+      }
     }
 
 
