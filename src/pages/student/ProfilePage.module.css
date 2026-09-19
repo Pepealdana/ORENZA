@@ -31,3 +31,13 @@
 .heroVisual{margin:0 0 var(--space-3);overflow:hidden;background:#F5FAFC;border-radius:var(--radius-card);border:1px solid var(--color-gray-medium)}
 .heroVisual img{display:block;width:100%;height:auto;max-height:250px;object-fit:cover}
 @media(max-width:600px){.heroVisual img{max-height:190px}}
+
+
+/* Responsive hardening */
+ .page, .header, .profileCard, .section, .sectionTitle, .stats, .notice, .continueCard { min-width: 0; max-width: 100%; }
+.identity { min-width: 0; }
+.header h1, .header > p:last-child, .identity h2, .email, .notice p, .continueCard p { overflow-wrap: anywhere; }
+@media (max-width: 480px) {
+  .profileCard { flex-wrap: wrap; }
+  .settingsLink { margin-left: auto; }
+}
