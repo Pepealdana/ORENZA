@@ -5,6 +5,7 @@ import styles from './CompetencyList.module.css';
 function CompetencyList({
   competencies,
   iconMap = {},
+  iconFallbackMap = {},
 }) {
   return (
     <div className={styles.list}>
@@ -16,6 +17,7 @@ function CompetencyList({
             key={competency.id}
 
             icon={iconMap[competency.id]}
+            iconFallback={iconFallbackMap[competency.id]}
 
             name={
               competency.name
