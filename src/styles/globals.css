@@ -38,6 +38,8 @@ h3,
 h4,
 h5,
 h6 {
+  max-width: 100%;
+  overflow-wrap: anywhere;
   margin: 0;
   font-family: var(--font-heading);
   font-weight: 600;
@@ -46,7 +48,9 @@ h6 {
 }
 
 p {
+  max-width: 100%;
   margin: 0;
+  overflow-wrap: anywhere;
 }
 
 button,
@@ -139,4 +143,6 @@ textarea::placeholder {
 
 /* ORENZA responsive hardening */
 .page, main, section, article, header, nav, div { min-width: 0; }
-@media (max-width: 480px) { .orenza-container { width: min(100% - 24px, var(--container-max-width)); } }
+@media (max-width: 480px) {
+  h1, h2, h3, h4, h5, h6, p, a, button, span { max-width: 100%; }
+  .orenza-container { width: min(100% - 24px, var(--container-max-width)); } }
