@@ -11,7 +11,7 @@ import login from '../../assets/illustrations/screens/login-illustration.png';
 import register from '../../assets/illustrations/screens/register-illustration.png';
 
 const images = {
-  bienvenida: inicio,
+  bienvenida: register,
   inicio,
   dashboard: dashboardWelcome,
   historia: login,
@@ -22,7 +22,7 @@ const images = {
   actividades,
   recursos,
   perfil,
-  conocete: inicio,
+  conocete: dashboardWelcome,
 };
 
 function IdentityVisual({ variant, size = 'hero', className = '' }) {
