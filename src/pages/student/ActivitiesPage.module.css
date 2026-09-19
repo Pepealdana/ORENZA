@@ -767,3 +767,41 @@
   .header h1, .description, .cardTop, .activityCard { overflow-wrap: anywhere; }
 }
 
+
+
+/* ========================================
+   IDENTIDAD VISUAL — ILUSTRACIÓN DE CONTEXTO
+   ======================================== */
+
+.heroVisual {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin: 4px 0 var(--space-5);
+  padding: 0;
+  overflow: visible;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
+.heroVisual > div {
+  width: min(100%, 390px);
+}
+
+.heroVisual img {
+  width: 100%;
+  max-height: none;
+  object-fit: contain;
+  border-radius: var(--radius-card);
+}
+
+@media (max-width: 600px) {
+  .heroVisual {
+    margin-bottom: var(--space-4);
+  }
+
+  .heroVisual > div {
+    width: min(100%, 330px);
+  }
+}
