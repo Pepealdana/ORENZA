@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { useStudentProgress } from '../../hooks/useStudentProgress';
 
 import {
   ArrowRight,
@@ -12,9 +13,6 @@ import { Link } from 'react-router-dom';
 
 import activities from '../../data/activities';
 
-import {
-  getCompletedActivities,
-} from '../../utils/activityStorage';
 
 import styles from './ActivitiesPage.module.css';
 import IdentityVisual from '../../components/visual/IdentityVisual';
@@ -88,8 +86,7 @@ function ActivitiesPage() {
    * ========================================
    */
 
-  const completedActivities =
-    getCompletedActivities();
+  const { completedActivities } = useStudentProgress();
 
 
   /*
