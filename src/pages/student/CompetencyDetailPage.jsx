@@ -12,7 +12,7 @@ import {
 import ProgressBar from '../../components/ui/ProgressBar/ProgressBar';
 
 import styles from './CompetencyDetailPage.module.css';
-import IdentityVisual from '../../components/visual/IdentityVisual';
+import competencyIllustration from '../../assets/illustrations/screens/autoregulacion.png.png';
 
 
 function CompetencyDetailPage() {
@@ -149,7 +149,12 @@ function CompetencyDetailPage() {
 
       </header>
 
-      <IdentityVisual variant="competencias" />
+      <div className={styles.heroVisual}>
+        <img
+          src={competencyIllustration}
+          alt="Ilustración de la exploración de competencias socioemocionales"
+        />
+      </div>
 
 
       {/* ======================================
