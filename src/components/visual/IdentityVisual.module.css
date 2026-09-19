@@ -4,7 +4,7 @@
   margin: 0 auto var(--space-4);
   display: block;
   overflow: hidden;
-  background: transparent;
+  background: var(--color-white);
   border-radius: var(--radius-card);
 }
 
@@ -13,7 +13,6 @@
   width: 100%;
   height: auto;
   max-width: 100%;
-  max-height: none;
   object-fit: contain;
   object-position: center;
   border-radius: var(--radius-card);
@@ -21,10 +20,6 @@
 
 .hero { width: 100%; }
 .compact { max-width: 360px; }
-
-@media (max-width: 1024px) {
-  .wrapper { max-width: 700px; }
-}
 
 @media (max-width: 700px) {
   .wrapper {
@@ -36,14 +31,7 @@
   .wrapper img {
     width: 100%;
     height: auto;
-    max-height: none;
-    object-fit: contain;
   }
 
   .compact { max-width: 100%; }
-}
-
-@media (max-width: 480px) {
-  .wrapper { margin-bottom: var(--space-3); }
-  .wrapper img { max-height: none; }
 }
