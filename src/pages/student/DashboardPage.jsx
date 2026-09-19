@@ -178,6 +178,9 @@ function DashboardPage() {
             id:
               completedActivity.id,
 
+            activityId:
+              activity.id,
+
             title:
               activity.title,
 
