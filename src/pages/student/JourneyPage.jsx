@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { useStudentProgress } from '../../hooks/useStudentProgress';
 
 import {
   CalendarDays,
@@ -11,13 +12,6 @@ import {
 
 import { useNavigate } from 'react-router-dom';
 
-import {
-  getStoredCheckIns,
-} from '../../utils/emotionalStorage';
-
-import {
-  getCompletedActivities,
-} from '../../utils/activityStorage';
 
 import {
   calculateCurrentStreak,
@@ -92,18 +86,10 @@ function JourneyPage() {
    * ========================================
    */
 
-  const checkIns =
-    getStoredCheckIns();
-
-
-  /*
-   * ========================================
-   * EXPERIENCIAS REALIZADAS
-   * ========================================
-   */
-
-  const completedActivities =
-    getCompletedActivities();
+  const {
+    checkIns,
+    completedActivities,
+  } = useStudentProgress();
 
 
   /*
