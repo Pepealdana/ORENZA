@@ -12,6 +12,11 @@ import {
 import ProgressBar from '../../components/ui/ProgressBar/ProgressBar';
 
 import styles from './CompetencyDetailPage.module.css';
+import SafeImage from '../../components/ui/SafeImage/SafeImage';
+import autoconocimientoFallback from '../../assets/illustrations/personal.svg';
+import autorregulacionFallback from '../../assets/illustrations/emocional.svg';
+import empatiaFallback from '../../assets/illustrations/social.svg';
+import relacionesFallback from '../../assets/illustrations/social.svg';
 import autoconocimientoIllustration from '../../assets/illustrations/screens/autoconocimiento.png';
 import autorregulacionIllustration from '../../assets/illustrations/screens/autoregulacion.png';
 import empatiaIllustration from '../../assets/illustrations/screens/empatia.png';
@@ -50,6 +55,13 @@ function CompetencyDetailPage() {
   };
 
   const competencyIllustration = competencyIllustrations[competencyId];
+  const competencyFallbacks = {
+    autoconocimiento: autoconocimientoFallback,
+    autorregulacion: autorregulacionFallback,
+    empatia: empatiaFallback,
+    relaciones: relacionesFallback,
+  };
+  const competencyFallback = competencyFallbacks[competencyId];
 
   const competencyIllustrationAlt = {
     autoconocimiento: 'Ilustración de autoconocimiento de ORENZA',
@@ -169,9 +181,10 @@ function CompetencyDetailPage() {
       </header>
 
       <div className={styles.heroVisual}>
-        <img
+        <SafeImage
           key={competencyId}
           src={competencyIllustration}
+          fallback={competencyFallback}
           alt={competencyIllustrationAlt}
         />
       </div>
