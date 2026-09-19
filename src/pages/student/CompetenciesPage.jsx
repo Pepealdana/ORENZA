@@ -29,6 +29,13 @@ const competencyIcons = {
   relaciones: socialIcon,
 };
 
+const competencyIconFallbacks = {
+  autoconocimiento: personalFallback,
+  autorregulacion: emocionalFallback,
+  empatia: socialFallback,
+  relaciones: socialFallback,
+};
+
 const dimensions = [
   ['Emocional', emocionalIcon, emocionalFallback],
   ['Cognitiva', cognitivaIcon, cognitivaFallback],
@@ -59,7 +66,7 @@ function CompetenciesPage() {
       </section>
       <IdentityVisual variant="competencias" />
       <div className={styles.competencyVisual}><div><strong>Explora diferentes dimensiones de ti</strong><span>Tu proceso puede incluir lo emocional, personal, social y otras áreas de crecimiento.</span></div><div className={styles.dimensionGrid}>{dimensions.map(([label, icon, fallback]) => <div key={label} className={styles.dimension}><SafeImage className={styles.dimensionIcon} src={icon} fallback={fallback} alt="" /><span>{label}</span></div>)}</div></div>
-      <CompetencyList competencies={competencyStats} iconMap={competencyIcons} />
+      <CompetencyList competencies={competencyStats} iconMap={competencyIcons} iconFallbackMap={competencyIconFallbacks} />
     </section>
   );
 }
