@@ -12,7 +12,7 @@ import {
 import ProgressBar from '../../components/ui/ProgressBar/ProgressBar';
 
 import styles from './CompetencyDetailPage.module.css';
-import competenciasIllustration from '../../assets/illustrations/competencias.svg';
+import IdentityVisual from '../../components/visual/IdentityVisual';
 
 
 function CompetencyDetailPage() {
@@ -149,7 +149,7 @@ function CompetencyDetailPage() {
 
       </header>
 
-      <div className={styles.heroVisual}><img src={competenciasIllustration} alt="" aria-hidden="true" /></div>
+      <IdentityVisual variant="competencias" />
 
 
       {/* ======================================
