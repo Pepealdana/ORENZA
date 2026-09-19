@@ -11,7 +11,7 @@ import login from '../../assets/illustrations/screens/login-illustration.png';
 import register from '../../assets/illustrations/screens/register-illustration.png';
 
 const images = {
-  bienvenida: register,
+  bienvenida: dashboardWelcome,
   inicio,
   dashboard: dashboardWelcome,
   historia: login,
