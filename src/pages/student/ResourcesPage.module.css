@@ -30,3 +30,13 @@
  .page, .section, .sectionHeader, .list { min-width: 0; max-width: 100%; }
 .sectionHeader > div { min-width: 0; }
 .title, .description, .sectionHeader h2 { overflow-wrap: anywhere; }
+
+
+
+/* Mobile layout correction */
+@media (max-width: 600px) {
+  .page { width: 100%; max-width: 100%; min-width: 0; }
+  .header, .section, .sectionHeader, .list { min-width: 0; max-width: 100%; }
+  .title, .description, .sectionHeader h2 { overflow-wrap: anywhere; }
+}
+
