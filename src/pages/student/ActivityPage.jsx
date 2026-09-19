@@ -21,7 +21,7 @@ import {
 } from '../../utils/dateUtils';
 
 import styles from './ActivityPage.module.css';
-import actividadesIllustration from '../../assets/illustrations/actividades.svg';
+import IdentityVisual from '../../components/visual/IdentityVisual';
 
 
 function ActivityPage() {
@@ -335,7 +335,7 @@ function ActivityPage() {
 
       </header>
 
-      <div className={styles.heroVisual}><img src={actividadesIllustration} alt="" aria-hidden="true" /></div>
+      <IdentityVisual variant="actividades" />
 
 
       {/* ======================================
