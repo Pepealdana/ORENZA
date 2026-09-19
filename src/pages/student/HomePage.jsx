@@ -21,23 +21,26 @@ function HomePage() {
           ======================================== */}
 
       <header className={styles.header}>
-        <IdentityVisual variant="inicio" />
+        <div className={styles.headerCopy}>
+          <p className={styles.eyebrow}>
+            Bienvenido a ORENZA
+          </p>
 
-        <p className={styles.eyebrow}>
-          Bienvenido a ORENZA
-        </p>
+          <h1 className={styles.title}>
+            Hola, {name}
+          </h1>
 
-        <h1 className={styles.title}>
-          Hola, {name}
-        </h1>
+          <p className={styles.description}>
+            Este es un espacio para conocerte,
+            explorar lo que sientes y descubrir
+            poco a poco todo lo que puedes desarrollar
+            en ti.
+          </p>
+        </div>
 
-        <p className={styles.description}>
-          Este es un espacio para conocerte,
-          explorar lo que sientes y descubrir
-          poco a poco todo lo que puedes desarrollar
-          en ti.
-        </p>
-
+        <div className={styles.headerVisual}>
+          <IdentityVisual variant="inicio" />
+        </div>
       </header>
 
 
