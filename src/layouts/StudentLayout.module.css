@@ -1,26 +1,35 @@
 .layout {
   min-height: 100vh;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
   background: var(--color-gray-light);
 }
 
 .body {
   display: flex;
   width: 100%;
+  min-width: 0;
   min-height: calc(100vh - var(--header-height-mobile));
 }
 
 .main {
-  flex: 1;
+  flex: 1 1 auto;
   min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
   padding: var(--space-3) var(--space-2) calc(var(--space-7) + 80px);
 }
 
 @media (min-width: 1024px) {
-  .body {
-    min-height: calc(100vh - var(--header-height-desktop));
-  }
+  .body { min-height: calc(100vh - var(--header-height-desktop)); }
+  .main { padding: var(--space-5) clamp(32px, 4vw, 64px); }
+}
 
+@media (max-width: 700px) {
   .main {
-    padding: var(--space-5) clamp(32px, 4vw, 64px);
+    padding-inline: 12px;
+    padding-bottom: calc(var(--space-7) + 80px);
   }
 }
