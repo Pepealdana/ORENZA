@@ -59,6 +59,7 @@ export const api = {
     method: 'PATCH',
     body: JSON.stringify(payload),
   }),
+  getCounselorOverview: () => request('/counselor/overview'),
 };
 
 export { API_URL };
