@@ -1,7 +1,7 @@
 .wrapper {
   width: 100%;
-  max-width: 980px;
-  margin: 0 auto;
+  max-width: 760px;
+  margin: 0 auto var(--space-3);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -13,7 +13,7 @@
   display: block;
   width: 100%;
   height: auto;
-  max-height: 520px;
+  max-height: 300px;
   object-fit: contain;
   object-position: center;
   border-radius: var(--radius-card);
@@ -24,20 +24,20 @@
 }
 
 .compact {
-  max-width: 420px;
+  max-width: 360px;
 }
 
 .compact img {
-  max-height: 260px;
+  max-height: 190px;
 }
 
 @media (max-width: 1024px) {
   .wrapper {
-    max-width: 900px;
+    max-width: 700px;
   }
 
   .wrapper img {
-    max-height: 460px;
+    max-height: 260px;
   }
 }
 
@@ -45,12 +45,16 @@
   .wrapper {
     width: 100%;
     max-width: 100%;
+    margin-bottom: var(--space-3);
+    padding: 0;
   }
 
   .wrapper img {
     width: 100%;
-    max-height: 310px;
-    border-radius: 16px;
+    height: auto;
+    max-height: 180px;
+    object-fit: contain;
+    border-radius: 14px;
   }
 
   .compact {
@@ -58,6 +62,16 @@
   }
 
   .compact img {
-    max-height: 220px;
+    max-height: 150px;
+  }
+}
+
+@media (max-width: 480px) {
+  .wrapper img {
+    max-height: 165px;
+  }
+
+  .compact img {
+    max-height: 135px;
   }
 }
