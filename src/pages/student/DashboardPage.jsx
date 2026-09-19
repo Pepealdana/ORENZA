@@ -273,7 +273,7 @@ function DashboardPage() {
           ======================================== */}
 
       <header className={styles.header}>
-        <IdentityVisual variant="bienvenida" />
+        <IdentityVisual variant="dashboard" />
 
         <p className={styles.greeting}>
           Hola, {name}
