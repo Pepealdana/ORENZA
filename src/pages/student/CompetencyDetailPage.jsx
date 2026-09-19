@@ -12,7 +12,10 @@ import {
 import ProgressBar from '../../components/ui/ProgressBar/ProgressBar';
 
 import styles from './CompetencyDetailPage.module.css';
-import competencyIllustration from '../../assets/illustrations/screens/autoregulacion.png';
+import autoconocimientoIllustration from '../../assets/illustrations/screens/autoconocimiento.png';
+import autorregulacionIllustration from '../../assets/illustrations/screens/autoregulacion.png';
+import empatiaIllustration from '../../assets/illustrations/screens/empatia.png';
+import relacionesIllustration from '../../assets/illustrations/screens/relaciones.png';
 
 
 function CompetencyDetailPage() {
@@ -38,6 +41,16 @@ function CompetencyDetailPage() {
     studentData.competencies[
       competencyIndex
     ];
+
+  const competencyIllustrations = {
+    autoconocimiento: autoconocimientoIllustration,
+    autorregulacion: autorregulacionIllustration,
+    empatia: empatiaIllustration,
+    relaciones: relacionesIllustration,
+  };
+
+  const competencyIllustration =
+    competencyIllustrations[competencyId];
 
 
   /*
