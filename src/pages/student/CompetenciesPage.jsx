@@ -1,4 +1,5 @@
 import { Target } from 'lucide-react';
+import { useStudentProgress } from '../../hooks/useStudentProgress';
 import studentData from '../../data/studentData';
 import CompetencyList from '../../components/competencies/CompetencyList/CompetencyList';
 import { getAllCompetencyStats } from '../../utils/competencyUtils';
@@ -42,7 +43,8 @@ const dimensions = [
 
 function CompetenciesPage() {
   const { competencies } = studentData;
-  const competencyStats = getAllCompetencyStats(competencies);
+  const { completedActivities } = useStudentProgress();
+  const competencyStats = getAllCompetencyStats(competencies, completedActivities);
 
   return (
     <section className={styles.page}>
