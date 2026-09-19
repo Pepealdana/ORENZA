@@ -49,7 +49,7 @@ function CompetenciesPage() {
         <p><strong>Tu progreso es personal.</strong> Las experiencias que realizas te ayudan a explorar diferentes competencias. No se trata de competir ni de alcanzar una calificación.</p>
       </section>
       <IdentityVisual variant="competencias" />
-      <div className={styles.competencyVisual}><div><strong>Explora diferentes dimensiones de ti</strong><span>Tu proceso puede incluir lo emocional, personal, social y otras áreas de crecimiento.</span></div><div className={styles.dimensionGrid}>{dimensions.map(([label, icon]) => <div key={label} className={styles.dimension}><img src={icon} alt="" aria-hidden="true" /><span>{label}</span></div>)}</div></div>
+      <div className={styles.competencyVisual}><div><strong>Explora diferentes dimensiones de ti</strong><span>Tu proceso puede incluir lo emocional, personal, social y otras áreas de crecimiento.</span></div><div className={styles.dimensionGrid}>{dimensions.map(([label, icon]) => <div key={label} className={styles.dimension}><img className={styles.dimensionIcon} src={icon} alt="" aria-hidden="true" /><span>{label}</span></div>)}</div></div>
       <CompetencyList competencies={competencyStats} iconMap={competencyIcons} />
     </section>
   );
