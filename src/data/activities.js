@@ -892,4 +892,355 @@ const activities = [
 ];
 
 
+  /*
+   * ========================================
+   * EXPERIENCIAS ADICIONALES — AUTOCONOCIMIENTO
+   * ========================================
+   */
+
+  {
+    id: 'mi-mapa-personal',
+    title: 'Mi mapa personal',
+    description: 'Reconoce personas, lugares, actividades y experiencias que forman parte de tu historia.',
+    purpose: 'Explorar elementos significativos de la propia identidad.',
+    type: 'creative',
+    estimatedTime: 8,
+    ageRange: { min: 13, max: 18 },
+    competencies: { primary: 'autoconocimiento', secondary: ['relaciones-positivas'] },
+    emotions: ['tranquilidad', 'alegria', 'motivacion'],
+    difficulty: 'easy',
+    repeatable: true,
+    steps: [
+      { id: 'step-1', type: 'question', question: 'Escribe tres personas, lugares o actividades que sean importantes para ti.', responseType: 'textarea' },
+      { id: 'step-2', type: 'question', question: '¿Qué has aprendido de alguno de ellos?', responseType: 'textarea' },
+      { id: 'step-3', type: 'reflection', question: '¿Qué parte de ese mapa te gustaría cuidar o explorar más?', responseType: 'textarea' },
+    ],
+  },
+
+  {
+    id: 'lo-que-he-aprendido-de-mi',
+    title: 'Lo que he aprendido de mí',
+    description: 'Mira experiencias recientes y descubre qué te han enseñado sobre ti.',
+    purpose: 'Identificar aprendizajes personales a partir de experiencias cotidianas.',
+    type: 'journal',
+    estimatedTime: 6,
+    ageRange: { min: 13, max: 18 },
+    competencies: { primary: 'autoconocimiento', secondary: [] },
+    emotions: ['tranquilidad', 'motivacion'],
+    difficulty: 'easy',
+    repeatable: true,
+    steps: [
+      { id: 'step-1', type: 'question', question: 'Piensa en algo que hayas aprendido recientemente sobre ti.', responseType: 'textarea' },
+      { id: 'step-2', type: 'question', question: '¿Qué situación te ayudó a descubrirlo?', responseType: 'textarea' },
+      { id: 'step-3', type: 'reflection', question: '¿Cómo podrías usar ese aprendizaje en una situación futura?', responseType: 'textarea' },
+    ],
+  },
+
+  {
+    id: 'mis-pequenas-victorias',
+    title: 'Mis pequeñas victorias',
+    description: 'Reconoce avances cotidianos que a veces pasan desapercibidos.',
+    purpose: 'Valorar procesos y avances personales sin compararse con otras personas.',
+    type: 'reflection',
+    estimatedTime: 5,
+    ageRange: { min: 13, max: 18 },
+    competencies: { primary: 'autoconocimiento', secondary: ['autorregulacion'] },
+    emotions: ['alegria', 'motivacion', 'tranquilidad'],
+    difficulty: 'easy',
+    repeatable: true,
+    steps: [
+      { id: 'step-1', type: 'question', question: 'Menciona tres cosas pequeñas que hayas logrado o intentado recientemente.', responseType: 'textarea' },
+      { id: 'step-2', type: 'question', question: '¿Cuál de ellas te costó más de lo que parecía?', responseType: 'textarea' },
+      { id: 'step-3', type: 'reflection', question: '¿Qué te gustaría reconocer más de tu propio proceso?', responseType: 'textarea' },
+    ],
+  },
+
+  {
+    id: 'mi-version-del-futuro',
+    title: 'Mi versión del futuro',
+    description: 'Imagina cómo te gustaría verte desarrollando algunas de tus capacidades.',
+    purpose: 'Explorar aspiraciones personales desde una perspectiva flexible y realista.',
+    type: 'exploration',
+    estimatedTime: 8,
+    ageRange: { min: 13, max: 18 },
+    competencies: { primary: 'autoconocimiento', secondary: ['autorregulacion'] },
+    emotions: ['motivacion', 'tranquilidad'],
+    difficulty: 'medium',
+    repeatable: true,
+    steps: [
+      { id: 'step-1', type: 'question', question: '¿Qué habilidad personal te gustaría fortalecer durante los próximos meses?', responseType: 'textarea' },
+      { id: 'step-2', type: 'question', question: '¿Por qué sería importante para ti?', responseType: 'textarea' },
+      { id: 'step-3', type: 'reflection', question: '¿Cuál sería un primer paso pequeño y posible?', responseType: 'textarea' },
+    ],
+  },
+
+  {
+    id: 'lo-que-me-motiva',
+    title: 'Lo que me motiva',
+    description: 'Explora qué situaciones despiertan tu interés, curiosidad o ganas de aprender.',
+    purpose: 'Identificar fuentes personales de motivación y curiosidad.',
+    type: 'observation',
+    estimatedTime: 6,
+    ageRange: { min: 13, max: 18 },
+    competencies: { primary: 'autoconocimiento', secondary: [] },
+    emotions: ['alegria', 'motivacion'],
+    difficulty: 'easy',
+    repeatable: true,
+    steps: [
+      { id: 'step-1', type: 'question', question: '¿Qué actividades hacen que pierdas la noción del tiempo porque te interesan?', responseType: 'textarea' },
+      { id: 'step-2', type: 'question', question: '¿Prefieres aprender haciendo, leyendo, conversando, creando o de otra manera?', responseType: 'textarea' },
+      { id: 'step-3', type: 'reflection', question: '¿Cómo podrías aprovechar una de esas formas de motivación esta semana?', responseType: 'textarea' },
+    ],
+  },
+
+
+  /*
+   * ========================================
+   * EXPERIENCIAS ADICIONALES — AUTORREGULACIÓN
+   * ========================================
+   */
+
+  {
+    id: 'mi-pausa-consciente',
+    title: 'Mi pausa consciente',
+    description: 'Identifica una pausa sencilla que puedas utilizar cuando necesites ordenar tus ideas.',
+    purpose: 'Explorar estrategias cotidianas de pausa antes de actuar.',
+    type: 'challenge',
+    estimatedTime: 4,
+    ageRange: { min: 13, max: 18 },
+    competencies: { primary: 'autorregulacion', secondary: ['autoconocimiento'] },
+    emotions: ['enojo', 'frustracion', 'preocupacion'],
+    difficulty: 'easy',
+    repeatable: true,
+    steps: [
+      { id: 'step-1', type: 'question', question: '¿Cómo notas que necesitas hacer una pausa?', responseType: 'textarea' },
+      { id: 'step-2', type: 'question', question: '¿Qué acción breve te resulta más natural: respirar, tomar agua, caminar o guardar silencio?', responseType: 'textarea' },
+      { id: 'step-3', type: 'reflection', question: '¿En qué situación cotidiana podrías probarla?', responseType: 'textarea' },
+    ],
+  },
+
+  {
+    id: 'semaforo-de-reacciones',
+    title: 'Semáforo de reacciones',
+    description: 'Diferencia una reacción impulsiva, una pausa y una respuesta pensada.',
+    purpose: 'Reconocer alternativas entre reaccionar inmediatamente y responder con intención.',
+    type: 'situation',
+    estimatedTime: 6,
+    ageRange: { min: 13, max: 18 },
+    competencies: { primary: 'autorregulacion', secondary: ['relaciones-positivas'] },
+    emotions: ['enojo', 'frustracion', 'preocupacion'],
+    difficulty: 'medium',
+    repeatable: true,
+    steps: [
+      { id: 'step-1', type: 'question', question: 'Piensa en una situación que suele alterarte. ¿Qué sería una reacción en “rojo”?', responseType: 'textarea' },
+      { id: 'step-2', type: 'question', question: '¿Qué podría significar poner la situación en “amarillo” y hacer una pausa?', responseType: 'textarea' },
+      { id: 'step-3', type: 'reflection', question: '¿Cómo sería una respuesta en “verde” que cuide lo que necesitas y también a los demás?', responseType: 'textarea' },
+    ],
+  },
+
+  {
+    id: 'cuando-mi-mente-se-llena',
+    title: 'Cuando mi mente se llena',
+    description: 'Observa qué haces cuando tienes muchas cosas pendientes o pensamientos al mismo tiempo.',
+    purpose: 'Reconocer señales de saturación cotidiana y organizar pequeñas acciones posibles.',
+    type: 'journal',
+    estimatedTime: 7,
+    ageRange: { min: 13, max: 18 },
+    competencies: { primary: 'autorregulacion', secondary: ['autoconocimiento'] },
+    emotions: ['preocupacion', 'frustracion'],
+    difficulty: 'medium',
+    repeatable: true,
+    steps: [
+      { id: 'step-1', type: 'question', question: '¿Qué suele pasar cuando tienes demasiadas cosas en la cabeza?', responseType: 'textarea' },
+      { id: 'step-2', type: 'question', question: 'Escribe tres cosas que tengas pendientes y ordénalas por prioridad.', responseType: 'textarea' },
+      { id: 'step-3', type: 'reflection', question: '¿Cuál es la primera acción pequeña que puedes realizar?', responseType: 'textarea' },
+    ],
+  },
+
+  {
+    id: 'elegir-con-calma',
+    title: 'Elegir con calma',
+    description: 'Practica detenerte a considerar opciones antes de tomar una decisión cotidiana.',
+    purpose: 'Explorar una secuencia sencilla para tomar decisiones con mayor intención.',
+    type: 'decision',
+    estimatedTime: 6,
+    ageRange: { min: 13, max: 18 },
+    competencies: { primary: 'autorregulacion', secondary: ['autoconocimiento'] },
+    emotions: ['preocupacion', 'tranquilidad'],
+    difficulty: 'medium',
+    repeatable: true,
+    steps: [
+      { id: 'step-1', type: 'question', question: 'Piensa en una decisión pequeña que tengas pendiente. ¿Cuáles son tus opciones?', responseType: 'textarea' },
+      { id: 'step-2', type: 'question', question: '¿Qué podría pasar con cada opción?', responseType: 'textarea' },
+      { id: 'step-3', type: 'reflection', question: '¿Qué opción se relaciona mejor con lo que quieres cuidar o conseguir?', responseType: 'textarea' },
+    ],
+  },
+
+
+  /*
+   * ========================================
+   * EXPERIENCIAS ADICIONALES — EMPATÍA
+   * ========================================
+   */
+
+  {
+    id: 'dos-miradas-una-situacion',
+    title: 'Dos miradas, una situación',
+    description: 'Explora cómo dos personas pueden vivir de manera diferente una misma situación.',
+    purpose: 'Practicar la toma de perspectiva sin asumir que conocemos lo que otra persona piensa.',
+    type: 'situation',
+    estimatedTime: 7,
+    ageRange: { min: 13, max: 18 },
+    competencies: { primary: 'empatia', secondary: ['relaciones-positivas'] },
+    emotions: ['preocupacion', 'enojo', 'tranquilidad'],
+    difficulty: 'medium',
+    repeatable: true,
+    steps: [
+      { id: 'step-1', type: 'question', question: 'Piensa en un desacuerdo reciente. ¿Cómo lo viste tú?', responseType: 'textarea' },
+      { id: 'step-2', type: 'question', question: '¿Qué podría haber visto o sentido la otra persona?', responseType: 'textarea' },
+      { id: 'step-3', type: 'reflection', question: '¿Qué información te faltaría para comprender mejor la situación?', responseType: 'textarea' },
+    ],
+  },
+
+  {
+    id: 'escuchar-sin-resolver',
+    title: 'Escuchar sin resolver',
+    description: 'Practica escuchar a alguien sin convertir inmediatamente la conversación en un problema que debes solucionar.',
+    purpose: 'Diferenciar escuchar, comprender y aconsejar en una conversación.',
+    type: 'challenge',
+    estimatedTime: 5,
+    ageRange: { min: 13, max: 18 },
+    competencies: { primary: 'empatia', secondary: ['relaciones-positivas'] },
+    emotions: ['tranquilidad', 'preocupacion'],
+    difficulty: 'easy',
+    repeatable: true,
+    steps: [
+      { id: 'step-1', type: 'question', question: 'Cuando alguien te cuenta un problema, ¿qué haces normalmente?', responseType: 'textarea' },
+      { id: 'step-2', type: 'question', question: '¿Qué pregunta podrías hacer para comprender mejor antes de dar una opinión?', responseType: 'textarea' },
+      { id: 'step-3', type: 'reflection', question: '¿Qué podría sentir una persona cuando nota que realmente la están escuchando?', responseType: 'textarea' },
+    ],
+  },
+
+  {
+    id: 'no-tengo-toda-la-historia',
+    title: 'No tengo toda la historia',
+    description: 'Distingue entre lo que observas y lo que supones sobre una persona.',
+    purpose: 'Reducir interpretaciones apresuradas y abrir espacio a diferentes explicaciones.',
+    type: 'observation',
+    estimatedTime: 5,
+    ageRange: { min: 13, max: 18 },
+    competencies: { primary: 'empatia', secondary: ['autoconocimiento'] },
+    emotions: ['preocupacion', 'enojo'],
+    difficulty: 'easy',
+    repeatable: true,
+    steps: [
+      { id: 'step-1', type: 'question', question: 'Alguien no te saluda al llegar. ¿Qué sabes realmente de la situación?', responseType: 'textarea' },
+      { id: 'step-2', type: 'question', question: 'Escribe dos explicaciones diferentes que también podrían ser posibles.', responseType: 'textarea' },
+      { id: 'step-3', type: 'reflection', question: '¿Qué pregunta respetuosa podrías hacer antes de sacar una conclusión?', responseType: 'textarea' },
+    ],
+  },
+
+  {
+    id: 'palabras-que-acompanan',
+    title: 'Palabras que acompañan',
+    description: 'Explora cómo una misma intención puede expresarse de formas que hacen sentir diferente a la otra persona.',
+    purpose: 'Reconocer el impacto de las palabras y elegir formas de comunicación consideradas.',
+    type: 'creative',
+    estimatedTime: 6,
+    ageRange: { min: 13, max: 18 },
+    competencies: { primary: 'empatia', secondary: ['relaciones-positivas'] },
+    emotions: ['tranquilidad', 'alegria'],
+    difficulty: 'medium',
+    repeatable: true,
+    steps: [
+      { id: 'step-1', type: 'question', question: 'Piensa en una frase que alguien podría decir cuando otra persona está pasando por un momento difícil.', responseType: 'textarea' },
+      { id: 'step-2', type: 'question', question: '¿Cómo podrías decirla de una manera que acompañe sin minimizar lo que siente?', responseType: 'textarea' },
+      { id: 'step-3', type: 'reflection', question: '¿Qué diferencia hay entre intentar arreglar un problema y acompañar a alguien?', responseType: 'textarea' },
+    ],
+  },
+
+
+  /*
+   * ========================================
+   * EXPERIENCIAS ADICIONALES — RELACIONES POSITIVAS
+   * ========================================
+   */
+
+  {
+    id: 'pedir-ayuda-tambien-es-cuidarme',
+    title: 'Pedir ayuda también es cuidarme',
+    description: 'Explora cómo identificar cuándo necesitas apoyo y cómo puedes pedirlo de manera clara.',
+    purpose: 'Reconocer la búsqueda de apoyo como una habilidad de cuidado personal y relacional.',
+    type: 'reflection',
+    estimatedTime: 6,
+    ageRange: { min: 13, max: 18 },
+    competencies: { primary: 'relaciones-positivas', secondary: ['autoconocimiento'] },
+    emotions: ['preocupacion', 'tristeza', 'tranquilidad'],
+    difficulty: 'easy',
+    repeatable: true,
+    steps: [
+      { id: 'step-1', type: 'question', question: '¿Qué señales te indican que sería bueno hablar con alguien de confianza?', responseType: 'textarea' },
+      { id: 'step-2', type: 'question', question: '¿Con quién podrías hablar en una situación cotidiana?', responseType: 'textarea' },
+      { id: 'step-3', type: 'reflection', question: 'Escribe una frase sencilla que podrías usar para pedir apoyo.', responseType: 'textarea' },
+    ],
+  },
+
+  {
+    id: 'conversaciones-dificiles',
+    title: 'Conversaciones difíciles',
+    description: 'Prepara una conversación importante pensando qué quieres expresar y cómo quieres hacerlo.',
+    purpose: 'Practicar una comunicación clara y respetuosa en situaciones difíciles.',
+    type: 'decision',
+    estimatedTime: 8,
+    ageRange: { min: 13, max: 18 },
+    competencies: { primary: 'relaciones-positivas', secondary: ['autorregulacion'] },
+    emotions: ['enojo', 'frustracion', 'preocupacion'],
+    difficulty: 'medium',
+    repeatable: true,
+    steps: [
+      { id: 'step-1', type: 'question', question: '¿Qué necesitas expresar y qué te gustaría que la otra persona comprendiera?', responseType: 'textarea' },
+      { id: 'step-2', type: 'question', question: '¿Qué palabras deberías evitar para no convertir la conversación en un ataque?', responseType: 'textarea' },
+      { id: 'step-3', type: 'reflection', question: '¿Qué sería una forma respetuosa de comenzar la conversación?', responseType: 'textarea' },
+    ],
+  },
+
+  {
+    id: 'agradecer-de-forma-concreta',
+    title: 'Agradecer de forma concreta',
+    description: 'Reconoce una acción de otra persona y expresa por qué fue importante para ti.',
+    purpose: 'Fortalecer vínculos mediante reconocimiento y comunicación positiva.',
+    type: 'challenge',
+    estimatedTime: 4,
+    ageRange: { min: 13, max: 18 },
+    competencies: { primary: 'relaciones-positivas', secondary: ['empatia'] },
+    emotions: ['alegria', 'tranquilidad'],
+    difficulty: 'easy',
+    repeatable: true,
+    steps: [
+      { id: 'step-1', type: 'question', question: 'Piensa en alguien que haya hecho algo que valoraste recientemente.', responseType: 'textarea' },
+      { id: 'step-2', type: 'question', question: '¿Qué hizo exactamente?', responseType: 'textarea' },
+      { id: 'step-3', type: 'reflection', question: 'Escribe un mensaje breve y concreto para agradecerlo.', responseType: 'textarea' },
+    ],
+  },
+
+  {
+    id: 'resolver-un-desacuerdo',
+    title: 'Resolver un desacuerdo',
+    description: 'Explora distintas formas de afrontar un desacuerdo sin convertirlo en una competencia.',
+    purpose: 'Practicar alternativas para manejar diferencias y buscar acuerdos posibles.',
+    type: 'situation',
+    estimatedTime: 7,
+    ageRange: { min: 13, max: 18 },
+    competencies: { primary: 'relaciones-positivas', secondary: ['empatia', 'autorregulacion'] },
+    emotions: ['enojo', 'frustracion', 'tranquilidad'],
+    difficulty: 'medium',
+    repeatable: true,
+    steps: [
+      { id: 'step-1', type: 'question', question: 'Piensa en un desacuerdo cotidiano. ¿Qué quiere cada persona?', responseType: 'textarea' },
+      { id: 'step-2', type: 'question', question: '¿Qué parte del problema podría hablarse con calma?', responseType: 'textarea' },
+      { id: 'step-3', type: 'reflection', question: '¿Qué acuerdo sería razonable sin que ninguna persona tenga que ignorar completamente lo que necesita?', responseType: 'textarea' },
+    ],
+  },
+
+
 export default activities;
