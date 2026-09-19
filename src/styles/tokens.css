@@ -64,3 +64,17 @@
   --header-height-desktop: 72px;
   --sidebar-width: 248px;
 }
+
+
+:root[data-theme="contraste"] {
+  --color-primary: #123A5C;
+  --color-primary-dark: #0B2941;
+  --color-primary-soft: #DDEAF5;
+  --color-accent: #007A78;
+  --color-accent-soft: #D8F1F0;
+  --color-gray-light: #EEF1F4;
+  --color-gray-medium: #AAB4C0;
+  --color-gray-dark: #354352;
+  --color-text-primary: #102235;
+  --color-text-secondary: #243647;
+}
