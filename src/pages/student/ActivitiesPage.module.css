@@ -735,3 +735,25 @@
 .heroVisual{margin:0 0 var(--space-3);overflow:hidden;background:#F5FAFC;border-radius:var(--radius-card);border:1px solid var(--color-gray-medium)}
 .heroVisual img{display:block;width:100%;height:auto;max-height:250px;object-fit:cover}
 @media(max-width:600px){.heroVisual img{max-height:190px}}
+
+
+/* Responsive hardening */
+@media (max-width: 600px) {
+  .page, .header, .summary, .filtersSection, .activitiesSection, .footerMessage { min-width: 0; max-width: 100%; }
+  .header { flex-wrap: nowrap; }
+  .header > div:last-child { min-width: 0; }
+  .header h1, .description { overflow-wrap: anywhere; }
+  .summary { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .summary > div { min-width: 0; }
+  .summary span { overflow-wrap: anywhere; }
+  .filters { flex-wrap: wrap; overflow-x: visible; }
+  .filterButton { flex: 0 1 auto; max-width: 100%; white-space: normal; }
+  .cardTop { flex-wrap: wrap; }
+  .repeatable, .completed { white-space: normal; }
+  .activityCard { min-width: 0; }
+  .startButton { width: 100%; min-width: 0; }
+}
+@media (max-width: 380px) {
+  .summary { grid-template-columns: 1fr; }
+  .summary > div + div { border-top: 1px solid var(--color-gray-medium); }
+}
