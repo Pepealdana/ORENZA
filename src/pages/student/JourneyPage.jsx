@@ -25,7 +25,6 @@ import {
 
 import styles from './JourneyPage.module.css';
 import IdentityVisual from '../../components/visual/IdentityVisual';
-import bienestarIcon from '../../assets/illustrations/bienestar.svg';
 
 
 /*
