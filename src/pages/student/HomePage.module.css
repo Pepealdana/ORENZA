@@ -433,3 +433,51 @@
   .highlight { width: 100%; }
   .highlightVisual { width: 100%; max-width: 100%; }
 }
+
+
+/* ========================================
+   IDENTIDAD VISUAL — HERO
+   ======================================== */
+
+.header {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(260px, .95fr);
+  align-items: center;
+  gap: clamp(24px, 5vw, 56px);
+  padding: clamp(20px, 4vw, 36px);
+  background: var(--color-white);
+  border: 1px solid var(--color-gray-medium);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-1);
+}
+
+.headerCopy {
+  min-width: 0;
+}
+
+.headerVisual {
+  min-width: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.headerVisual > div {
+  width: 100%;
+  max-width: 360px;
+}
+
+@media (max-width: 760px) {
+  .header {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    padding: 20px;
+  }
+
+  .headerVisual {
+    order: -1;
+  }
+
+  .headerVisual > div {
+    max-width: 330px;
+  }
+}
