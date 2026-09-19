@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -83,7 +83,8 @@ function DashboardPage() {
 
   const competencyStats =
     getAllCompetencyStats(
-      competencies
+      competencies,
+      completedActivities
     );
 
 
@@ -92,12 +93,11 @@ function DashboardPage() {
    * ACTIVIDADES RECIENTES
    * ========================================
    *
-   * La fuente de verdad es activityStorage.
+   * La fuente de verdad es el progreso
+   * persistido del estudiante.
    *
-   * activities.js contiene la información
-   * de las actividades.
-   *
-   * No utilizamos studentData.recentActivities.
+   * activities.js contiene el catálogo
+   * de actividades.
    */
 
 
