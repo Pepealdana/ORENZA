@@ -54,7 +54,7 @@ function RegisterPage() {
     <main className={styles.page}>
       <section className={styles.card} aria-labelledby="register-title">
         <div className={styles.brand}><img src={orenzaLogo} alt="ORENZA" /></div>
-        <IdentityVisual variant="bienvenida" />
+        <IdentityVisual variant="registro" />
         <header className={styles.header}>
           <p className={styles.eyebrow}>Comienza tu recorrido</p>
           <h1 id="register-title" className={styles.title}>Crear cuenta</h1>
