@@ -48,3 +48,46 @@
 .illustration { margin: 0 0 var(--space-3); overflow: hidden; border-radius: var(--radius-card); }
 .illustration img { display: block; width: 100%; height: auto; max-height: 260px; object-fit: cover; }
 @media (max-width: 480px) { .illustration img { max-height: 220px; } }
+
+
+/* ========================================
+   IDENTIDAD VISUAL — AUTENTICACIÓN
+   ======================================== */
+
+@media (min-width: 760px) {
+  .card {
+    width: min(100%, 900px);
+    display: grid;
+    grid-template-columns: minmax(280px, .9fr) minmax(320px, 1fr);
+    column-gap: clamp(28px, 5vw, 52px);
+    align-items: center;
+  }
+
+  .card > .wrapper {
+    grid-column: 1;
+    grid-row: 1 / span 7;
+    width: 100%;
+    max-width: 360px;
+    margin: 0 auto;
+  }
+
+  .card > .brand,
+  .card > .header,
+  .card > .form,
+  .card > .footer,
+  .card > .alert {
+    grid-column: 2;
+  }
+
+  .card > .brand {
+    margin-bottom: var(--space-2);
+  }
+
+  .card > .header {
+    margin-bottom: var(--space-2);
+  }
+
+  .card > .footer {
+    margin-bottom: 0;
+  }
+}
