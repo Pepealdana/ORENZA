@@ -1,8 +1,10 @@
 .wrapper {
-  width: 100%;
-  max-width: 760px;
+  width: min(100%, 720px);
+  height: 360px;
   margin: 0 auto var(--space-4);
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
   background: var(--color-white);
   border-radius: var(--radius-card);
@@ -11,27 +13,63 @@
 .wrapper img {
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
   max-width: 100%;
   object-fit: contain;
   object-position: center;
   border-radius: var(--radius-card);
 }
 
-.hero { width: 100%; }
-.compact { max-width: 360px; }
+.hero {
+  width: min(100%, 720px);
+}
+
+.compact {
+  width: min(100%, 360px);
+  height: 180px;
+}
+
+@media (max-width: 1023px) {
+  .wrapper {
+    width: min(100%, 680px);
+    height: 320px;
+  }
+
+  .compact {
+    width: min(100%, 340px);
+    height: 170px;
+  }
+}
 
 @media (max-width: 700px) {
   .wrapper {
     width: 100%;
-    max-width: 100%;
+    height: min(58vw, 235px);
+    min-height: 180px;
     margin-bottom: var(--space-3);
+    border-radius: 16px;
   }
 
   .wrapper img {
     width: 100%;
-    height: auto;
+    height: 100%;
   }
 
-  .compact { max-width: 100%; }
+  .compact {
+    width: 100%;
+    height: min(48vw, 200px);
+    min-height: 150px;
+  }
+}
+
+@media (max-width: 380px) {
+  .wrapper {
+    height: 185px;
+    min-height: 185px;
+  }
+
+  .compact {
+    height: 155px;
+    min-height: 155px;
+  }
 }
