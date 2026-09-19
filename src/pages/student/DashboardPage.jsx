@@ -574,17 +574,10 @@ function DashboardPage() {
             (resource) => (
 
               <ResourceCard
-                key={
-                  resource.id
-                }
-
-                title={
-                  resource.title
-                }
-
-                type={
-                  resource.type
-                }
+                key={resource.id}
+                title={resource.title}
+                type={resource.type}
+                resourceId={resource.id}
               />
 
             )
