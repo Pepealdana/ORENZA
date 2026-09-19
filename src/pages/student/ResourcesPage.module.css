@@ -24,3 +24,9 @@
 .heroVisual{margin:0 0 var(--space-3);overflow:hidden;background:#F5FAFC;border-radius:var(--radius-card);border:1px solid var(--color-gray-medium)}
 .heroVisual img{display:block;width:100%;height:auto;max-height:250px;object-fit:cover}
 @media(max-width:600px){.heroVisual img{max-height:190px}}
+
+
+/* Responsive hardening */
+ .page, .section, .sectionHeader, .list { min-width: 0; max-width: 100%; }
+.sectionHeader > div { min-width: 0; }
+.title, .description, .sectionHeader h2 { overflow-wrap: anywhere; }
