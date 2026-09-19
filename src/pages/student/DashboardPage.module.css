@@ -17,3 +17,9 @@
 
 .welcomeVisual { width:100%; margin-bottom:var(--space-3); overflow:hidden; border-radius:var(--radius-card); background:var(--color-primary-soft); }
 .welcomeVisual img { display:block; width:100%; height:auto; max-height:240px; object-fit:cover; }
+
+
+/* Responsive hardening */
+ .page, .header, .section, .grid, .list { min-width: 0; max-width: 100%; }
+.header { overflow: hidden; }
+.title, .description { overflow-wrap: anywhere; }
