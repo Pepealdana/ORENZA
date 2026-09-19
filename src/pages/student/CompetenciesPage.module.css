@@ -43,3 +43,13 @@
   .dimensionIcon { width: 40px; height: 40px; }
   .dimension span { overflow-wrap: anywhere; }
 }
+
+
+
+/* Mobile layout correction */
+@media (max-width: 600px) {
+  .page { width: 100%; max-width: 100%; min-width: 0; }
+  .header, .introCard, .competencyVisual, .competencyList { min-width: 0; max-width: 100%; }
+  .header h1, .description, .introCard p, .competencyVisual span { overflow-wrap: anywhere; }
+}
+
