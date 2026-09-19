@@ -14,14 +14,16 @@ function AboutPage() {
         <p>Una herramienta digital de acompañamiento socioemocional.</p>
       </header>
 
-      <IdentityVisual variant="conocete" />
+      <section className={styles.hero}>
+        <div className={styles.intro}>
+          <p className={styles.eyebrow}>Conocer ORENZA</p>
+          <h1>Un espacio para conocerte mejor</h1>
+          <p>
+            ORENZA propone una experiencia centrada en el autoconocimiento, el desarrollo socioemocional, el acompañamiento y el crecimiento personal.
+          </p>
+        </div>
 
-      <section className={styles.intro}>
-        <p className={styles.eyebrow}>Conocer ORENZA</p>
-        <h1>Un espacio para conocerte mejor</h1>
-        <p>
-          ORENZA propone una experiencia centrada en el autoconocimiento, el desarrollo socioemocional, el acompañamiento y el crecimiento personal.
-        </p>
+        <IdentityVisual variant="conocete" />
       </section>
 
       <section className={styles.grid}>
