@@ -28,3 +28,18 @@
   display: block;
   margin: 0 auto 8px;
 }
+
+
+/* Responsive hardening */
+ .page, .header, .introCard, .competencyVisual { min-width: 0; max-width: 100%; }
+.header > div:last-child { min-width: 0; }
+.title, .description, .introCard p { overflow-wrap: anywhere; }
+.competencyVisual { overflow: hidden; }
+.dimensionGrid { min-width: 0; }
+.dimension { min-width: 0; }
+.dimensionIcon { width: 48px; height: 48px; object-fit: contain; }
+@media (max-width: 480px) {
+  .dimensionGrid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px 6px; }
+  .dimensionIcon { width: 40px; height: 40px; }
+  .dimension span { overflow-wrap: anywhere; }
+}
