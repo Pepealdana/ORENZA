@@ -78,6 +78,65 @@ router.post('/login', async (req, res, next) => {
   }
 });
 
+router.post('/reset-password', async (req, res, next) => {
+  try {
+    const { email, newPassword } = req.body;
+
+    if (!email || !newPassword) {
+      return res.status(400).json({ message: 'Correo y nueva contraseña son obligatorios.' });
+    }
+
+    if (newPassword.length < 8) {
+      return res.status(400).json({ message: 'La nueva contraseña debe tener mínimo 8 caracteres.' });
+    }
+
+    const user = await User.findOne({ email: email.toLowerCase() }).select('+password');
+
+    if (!user || !user.active) {
+      return res.status(404).json({ message: 'No encontramos una cuenta activa con ese correo.' });
+    }
+
+    user.password = await bcrypt.hash(newPassword, 12);
+    await user.save();
+
+    res.json({ message: 'Contraseña actualizada correctamente. Ya puedes iniciar sesión.' });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.patch('/change-password', requireAuth, async (req, res, next) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+
+    if (!currentPassword || !newPassword) {
+      return res.status(400).json({ message: 'La contraseña actual y la nueva son obligatorias.' });
+    }
+
+    if (newPassword.length < 8) {
+      return res.status(400).json({ message: 'La nueva contraseña debe tener mínimo 8 caracteres.' });
+    }
+
+    const user = await User.findById(req.user._id).select('+password');
+    const matches = user && await bcrypt.compare(currentPassword, user.password);
+
+    if (!matches) {
+      return res.status(401).json({ message: 'La contraseña actual no es correcta.' });
+    }
+
+    if (currentPassword === newPassword) {
+      return res.status(400).json({ message: 'La nueva contraseña debe ser diferente a la actual.' });
+    }
+
+    user.password = await bcrypt.hash(newPassword, 12);
+    await user.save();
+
+    res.json({ message: 'Contraseña actualizada correctamente.' });
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.get('/me', requireAuth, (req, res) => {
   res.json({ user: publicUser(req.user) });
 });
