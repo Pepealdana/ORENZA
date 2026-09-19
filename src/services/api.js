@@ -33,6 +33,14 @@ export const api = {
     method: 'POST',
     body: JSON.stringify(payload),
   }),
+  resetPassword: (payload) => request('/auth/reset-password', {
+    method: 'POST',
+    body: JSON.stringify(payload),
+  }),
+  changePassword: (payload) => request('/auth/change-password', {
+    method: 'PATCH',
+    body: JSON.stringify(payload),
+  }),
   me: () => request('/auth/me'),
   getProfile: () => request('/student/profile'),
   updateProfile: (payload) => request('/student/profile', {
