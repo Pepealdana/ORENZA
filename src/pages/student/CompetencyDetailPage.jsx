@@ -12,7 +12,7 @@ import {
 import ProgressBar from '../../components/ui/ProgressBar/ProgressBar';
 
 import styles from './CompetencyDetailPage.module.css';
-import competencyIllustration from '../../assets/illustrations/screens/autoregulacion.png.png';
+import competencyIllustration from '../../assets/illustrations/screens/autoregulacion.png';
 
 
 function CompetencyDetailPage() {
