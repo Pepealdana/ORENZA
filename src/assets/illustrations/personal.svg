@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
-<circle cx="128" cy="128" r="116" fill="#FFF6D9"/>
-<circle cx="128" cy="128" r="82" fill="#D99A00" opacity=".12"/>
-<text x="128" y="151" text-anchor="middle" font-family="Arial,sans-serif" font-size="82" font-weight="700" fill="#D99A00">◆</text>
-</svg>
