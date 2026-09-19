@@ -158,3 +158,16 @@
 .heroVisual { margin: 0 0 var(--space-4); overflow: hidden; border-radius: var(--radius-card); box-shadow: var(--shadow-1); }
 .heroVisual img { display: block; width: 100%; height: auto; max-height: 300px; object-fit: cover; }
 @media (max-width: 480px) { .heroVisual { margin-bottom: var(--space-3); } .heroVisual img { max-height: 220px; } }
+
+
+/* Responsive hardening */
+ .page, .headerContent, .summary, .latestCard, .activityHistoryItem, .historyItem, .reflection { min-width: 0; max-width: 100%; }
+.headerContent > div:last-child, .activityHistoryContent, .historyContent { min-width: 0; }
+.header h1, .description, .activityHistoryContent h3, .activityHistoryContent > p, .historyContent p { overflow-wrap: anywhere; }
+@media (max-width: 480px) {
+  .latestCard { align-items: flex-start; }
+  .activityHistoryItem { grid-template-columns: 40px minmax(0, 1fr); }
+  .activityHistoryButton { grid-column: 2; width: 100%; min-width: 0; }
+  .historyItem { grid-template-columns: 48px 38px minmax(0, 1fr); }
+  .actionButton { width: 100%; min-width: 0; }
+}
