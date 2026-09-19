@@ -408,11 +408,8 @@ function DashboardPage() {
 
           status="recommended"
 
-          date={
-            today
-              .suggestedActivity
-              .estimatedTime
-          }
+          date={today.suggestedActivity.estimatedTime}
+          activityId={today.suggestedActivity.id}
         />
 
       </section>
@@ -523,9 +520,8 @@ function DashboardPage() {
                     activity.status
                   }
 
-                  date={
-                    activity.date
-                  }
+                  date={activity.date}
+                  activityId={activity.activityId}
                 />
 
               )
