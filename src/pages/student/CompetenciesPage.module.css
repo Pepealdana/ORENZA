@@ -19,3 +19,12 @@
 .dimension span { color:var(--color-gray-dark); font-size:.64rem; line-height:1.2; }
 @media(max-width:800px) { .dimensionGrid { grid-template-columns:repeat(4,minmax(0,1fr)); } }
 @media(max-width:480px) { .dimensionGrid { gap:8px; } .dimension img { width:42px; height:42px; } .dimension span { font-size:.6rem; } }
+
+
+.dimensionIcon {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto 8px;
+}
