@@ -80,7 +80,7 @@ const studentData = {
     },
 
     suggestedActivity: {
-      id: 'activity-001',
+      id: 'reconociendo-mis-fortalezas',
 
       title: 'Reconociendo mis fortalezas',
 
