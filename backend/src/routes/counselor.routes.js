@@ -180,7 +180,7 @@ router.get('/students/:studentId/activity-progress', async (req, res, next) => {
     }
 
     const student = ensureStudent(
-      await User.findOne({ _id: req.params.studentId, role: 'student' }).select('_id')
+      await User.findOne({ _id: req.params.studentId, role: 'student', institution }).select('_id')
     );
 
     const items = await ActivityProgress.find({ user: student._id })
