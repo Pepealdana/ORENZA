@@ -1,7 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
 import { api } from '../services/api';
-import { getStoredCheckIns } from '../utils/emotionalStorage';
-import { getCompletedActivities } from '../utils/activityStorage';
 
 function mapCheckIn(item) {
   return {
@@ -19,16 +17,16 @@ function mapActivity(item) {
     id: item._id || item.id,
     activityId: item.activityId,
     status: item.status,
-    completedAt: item.completedAt
-      ? new Date(item.completedAt).toISOString()
-      : null,
+    startedAt: item.startedAt || null,
+    completedAt: item.completedAt ? new Date(item.completedAt).toISOString() : null,
     responses: item.answers || {},
   };
 }
 
 export function useStudentProgress() {
-  const [checkIns, setCheckIns] = useState(() => getStoredCheckIns());
-  const [completedActivities, setCompletedActivities] = useState(() => getCompletedActivities());
+  const [checkIns, setCheckIns] = useState([]);
+  const [completedActivities, setCompletedActivities] = useState([]);
+  const [activityProgress, setActivityProgress] = useState([]);
   const [loading, setLoading] = useState(true);
   const [syncError, setSyncError] = useState('');
 
@@ -42,13 +40,11 @@ export function useStudentProgress() {
         api.getActivityProgress(),
       ]);
 
-      const nextCheckIns = (checkInsResponse.items || []).map(mapCheckIn);
-      const nextActivities = (activitiesResponse.items || [])
-        .filter((item) => item.status === 'completed')
-        .map(mapActivity);
+      const nextActivities = (activitiesResponse.items || []).map(mapActivity);
 
-      setCheckIns(nextCheckIns);
-      setCompletedActivities(nextActivities);
+      setCheckIns((checkInsResponse.items || []).map(mapCheckIn));
+      setActivityProgress(nextActivities);
+      setCompletedActivities(nextActivities.filter((item) => item.status === 'completed'));
     } catch (error) {
       setSyncError(error.message || 'No fue posible sincronizar tus datos.');
     } finally {
@@ -63,10 +59,12 @@ export function useStudentProgress() {
   return {
     checkIns,
     completedActivities,
+    activityProgress,
     loading,
     syncError,
     refresh,
     setCheckIns,
     setCompletedActivities,
+    setActivityProgress,
   };
 }
