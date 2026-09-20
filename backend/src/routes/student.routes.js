@@ -344,7 +344,7 @@ router.get('/profile', (req, res) => {
 
 router.patch('/profile', async (req, res, next) => {
   try {
-    const allowed = ['name', 'grade', 'institution'];
+    const allowed = ['name', 'grade'];
     const updates = Object.fromEntries(
       Object.entries(req.body)
         .filter(([key]) => allowed.includes(key))
