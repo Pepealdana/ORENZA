@@ -32,6 +32,7 @@ import SettingsPage from '../pages/student/SettingsPage';
 
 import CounselorDashboardPage from '../pages/counselor/CounselorDashboardPage';
 import AdminDashboardPage from '../pages/admin/AdminDashboardPage';
+import AdminActivitiesPage from '../pages/admin/AdminActivitiesPage';
 import ActivityPage from '../pages/student/ActivityPage';
 
 function AppRoutes() {
@@ -88,6 +89,7 @@ function AppRoutes() {
           }
         >
           <Route index element={<AdminDashboardPage />} />
+          <Route path="contenidos" element={<AdminActivitiesPage />} />
         </Route>
 
         <Route path="*" element={<Navigate to="/" replace />} />
