@@ -306,6 +306,17 @@ function AdminDashboardPage() {
               </table>
             </div>
           </section>
+
+          <section className={styles.panel}>
+            <div className={styles.panelHeader}>
+              <div><p className={styles.eyebrow}>Trazabilidad</p><h2>Auditoría del sistema</h2></div>
+              <span className={styles.count}>{stats?.recentAudits ?? 0}</span>
+            </div>
+            <p>Consulta cambios administrativos y eventos relevantes de seguridad.</p>
+            <div style={{ marginTop: '12px' }}>
+              <Link className={styles.cardLink} to="/administrador/auditoria">Ver historial de auditoría</Link>
+            </div>
+          </section>
         </>
       )}
     </main>
