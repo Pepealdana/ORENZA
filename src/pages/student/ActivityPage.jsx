@@ -65,7 +65,13 @@ function ActivityPage() {
     api.getActivityProgressById(activityId)
       .then(({ item }) => {
         if (!active) return;
-        if (item?.answers) setResponses(item.answers);
+        if (item?.answers) {
+          setResponses(item.answers);
+          const answeredSteps = activity?.steps?.map((stepItem, index) => ({ index, answered: item.answers[stepItem.id] !== undefined && item.answers[stepItem.id] !== '' })).filter((entry) => entry.answered) || [];
+          if (item?.status === 'in-progress' && answeredSteps.length > 0) {
+            setCurrentStep(Math.min(answeredSteps[answeredSteps.length - 1].index + 1, (activity?.steps?.length || 1) - 1));
+          }
+        }
       })
       .catch(() => {
         if (active) setError('No fue posible recuperar el progreso guardado.');
