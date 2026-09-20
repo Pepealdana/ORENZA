@@ -27,18 +27,21 @@ function assert(condition, message) {
 
 const unique = Date.now();
 const studentEmail = `smoke-${unique}@orenza.local`;
+const otherStudentEmail = `smoke-other-${unique}@orenza.local`;
+const otherInstitutionCode = `SMOKE-${unique}`;
 
 async function cleanup() {
   try {
     await connectDB();
-    const smokeUser = await User.findOne({ email: studentEmail }).select('_id');
-    if (smokeUser) {
+    const smokeUsers = await User.find({ email: { $in: [studentEmail, otherStudentEmail] } }).select('_id');
+    for (const smokeUser of smokeUsers) {
       await Promise.all([
         CheckIn.deleteMany({ user: smokeUser._id }),
         ActivityProgress.deleteMany({ user: smokeUser._id }),
         User.deleteOne({ _id: smokeUser._id }),
       ]);
     }
+    await mongoose.connection.collection('institutions').deleteMany({ code: otherInstitutionCode });
     await Activity.deleteMany({ activityId: { $regex: `^smoke-activity-${unique}` } });
   } catch (error) {
     console.error('No fue posible limpiar los datos del smoke test:', error.message);
@@ -123,6 +126,36 @@ async function run() {
     }),
   });
   const adminHeaders = { Authorization: `Bearer ${adminLogin.token}` };
+
+  const institutions = await request('/admin/institutions?limit=100&active=true', { headers: adminHeaders });
+  assert(institutions.institutions.some((item) => item.name === 'ORENZA Demo'), 'La institución demo no está disponible');
+
+  const assignedStudent = await request('/admin/users/' + smokeStudentId, {
+    method: 'PATCH',
+    headers: adminHeaders,
+    body: JSON.stringify({ institution: 'ORENZA Demo' }),
+  });
+  assert(assignedStudent.user.institution === 'ORENZA Demo', 'No fue posible asignar la institución al estudiante');
+
+  const otherInstitution = await request('/admin/institutions', {
+    method: 'POST',
+    headers: adminHeaders,
+    body: JSON.stringify({ name: 'Smoke Other Institution', code: otherInstitutionCode }),
+  });
+  assert(otherInstitution.institution.code === otherInstitutionCode, 'Institución de aislamiento no creada');
+
+  const otherStudent = await request('/admin/users', {
+    method: 'POST',
+    headers: adminHeaders,
+    body: JSON.stringify({
+      name: 'Smoke Other Student',
+      email: otherStudentEmail,
+      password: 'Smoke1234!',
+      role: 'student',
+      institution: 'Smoke Other Institution',
+    }),
+  });
+  assert(otherStudent.user.institution === 'Smoke Other Institution', 'Usuario de otra institución no creado');
 
   let emptyActivityRejected = false;
   try {
@@ -286,6 +319,17 @@ async function run() {
     counselorCannotCreateCheckIn = error.message.includes('-> 403:');
   }
   assert(counselorCannotCreateCheckIn, 'El orientador no debe poder crear registros emocionales');
+
+  let crossInstitutionBlocked = false;
+  try {
+    await request('/counselor/students/' + otherStudent.user.id, { headers: counselorHeaders });
+  } catch (error) {
+    crossInstitutionBlocked = error.message.includes('-> 404:');
+  }
+  assert(crossInstitutionBlocked, 'El orientador no debe consultar estudiantes de otra institución');
+
+  const auditLogs = await request('/admin/audit-logs?limit=100', { headers: adminHeaders });
+  assert(Array.isArray(auditLogs.logs) && auditLogs.logs.length > 0, 'La auditoría no registra operaciones administrativas');
 
   const deletedProgress = await request('/student/activities/progress/' + activityId, {
     method: 'DELETE',
