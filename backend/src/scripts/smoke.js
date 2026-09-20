@@ -69,6 +69,18 @@ async function run() {
   const smokeStudentId = registered.user.id;
   const auth = { Authorization: `Bearer ${token}` };
 
+  const resetRequest = await request('/auth/request-password-reset', {
+    method: 'POST',
+    body: JSON.stringify({ email: studentEmail }),
+  });
+  if (resetRequest.demoToken) {
+    const resetResponse = await request('/auth/reset-password', {
+      method: 'POST',
+      body: JSON.stringify({ token: resetRequest.demoToken, newPassword: 'Smoke1234!New' }),
+    });
+    assert(resetResponse.message.includes('Contraseña actualizada'), 'Recuperación de contraseña falló');
+  }
+
   const me = await request('/auth/me', { headers: auth });
   assert(me.user.email === studentEmail, 'GET /me falló');
 
