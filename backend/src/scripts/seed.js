@@ -49,7 +49,7 @@ for (const item of demoUsers) {
 }
 
 // Limpia únicamente datos de prueba generados por el smoke test.
-await User.deleteMany({ email: /^smoke-.*@orenza\\.local$/i });
+await User.deleteMany({ email: /^smoke-.*@orenza\.local$/i });
 await Activity.deleteMany({ activityId: /^smoke-activity-/i });
 
 await Activity.updateMany(
