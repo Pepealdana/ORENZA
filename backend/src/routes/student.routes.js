@@ -2,6 +2,7 @@ import { Router } from 'express';
 import mongoose from 'mongoose';
 import CheckIn from '../models/CheckIn.js';
 import ActivityProgress from '../models/ActivityProgress.js';
+import Activity from '../models/Activity.js';
 import User from '../models/User.js';
 import { requireAuth, allowRoles } from '../middleware/auth.js';
 
@@ -238,9 +239,19 @@ router.post('/activities/progress', async (req, res, next) => {
       });
     }
 
+    const normalizedActivityId = activityId.trim();
+    const activity = await Activity.findOne({
+      activityId: normalizedActivityId,
+      active: true,
+    }).select('_id activityId');
+
+    if (!activity) {
+      return res.status(404).json({ message: 'La actividad no está disponible.' });
+    }
+
     const item = await ActivityProgress.create({
       user: req.user._id,
-      activityId: activityId.trim(),
+      activityId: normalizedActivityId,
       status,
       answers,
       ...(status === 'completed' ? { completedAt: new Date() } : {}),
@@ -257,6 +268,15 @@ router.patch('/activities/progress/:activityId', async (req, res, next) => {
 
     const validationError = validateProgressPayload({ activityId, status, answers });
     if (validationError) return res.status(400).json({ message: validationError });
+
+    const activity = await Activity.findOne({
+      activityId,
+      active: true,
+    }).select('_id activityId');
+
+    if (!activity) {
+      return res.status(404).json({ message: 'La actividad no está disponible.' });
+    }
 
     const updates = {};
 
