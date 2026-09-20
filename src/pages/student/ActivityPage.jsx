@@ -193,6 +193,32 @@ function ActivityPage() {
 
   /*
    * ========================================
+   * ACTIVIDAD SIN PASOS
+   * ========================================
+   */
+
+  if (!Array.isArray(activity.steps) || activity.steps.length === 0) {
+    return (
+      <section className={styles.page}>
+        <button
+          type="button"
+          className={styles.backButton}
+          onClick={() => navigate('/estudiante/actividades')}
+        >
+          <ChevronLeft size={20} aria-hidden="true" />
+          Volver a actividades
+        </button>
+
+        <div className={styles.alert} role="alert">
+          <strong>Esta experiencia aún no está disponible.</strong>
+          <p>La actividad no tiene pasos configurados.</p>
+        </div>
+      </section>
+    );
+  }
+
+  /*
+   * ========================================
    * INFORMACIÓN DEL PASO ACTUAL
    * ========================================
    */
