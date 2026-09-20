@@ -4,6 +4,7 @@ import bcrypt from 'bcryptjs';
 import { connectDB } from '../config/db.js';
 import User from '../models/User.js';
 import Activity from '../models/Activity.js';
+import demoActivities from '../data/activities.seed.js';
 
 const demoUsers = [
   {
@@ -30,28 +31,6 @@ const demoUsers = [
   },
 ];
 
-const demoActivities = [
-  {
-    activityId: 'emociones-basicas',
-    title: 'Reconociendo mis emociones',
-    description: 'Actividad introductoria para identificar y nombrar emociones.',
-    category: 'emocional',
-    instructions: 'Identifica la emoción que mejor representa cómo te sientes y registra una breve reflexión.',
-    estimatedTime: 10,
-    order: 1,
-    active: true,
-  },
-  {
-    activityId: 'autoconocimiento',
-    title: 'Conociéndome mejor',
-    description: 'Ejercicio de reflexión orientado al autoconocimiento.',
-    category: 'personal',
-    instructions: 'Responde las preguntas de reflexión con honestidad y respeto por tu propio proceso.',
-    estimatedTime: 15,
-    order: 2,
-    active: true,
-  },
-];
 
 await connectDB();
 
@@ -69,10 +48,32 @@ for (const item of demoUsers) {
   );
 }
 
-for (const activity of demoActivities) {
+await Activity.updateMany(
+  { activityId: { $in: ['emociones-basicas', 'autoconocimiento'] } },
+  { $set: { active: false } }
+);
+
+for (const [index, activity] of demoActivities.entries()) {
   await Activity.findOneAndUpdate(
-    { activityId: activity.activityId },
-    activity,
+    { activityId: activity.id },
+    {
+      activityId: activity.id,
+      title: activity.title,
+      description: activity.description,
+      purpose: activity.purpose,
+      type: activity.type,
+      category: activity.competencies?.primary || 'general',
+      instructions: activity.purpose || activity.description,
+      estimatedTime: activity.estimatedTime,
+      ageRange: activity.ageRange,
+      competencies: activity.competencies,
+      emotions: activity.emotions,
+      difficulty: activity.difficulty,
+      repeatable: activity.repeatable,
+      steps: activity.steps,
+      order: index + 1,
+      active: true,
+    },
     { upsert: true, new: true, setDefaultsOnInsert: true }
   );
 }
@@ -84,7 +85,7 @@ for (const item of demoUsers) {
 
 console.log('Actividades demo listas:');
 for (const item of demoActivities) {
-  console.log(`- ${item.activityId}: ${item.title}`);
+  console.log(`- ${item.id}: ${item.title}`);
 }
 
 await mongoose.disconnect();
