@@ -731,15 +731,13 @@ function formatShortDate(
 function formatLongDate(
   dateString
 ) {
-  const [
-    year,
-    month,
-    day,
-  ] = dateString.split('-');
+  if (!dateString) return '';
 
-  const date = new Date(
-    `${year}-${month}-${day}T12:00:00`
-  );
+  const date = new Date(dateString);
+
+  if (Number.isNaN(date.getTime())) {
+    return 'Fecha no disponible';
+  }
 
   return date.toLocaleDateString(
     'es-CO',
