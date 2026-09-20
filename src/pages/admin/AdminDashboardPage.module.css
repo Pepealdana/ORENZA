@@ -70,3 +70,5 @@ td small { display: block; margin-top: 3px; color: var(--color-gray-dark); }
 .filters input, .filters select { width: 100%; min-height: 42px; box-sizing: border-box; padding: 9px 12px; border: 1px solid var(--color-gray-medium); border-radius: 12px; background: var(--color-white); color: var(--color-text-primary); font: inherit; }
 .filters input:focus, .filters select:focus, .editForm input:focus, .editForm select:focus { outline: 2px solid rgba(0, 137, 123, .2); outline-offset: 1px; border-color: var(--color-primary); }
 @media (max-width: 700px) { .filters { grid-template-columns: 1fr; } }
+
+.pagination{display:flex;align-items:center;justify-content:flex-end;gap:10px;margin-top:14px}.pagination button{min-height:36px;padding:7px 11px;border:1px solid var(--color-gray-medium);border-radius:10px;background:var(--color-white);color:var(--color-primary);font:inherit;font-weight:600;cursor:pointer}.pagination button:disabled{opacity:.5;cursor:not-allowed}.pagination span{font-size:.78rem;color:var(--color-gray-dark)}
