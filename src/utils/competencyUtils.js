@@ -144,7 +144,8 @@ function getActivityCompetencies(
  */
 
 export function getActivitiesForCompetency(
-  competencyId
+  competencyId,
+  activitiesOverride = null
 ) {
   const normalizedCompetencyId =
     normalizeCompetencyId(
@@ -159,7 +160,11 @@ export function getActivitiesForCompetency(
   }
 
 
-  return activities.filter(
+  const catalog = Array.isArray(activitiesOverride)
+    ? activitiesOverride
+    : activities;
+
+  return catalog.filter(
     (activity) => {
 
       const activityCompetencies =
@@ -184,11 +189,13 @@ export function getActivitiesForCompetency(
 
 export function getCompletedActivitiesForCompetency(
   competencyId,
-  completedActivitiesOverride = []
+  completedActivitiesOverride = [],
+  activitiesOverride = null
 ) {
   const competencyActivities =
     getActivitiesForCompetency(
-      competencyId
+      competencyId,
+      activitiesOverride
     );
 
 
@@ -245,11 +252,13 @@ export function getCompletedActivitiesForCompetency(
 
 export function getCompetencyStats(
   competencyId,
-  completedActivitiesOverride = null
+  completedActivitiesOverride = null,
+  activitiesOverride = null
 ) {
   const competencyActivities =
     getActivitiesForCompetency(
-      competencyId
+      competencyId,
+      activitiesOverride
     );
 
 
@@ -322,7 +331,8 @@ export function getCompetencyStats(
 
 export function getAllCompetencyStats(
   competencies,
-  completedActivitiesOverride = null
+  completedActivitiesOverride = null,
+  activitiesOverride = null
 ) {
   if (
     !Array.isArray(
@@ -339,7 +349,8 @@ export function getAllCompetencyStats(
 
       ...getCompetencyStats(
         competency.id,
-        completedActivitiesOverride
+        completedActivitiesOverride,
+        activitiesOverride
       ),
     })
   );
