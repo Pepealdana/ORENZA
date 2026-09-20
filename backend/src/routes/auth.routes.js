@@ -99,7 +99,7 @@ router.post('/login', async (req, res, next) => {
     const password = typeof req.body.password === 'string' ? req.body.password : '';
 
     const user = await User.findOne({ email }).select('+password');
-    const passwordHash = user?.password || '$2b$12$invalidinvalidinvalidinvalidinvalidinvalidinvalidinvalid';
+    const passwordHash = user?.password || '$2b$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy';
 
     if (!user || !user.active || !(await bcrypt.compare(password, passwordHash))) {
       return res.status(401).json({ message: 'Credenciales no válidas.' });
