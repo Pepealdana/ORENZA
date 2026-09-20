@@ -50,7 +50,7 @@ app.use((_req, res) => {
 
 app.use((error, _req, res, _next) => {
   console.error(error);
-  const status = Number.isInteger(error.status) ? error.status : 500;
+  const status = Number.isInteger(error.status) ? error.status : (isValidation ? 400 : 500);
   const isValidation = error.name === 'ValidationError';
   const isDuplicate = error.code === 11000;
 
