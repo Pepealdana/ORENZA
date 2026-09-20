@@ -126,6 +126,21 @@ router.patch('/users/:id', async (req, res, next) => {
       }
     }
 
+    const currentUser = await User.findById(req.params.id);
+    if (!currentUser) return res.status(404).json({ message: 'Usuario no encontrado.' });
+
+    const willRemainActiveAdmin =
+      updates.role === undefined ? currentUser.role === 'admin' : updates.role === 'admin';
+    const willRemainActive =
+      updates.active === undefined ? currentUser.active : updates.active;
+
+    if (currentUser.role === 'admin' && currentUser.active && (!willRemainActiveAdmin || !willRemainActive)) {
+      const activeAdmins = await User.countDocuments({ role: 'admin', active: true });
+      if (activeAdmins <= 1) {
+        return res.status(400).json({ message: 'Debe existir al menos un administrador activo.' });
+      }
+    }
+
     const user = await User.findByIdAndUpdate(req.params.id, updates, { new: true, runValidators: true });
     if (!user) return res.status(404).json({ message: 'Usuario no encontrado.' });
 
@@ -141,6 +156,16 @@ router.delete('/users/:id', async (req, res, next) => {
 
     if (req.params.id === req.user._id.toString()) {
       return res.status(400).json({ message: 'No puedes eliminar tu propia cuenta de administrador.' });
+    }
+
+    const targetUser = await User.findById(req.params.id);
+    if (!targetUser) return res.status(404).json({ message: 'Usuario no encontrado.' });
+
+    if (targetUser.role === 'admin' && targetUser.active) {
+      const activeAdmins = await User.countDocuments({ role: 'admin', active: true });
+      if (activeAdmins <= 1) {
+        return res.status(400).json({ message: 'Debe existir al menos un administrador activo.' });
+      }
     }
 
     const user = await User.findByIdAndUpdate(
