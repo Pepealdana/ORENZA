@@ -79,6 +79,10 @@ assert(checkIns.items.some((item) => item._id === checkIn.item._id), 'Check-in n
 
 const activityCatalog = await request('/activities', { headers: auth });
 assert(Array.isArray(activityCatalog.activities), 'Catálogo de actividades no consultable');
+assert(activityCatalog.activities.length === 28, `El catálogo activo debe tener 28 actividades y tiene ${activityCatalog.activities.length}`);
+const catalogActivity = activityCatalog.activities.find((item) => item.activityId === 'reconociendo-mis-fortalezas');
+assert(catalogActivity && catalogActivity.steps?.length === 3, 'La actividad del catálogo no conserva sus pasos');
+assert(catalogActivity.competencies?.primary === 'autoconocimiento', 'La actividad no conserva sus competencias');
 
 const activityId = `smoke-activity-${unique}`;
 
