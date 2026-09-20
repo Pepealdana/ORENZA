@@ -160,7 +160,7 @@ router.get('/students/:studentId/check-ins', async (req, res, next) => {
     }
 
     const student = ensureStudent(
-      await User.findOne({ _id: req.params.studentId, role: 'student' }).select('_id')
+      await User.findOne({ _id: req.params.studentId, role: 'student', institution }).select('_id')
     );
 
     const items = await CheckIn.find({ user: student._id })
