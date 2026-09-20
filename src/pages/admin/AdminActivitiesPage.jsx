@@ -408,6 +408,14 @@ function AdminActivitiesPage() {
           </div>
         </div>
 
+        <div className={styles.filters}>
+          <input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Buscar por título o identificador" aria-label="Buscar actividades" />
+          <select value={difficulty} onChange={(event) => setDifficulty(event.target.value)} aria-label="Filtrar por dificultad">
+            <option value="all">Todas las dificultades</option>
+            {DIFFICULTY_OPTIONS.map(([value, label]) => <option key={value} value={value}>{label}</option>)}
+          </select>
+        </div>
+
         {loading ? (
           <div className={styles.loading}><LoaderCircle className={styles.spin} size={21} /> Cargando actividades…</div>
         ) : (
@@ -434,6 +442,7 @@ function AdminActivitiesPage() {
             </table>
           </div>
         )}
+        {pagination.pages > 1 && <div className={styles.pagination}><button type="button" onClick={() => loadActivities(pagination.page - 1)} disabled={pagination.page <= 1 || loading}>Anterior</button><span>Página {pagination.page} de {pagination.pages}</span><button type="button" onClick={() => loadActivities(pagination.page + 1)} disabled={pagination.page >= pagination.pages || loading}>Siguiente</button></div>}
       </section>
     </main>
   );
