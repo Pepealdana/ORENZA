@@ -36,19 +36,27 @@ function AdminDashboardPage() {
   const [statusFilter, setStatusFilter] = useState('all');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+  const [userPagination, setUserPagination] = useState({ page: 1, pages: 1, total: 0 });
 
-  const loadData = async () => {
+  const loadData = async (page = 1) => {
     setLoading(true);
     setError('');
 
     try {
       const [statsResponse, usersResponse, institutionsResponse] = await Promise.all([
         api.getAdminStats(),
-        api.getAdminUsers({ limit: 100 }),
+        api.getAdminUsers({
+          page,
+          limit: 10,
+          search,
+          role: roleFilter === 'all' ? '' : roleFilter,
+          active: statusFilter === 'all' ? '' : statusFilter === 'active' ? 'true' : 'false',
+        }),
         api.getAdminInstitutions({ limit: 100, active: 'true' }),
       ]);
       setStats(statsResponse.stats);
       setUsers(usersResponse.users);
+      setUserPagination(usersResponse.pagination || { page, pages: 1, total: usersResponse.users.length });
       setInstitutions(institutionsResponse.institutions || []);
     } catch (requestError) {
       setError(requestError.message || 'No fue posible cargar la administración.');
@@ -58,8 +66,9 @@ function AdminDashboardPage() {
   };
 
   useEffect(() => {
-    loadData();
-  }, []);
+    const timer = setTimeout(() => loadData(1), 250);
+    return () => clearTimeout(timer);
+  }, [search, roleFilter, statusFilter]);
 
   const updateForm = (event) => {
     setForm((current) => ({ ...current, [event.target.name]: event.target.value }));
@@ -75,7 +84,7 @@ function AdminDashboardPage() {
       await api.createAdminUser(form);
       setForm(emptyForm);
       setMessage('Usuario creado correctamente.');
-      await loadData();
+      await loadData(userPagination.page);
     } catch (requestError) {
       setError(requestError.message || 'No fue posible crear el usuario.');
     } finally {
@@ -129,18 +138,6 @@ function AdminDashboardPage() {
       setSaving(false);
     }
   };
-
-  const filteredUsers = users.filter((item) => {
-    const normalizedSearch = search.trim().toLowerCase();
-    const matchesSearch = !normalizedSearch
-      || item.name.toLowerCase().includes(normalizedSearch)
-      || item.email.toLowerCase().includes(normalizedSearch);
-    const matchesRole = roleFilter === 'all' || item.role === roleFilter;
-    const matchesStatus = statusFilter === 'all'
-      || (statusFilter === 'active' && item.active)
-      || (statusFilter === 'inactive' && !item.active);
-    return matchesSearch && matchesRole && matchesStatus;
-  });
 
   const toggleActive = async (item) => {
     setError('');
@@ -258,7 +255,7 @@ function AdminDashboardPage() {
                 <p className={styles.eyebrow}>Accesos</p>
                 <h2>Usuarios registrados</h2>
               </div>
-              <span className={styles.count}>{filteredUsers.length}{filteredUsers.length !== users.length ? ` / ${users.length}` : ''}</span>
+              <span className={styles.count}>{userPagination.total}</span>
             </div>
 
             <div className={styles.filters}>
@@ -285,7 +282,7 @@ function AdminDashboardPage() {
                   <tr><th>Usuario</th><th>Rol</th><th>Estado</th><th>Acción</th></tr>
                 </thead>
                 <tbody>
-                  {filteredUsers.map((item) => (
+                  {users.map((item) => (
                     <tr key={item.id}>
                       <td><strong>{item.name}</strong><small>{item.email}</small></td>
                       <td><span className={styles.roleLabel}>{roleLabels[item.role] || item.role}</span></td>
@@ -305,6 +302,7 @@ function AdminDashboardPage() {
                 </tbody>
               </table>
             </div>
+            {userPagination.pages > 1 && <div className={styles.pagination}><button type="button" onClick={() => loadData(userPagination.page - 1)} disabled={userPagination.page <= 1 || loading}>Anterior</button><span>Página {userPagination.page} de {userPagination.pages}</span><button type="button" onClick={() => loadData(userPagination.page + 1)} disabled={userPagination.page >= userPagination.pages || loading}>Siguiente</button></div>}
           </section>
 
           <section className={styles.panel}>
