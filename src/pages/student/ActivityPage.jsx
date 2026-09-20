@@ -145,6 +145,17 @@ function ActivityPage() {
     };
   }, [activityId, activity]);
 
+  if (activityLoading) {
+    return (
+      <section className={styles.page} aria-live="polite">
+        <p className={styles.eyebrow}>Experiencia</p>
+        <h1>Cargando actividad…</h1>
+        <p>Estamos preparando esta experiencia para ti.</p>
+      </section>
+    );
+  }
+
+
   /*
    * ========================================
    * ACTIVIDAD NO ENCONTRADA
