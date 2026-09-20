@@ -265,7 +265,8 @@ export function getCompetencyStats(
   const completedActivities =
     getCompletedActivitiesForCompetency(
       competencyId,
-      completedActivitiesOverride
+      completedActivitiesOverride,
+      activitiesOverride
     );
 
 
@@ -365,7 +366,8 @@ export function getAllCompetencyStats(
  */
 
 export function getActivitiesForCompetencies(
-  competencyIds
+  competencyIds,
+  activitiesOverride = null
 ) {
   if (
     !Array.isArray(
@@ -385,7 +387,11 @@ export function getActivitiesForCompetencies(
     );
 
 
-  return activities.filter(
+  const catalog = Array.isArray(activitiesOverride)
+    ? activitiesOverride
+    : activities;
+
+  return catalog.filter(
     (activity) => {
 
       const activityCompetencies =
