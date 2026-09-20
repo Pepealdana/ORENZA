@@ -7,6 +7,7 @@ import authRoutes from './routes/auth.routes.js';
 import studentRoutes from './routes/student.routes.js';
 import adminRoutes from './routes/admin.routes.js';
 import counselorRoutes from './routes/counselor.routes.js';
+import activityRoutes from './routes/activity.routes.js';
 
 const app = express();
 const PORT = Number(process.env.PORT) || 4000;
@@ -41,6 +42,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/student', studentRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/counselor', counselorRoutes);
+app.use('/api/activities', activityRoutes);
 
 app.use((_req, res) => {
   res.status(404).json({ message: 'Recurso no encontrado.' });
@@ -50,8 +52,16 @@ app.use((error, _req, res, _next) => {
   console.error(error);
   const status = Number.isInteger(error.status) ? error.status : 500;
   const isValidation = error.name === 'ValidationError';
-  res.status(status).json({
-    message: isValidation ? 'Los datos enviados no son válidos.' : status >= 500 ? 'Error interno del servidor.' : error.message,
+  const isDuplicate = error.code === 11000;
+
+  res.status(isDuplicate ? 409 : status).json({
+    message: isDuplicate
+      ? 'Ya existe un registro con los datos enviados.'
+      : isValidation
+        ? 'Los datos enviados no son válidos.'
+        : status >= 500
+          ? 'Error interno del servidor.'
+          : error.message,
   });
 });
 
