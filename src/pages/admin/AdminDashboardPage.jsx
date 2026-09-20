@@ -181,15 +181,17 @@ function AdminDashboardPage() {
             <article><Activity size={20} /><strong>{stats?.active ?? 0}</strong><span>Activos</span></article>
             <article><ShieldCheck size={20} /><strong>{stats?.students ?? 0}</strong><span>Estudiantes</span></article>
             <article><UsersRound size={20} /><strong>{stats?.counselors ?? 0}</strong><span>Orientadores</span></article>
+            <article><Building2 size={20} /><strong>{stats?.institutions ?? 0}</strong><span>Instituciones activas</span></article>
+            <article><Database size={20} /><strong>{stats?.activeActivities ?? 0}</strong><span>Actividades activas</span></article>
           </section>
 
           <section className={styles.grid} aria-label="Módulos de administración">
             <article className={styles.cardDisabled} aria-disabled="true">
               <span><UsersRound /></span><strong>Usuarios</strong><small>Gestión de accesos y roles</small><em>No disponible</em>
             </article>
-            <article className={styles.cardDisabled} aria-disabled="true">
-              <span><Building2 /></span><strong>Instituciones</strong><small>Configuración institucional</small><em>No disponible</em>
-            </article>
+            <Link className={styles.cardLink} to="/administrador/instituciones">
+              <span><Building2 /></span><strong>Instituciones</strong><small>Organización y aislamiento de acceso</small><em>Gestionar instituciones</em>
+            </Link>
             <Link className={styles.cardLink} to="/administrador/contenidos">
               <span><Database /></span><strong>Contenidos</strong><small>Recursos y contenidos generales</small><em>Gestionar actividades</em>
             </Link>
