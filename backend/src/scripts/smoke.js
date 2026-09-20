@@ -5,6 +5,7 @@ import User from '../models/User.js';
 import Activity from '../models/Activity.js';
 import ActivityProgress from '../models/ActivityProgress.js';
 import CheckIn from '../models/CheckIn.js';
+import AuditLog from '../models/AuditLog.js';
 
 const API = process.env.API_URL || 'http://localhost:4000/api';
 
@@ -43,6 +44,7 @@ async function cleanup() {
     }
     await mongoose.connection.collection('institutions').deleteMany({ code: otherInstitutionCode });
     await Activity.deleteMany({ activityId: { $regex: `^smoke-activity-${unique}` } });
+    await AuditLog.deleteMany({ summary: { $regex: new RegExp(`smoke|Smoke`, 'i') } });
   } catch (error) {
     console.error('No fue posible limpiar los datos del smoke test:', error.message);
   } finally {
