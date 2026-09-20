@@ -231,7 +231,7 @@ router.post('/activities/progress', async (req, res, next) => {
     const activity = await Activity.findOne({
       activityId: normalizedActivityId,
       active: true,
-    }).select('_id activityId');
+    }).select('_id activityId repeatable');
 
     if (!activity) {
       return res.status(404).json({ message: 'La actividad no está disponible.' });
