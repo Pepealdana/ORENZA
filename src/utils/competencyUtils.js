@@ -139,6 +139,30 @@ function getActivityCompetencies(
 
 /*
  * =========================================
+ * COMPETENCIA PRINCIPAL DE UNA ACTIVIDAD
+ * =========================================
+ *
+ * Para los indicadores y filtros principales
+ * de ORENZA, cada actividad pertenece a una
+ * única competencia principal. Las competencias
+ * secundarias se conservan como metadato, pero
+ * no duplican la actividad en los conteos.
+ */
+
+function getPrimaryActivityCompetency(
+  activity
+) {
+  const primary =
+    activity?.competencies?.primary;
+
+  return typeof primary === 'string'
+    ? normalizeCompetencyId(primary)
+    : '';
+}
+
+
+/*
+ * =========================================
  * OBTENER ACTIVIDADES DE UNA COMPETENCIA
  * =========================================
  */
@@ -165,18 +189,10 @@ export function getActivitiesForCompetency(
     : activities;
 
   return catalog.filter(
-    (activity) => {
-
-      const activityCompetencies =
-        getActivityCompetencies(
-          activity
-        );
-
-
-      return activityCompetencies.includes(
-        normalizedCompetencyId
-      );
-    }
+    (activity) =>
+      getPrimaryActivityCompetency(
+        activity
+      ) === normalizedCompetencyId
   );
 }
 
@@ -392,20 +408,11 @@ export function getActivitiesForCompetencies(
     : activities;
 
   return catalog.filter(
-    (activity) => {
-
-      const activityCompetencies =
-        getActivityCompetencies(
+    (activity) =>
+      normalizedIds.includes(
+        getPrimaryActivityCompetency(
           activity
-        );
-
-
-      return activityCompetencies.some(
-        (competencyId) =>
-          normalizedIds.includes(
-            competencyId
-          )
-      );
-    }
+        )
+      )
   );
 }
