@@ -115,13 +115,13 @@ function CounselorDashboardPage() {
                   <div className={styles.detailList}>
                     <h3>Actividad registrada</h3>
                     {selectedStudent.activities.length === 0 ? <p>No hay actividad guardada.</p> : selectedStudent.activities.map((item) => (
-                      <article key={item._id}><strong>{item.activityTitle || item.activityId}</strong><span>{item.status === 'completed' ? 'Finalizada' : 'En progreso'}</span></article>
+                      <article key={item.id}><strong>{item.activityTitle || item.activityId}</strong><span>{item.status === 'completed' ? 'Finalizada' : 'En progreso'}</span></article>
                     ))}
                   </div>
                   <div className={styles.detailList}>
                     <h3>Registros emocionales</h3>
                     {selectedStudent.checkIns.length === 0 ? <p>No hay registros emocionales.</p> : selectedStudent.checkIns.slice(0, 10).map((item) => (
-                      <article key={item._id}><strong>{item.date}</strong><span>{item.emotion} · {item.intensity}/5</span></article>
+                      <article key={item.id}><strong>{item.date}</strong><span>{item.emotion} · {item.intensity}/5</span></article>
                     ))}
                   </div>
                 </div>
