@@ -82,6 +82,7 @@ const emotions = [
 
 function EmotionalCheckIn({
   onSave,
+  onDelete,
   completed,
   todayCheckIn,
 }) {
@@ -140,6 +141,16 @@ function EmotionalCheckIn({
     setNote('');
   };
 
+  const handleEdit = () => {
+    const mood = moods.find((item) => item.id === todayCheckIn?.mood) || null;
+    const emotion = emotions.find((item) => item.id === todayCheckIn?.emotion) || null;
+
+    setSelectedMood(mood);
+    setSelectedEmotion(emotion);
+    setNote(todayCheckIn?.note || '');
+    setStep(mood && emotion ? 3 : 1);
+  };
+
   /*
    * Pantalla mostrada cuando el estudiante
    * ya realizó su registro del día.
@@ -178,9 +189,29 @@ function EmotionalCheckIn({
             conocerte mejor.
           </p>
 
+          <div className={styles.completedActions}>
+            <button
+              type="button"
+              className={styles.secondaryButton}
+              onClick={handleEdit}
+            >
+              Editar registro
+            </button>
+
+            {onDelete && (
+              <button
+                type="button"
+                className={styles.dangerButton}
+                onClick={onDelete}
+              >
+                Eliminar registro
+              </button>
+            )}
+          </div>
+
           <button
             type="button"
-            className={styles.secondaryButton}
+            className={styles.linkButton}
             onClick={handleRestart}
           >
             Registrar otro momento
