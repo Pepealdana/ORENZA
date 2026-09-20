@@ -151,6 +151,12 @@ function EmotionalCheckIn({
     setStep(mood && emotion ? 3 : 1);
   };
 
+  const handleDelete = async () => {
+    if (!onDelete) return;
+    await onDelete();
+    handleRestart();
+  };
+
   /*
    * Pantalla mostrada cuando el estudiante
    * ya realizó su registro del día.
@@ -202,7 +208,7 @@ function EmotionalCheckIn({
               <button
                 type="button"
                 className={styles.dangerButton}
-                onClick={onDelete}
+                onClick={handleDelete}
               >
                 Eliminar registro
               </button>
