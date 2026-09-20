@@ -13,6 +13,16 @@ function validObjectId(id) {
   return mongoose.Types.ObjectId.isValid(id);
 }
 
+function ensureInstitution(req) {
+  const institution = String(req.user?.institution || '').trim();
+  if (!institution) {
+    const error = new Error('El orientador no tiene una institución asignada.');
+    error.status = 403;
+    throw error;
+  }
+  return institution;
+}
+
 function ensureStudent(user) {
   if (!user) {
     const error = new Error('Estudiante no encontrado.');
@@ -82,9 +92,10 @@ async function getStudentFollowUp(studentId) {
   };
 }
 
-router.get('/overview', async (_req, res, next) => {
+router.get('/overview', async (req, res, next) => {
   try {
-    const students = await User.find({ role: 'student' })
+    const institution = ensureInstitution(req);
+    const students = await User.find({ role: 'student', institution })
       .select('name email grade institution active createdAt')
       .sort({ name: 1 });
 
@@ -122,12 +133,13 @@ router.get('/overview', async (_req, res, next) => {
 
 router.get('/students/:studentId', async (req, res, next) => {
   try {
+    const institution = ensureInstitution(req);
     if (!validObjectId(req.params.studentId)) {
       return res.status(400).json({ message: 'Identificador de estudiante no válido.' });
     }
 
     const student = ensureStudent(
-      await User.findOne({ _id: req.params.studentId, role: 'student' })
+      await User.findOne({ _id: req.params.studentId, role: 'student', institution })
         .select('name email grade institution active createdAt')
     );
 
@@ -142,6 +154,7 @@ router.get('/students/:studentId', async (req, res, next) => {
 
 router.get('/students/:studentId/check-ins', async (req, res, next) => {
   try {
+    const institution = ensureInstitution(req);
     if (!validObjectId(req.params.studentId)) {
       return res.status(400).json({ message: 'Identificador de estudiante no válido.' });
     }
@@ -161,6 +174,7 @@ router.get('/students/:studentId/check-ins', async (req, res, next) => {
 
 router.get('/students/:studentId/activity-progress', async (req, res, next) => {
   try {
+    const institution = ensureInstitution(req);
     if (!validObjectId(req.params.studentId)) {
       return res.status(400).json({ message: 'Identificador de estudiante no válido.' });
     }
