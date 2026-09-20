@@ -258,15 +258,7 @@ router.get('/', async (req, res, next) => {
     const active = req.query.active;
 
     if (search) {
-      const escaped = search.replace(/[.*+?^()|[\\]\\\\]/g, '\\\\router.get('/', async (req, res, next) => {
-  try {
-    const filter = req.user.role === 'admin' ? {} : { active: true };
-    const activities = await Activity.find(filter).sort({ order: 1, title: 1 });
-    res.json({ activities: activities.map(publicActivity) });
-  } catch (error) {
-    next(error);
-  }
-});');
+      const escaped = search.replace(/[.*+?^()|[\\]\\\\]/g, '\\$&');
       const pattern = new RegExp(escaped, 'i');
       filter.$or = [{ title: pattern }, { activityId: pattern }, { description: pattern }];
     }
