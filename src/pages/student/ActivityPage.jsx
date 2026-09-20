@@ -44,6 +44,7 @@ function ActivityPage() {
     useState(0);
 
   const [responses, setResponses] = useState({});
+  const [progressExists, setProgressExists] = useState(false);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
@@ -102,6 +103,8 @@ function ActivityPage() {
     api.getActivityProgressById(activityId)
       .then(({ item }) => {
         if (!active) return;
+
+        setProgressExists(Boolean(item));
 
         if (item?.answers) {
           setResponses(item.answers);
@@ -240,11 +243,18 @@ function ActivityPage() {
     setSaving(true);
 
     try {
-      await api.saveActivityProgress({
+      const payload = {
         activityId: activity.id,
         status: isLastStep ? 'completed' : 'in-progress',
         answers: responses,
-      });
+      };
+
+      if (progressExists) {
+        await api.updateActivityProgress(activity.id, payload);
+      } else {
+        await api.createActivityProgress(payload);
+        setProgressExists(true);
+      }
 
       if (!isLastStep) {
         setCurrentStep((previous) => previous + 1);
