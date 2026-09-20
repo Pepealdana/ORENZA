@@ -208,8 +208,8 @@ export function getCompletedActivitiesForCompetency(
 
 
   /*
-   * Obtenemos las experiencias guardadas
-   * en localStorage.
+   * Recibimos las experiencias persistidas
+   * desde el backend mediante el hook de progreso.
    */
 
   const completedActivities = Array.isArray(completedActivitiesOverride)
