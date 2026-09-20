@@ -52,6 +52,15 @@ for (const item of demoUsers) {
 await User.deleteMany({ email: /^smoke-.*@orenza\.local$/i });
 await Activity.deleteMany({ activityId: /^smoke-activity-/i });
 
+const demoActivityIds = demoActivities.map((activity) => activity.id);
+
+// El seed representa un estado demo limpio: cualquier actividad fuera del catálogo
+// oficial queda inactiva para no contaminar el catálogo activo de 28 experiencias.
+await Activity.updateMany(
+  { activityId: { $nin: demoActivityIds } },
+  { $set: { active: false } }
+);
+
 await Activity.updateMany(
   { activityId: { $in: ['emociones-basicas', 'autoconocimiento'] } },
   { $set: { active: false } }
