@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Activity, Building2, Database, LoaderCircle, Save, Settings, ShieldCheck, UserPlus, UsersRound } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { api } from '../../services/api';
@@ -138,9 +139,9 @@ function AdminDashboardPage() {
             <article className={styles.cardDisabled} aria-disabled="true">
               <span><Building2 /></span><strong>Instituciones</strong><small>Configuración institucional</small><em>No disponible</em>
             </article>
-            <a className={styles.cardLink} href="/administrador/contenidos">
+            <Link className={styles.cardLink} to="/administrador/contenidos">
               <span><Database /></span><strong>Contenidos</strong><small>Recursos y contenidos generales</small><em>Gestionar actividades</em>
-            </a>
+            </Link>
             <article className={styles.cardDisabled} aria-disabled="true">
               <span><Settings /></span><strong>Configuración</strong><small>Parámetros del sistema</small><em>No disponible</em>
             </article>
