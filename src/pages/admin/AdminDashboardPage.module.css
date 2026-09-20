@@ -66,7 +66,7 @@ td small { display: block; margin-top: 3px; color: var(--color-gray-dark); }
 .textButton { display: inline-flex; align-items: center; gap: 6px; }
 @media (max-width: 520px) { .editForm { grid-template-columns: 1fr; } .editActions { justify-content: stretch; } .editActions button { flex: 1; } }
 
-.filters { display: grid; grid-template-columns: minmax(220px, 1.5fr) repeat(2, minmax(160px, 1fr)); gap: 10px; margin-bottom: var(--space-2); }
+.filters { display: grid; grid-template-columns: minmax(220px, 1.5fr) repeat(3, minmax(150px, 1fr)); gap: 10px; margin-bottom: var(--space-2); }
 .filters input, .filters select { width: 100%; min-height: 42px; box-sizing: border-box; padding: 9px 12px; border: 1px solid var(--color-gray-medium); border-radius: 12px; background: var(--color-white); color: var(--color-text-primary); font: inherit; }
 .filters input:focus, .filters select:focus, .editForm input:focus, .editForm select:focus { outline: 2px solid rgba(0, 137, 123, .2); outline-offset: 1px; border-color: var(--color-primary); }
 @media (max-width: 700px) { .filters { grid-template-columns: 1fr; } }
