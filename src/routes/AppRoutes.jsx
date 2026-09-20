@@ -34,6 +34,7 @@ import CounselorDashboardPage from '../pages/counselor/CounselorDashboardPage';
 import AdminDashboardPage from '../pages/admin/AdminDashboardPage';
 import AdminActivitiesPage from '../pages/admin/AdminActivitiesPage';
 import AdminInstitutionsPage from '../pages/admin/AdminInstitutionsPage';
+import AdminAuditPage from '../pages/admin/AdminAuditPage';
 import ActivityPage from '../pages/student/ActivityPage';
 
 function AppRoutes() {
@@ -92,6 +93,7 @@ function AppRoutes() {
           <Route index element={<AdminDashboardPage />} />
           <Route path="contenidos" element={<AdminActivitiesPage />} />
           <Route path="instituciones" element={<AdminInstitutionsPage />} />
+          <Route path="auditoria" element={<AdminAuditPage />} />
         </Route>
 
         <Route path="*" element={<Navigate to="/" replace />} />
