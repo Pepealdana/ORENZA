@@ -92,6 +92,7 @@ for (const [index, activity] of demoActivities.entries()) {
       repeatable: activity.repeatable,
       steps: activity.steps,
       order: index + 1,
+      version: 1,
       active: true,
     },
     { upsert: true, new: true, setDefaultsOnInsert: true }
