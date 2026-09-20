@@ -4,10 +4,6 @@
 
 import activities from '../data/activities';
 
-import {
-  getCompletedActivities,
-} from './activityStorage';
-
 
 /*
  * =========================================
@@ -188,7 +184,7 @@ export function getActivitiesForCompetency(
 
 export function getCompletedActivitiesForCompetency(
   competencyId,
-  completedActivitiesOverride = null
+  completedActivitiesOverride = []
 ) {
   const competencyActivities =
     getActivitiesForCompetency(
@@ -216,10 +212,9 @@ export function getCompletedActivitiesForCompetency(
    * en localStorage.
    */
 
-  const completedActivities =
-    Array.isArray(completedActivitiesOverride)
-      ? completedActivitiesOverride
-      : getCompletedActivities();
+  const completedActivities = Array.isArray(completedActivitiesOverride)
+    ? completedActivitiesOverride
+    : [];
 
 
   /*
