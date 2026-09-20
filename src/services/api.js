@@ -72,7 +72,7 @@ export const api = {
     body: JSON.stringify(payload),
   }),
 
-  getActivities: () => request('/activities'),
+  getActivities: (params = {}) => request(`/activities?${new URLSearchParams(params).toString()}`),
   getActivity: (id) => request(`/activities/${id}`),
   createActivity: (payload) => request('/activities', {
     method: 'POST',
@@ -106,7 +106,7 @@ export const api = {
   }),
 
   getAdminStats: () => request('/admin/stats'),
-  getAdminUsers: () => request('/admin/users'),
+  getAdminUsers: (params = {}) => request(`/admin/users?${new URLSearchParams(params).toString()}`),
   createAdminUser: (payload) => request('/admin/users', {
     method: 'POST',
     body: JSON.stringify(payload),
@@ -118,6 +118,17 @@ export const api = {
   deleteAdminUser: (id) => request(`/admin/users/${id}`, {
     method: 'DELETE',
   }),
+  getAdminInstitutions: (params = {}) => request(`/admin/institutions?${new URLSearchParams(params).toString()}`),
+  createAdminInstitution: (payload) => request('/admin/institutions', {
+    method: 'POST',
+    body: JSON.stringify(payload),
+  }),
+  updateAdminInstitution: (id, payload) => request(`/admin/institutions/${id}`, {
+    method: 'PATCH',
+    body: JSON.stringify(payload),
+  }),
+  deleteAdminInstitution: (id) => request(`/admin/institutions/${id}`, { method: 'DELETE' }),
+  getAdminAuditLogs: (params = {}) => request(`/admin/audit-logs?${new URLSearchParams(params).toString()}`),
 
   getCounselorOverview: () => request('/counselor/overview'),
   getCounselorStudent: (studentId) => request(`/counselor/students/${studentId}`),
