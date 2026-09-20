@@ -25,6 +25,7 @@ function AdminDashboardPage() {
   const { user } = useAuth();
   const [stats, setStats] = useState(null);
   const [users, setUsers] = useState([]);
+  const [institutions, setInstitutions] = useState([]);
   const [form, setForm] = useState(emptyForm);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -41,12 +42,14 @@ function AdminDashboardPage() {
     setError('');
 
     try {
-      const [statsResponse, usersResponse] = await Promise.all([
+      const [statsResponse, usersResponse, institutionsResponse] = await Promise.all([
         api.getAdminStats(),
-        api.getAdminUsers(),
+        api.getAdminUsers({ limit: 100 }),
+        api.getAdminInstitutions({ limit: 100, active: 'true' }),
       ]);
       setStats(statsResponse.stats);
       setUsers(usersResponse.users);
+      setInstitutions(institutionsResponse.institutions || []);
     } catch (requestError) {
       setError(requestError.message || 'No fue posible cargar la administración.');
     } finally {
@@ -217,7 +220,7 @@ function AdminDashboardPage() {
                 {Object.entries(roleLabels).map(([value, label]) => <option key={value} value={value}>{label}</option>)}
               </select>
               <input name="grade" value={form.grade} onChange={updateForm} placeholder="Grado (opcional)" />
-              <input name="institution" value={form.institution} onChange={updateForm} placeholder="Institución (opcional)" />
+              <select name="institution" value={form.institution} onChange={updateForm}><option value="">Sin institución</option>{institutions.map((item) => <option key={item.id} value={item.name}>{item.name}</option>)}</select>
               <button type="submit" disabled={saving}><Save size={17} /> {saving ? 'Guardando…' : 'Crear usuario'}</button>
             </form>
           </section>
@@ -240,7 +243,7 @@ function AdminDashboardPage() {
                   {Object.entries(roleLabels).map(([value, label]) => <option key={value} value={value}>{label}</option>)}
                 </select>
                 <input name="grade" value={editForm.grade} onChange={updateEditForm} placeholder="Grado (opcional)" />
-                <input name="institution" value={editForm.institution} onChange={updateEditForm} placeholder="Institución (opcional)" />
+                <select name="institution" value={editForm.institution} onChange={updateEditForm}><option value="">Sin institución</option>{institutions.map((item) => <option key={item.id} value={item.name}>{item.name}</option>)}</select>
                 <div className={styles.editActions}>
                   <button type="button" className={styles.secondaryButton} onClick={cancelEdit} disabled={saving}>Cancelar</button>
                   <button type="submit" disabled={saving}><Save size={17} /> {saving ? 'Guardando…' : 'Guardar cambios'}</button>
