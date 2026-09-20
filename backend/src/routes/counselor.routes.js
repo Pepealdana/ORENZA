@@ -2,6 +2,7 @@ import { Router } from 'express';
 import mongoose from 'mongoose';
 import User from '../models/User.js';
 import CheckIn from '../models/CheckIn.js';
+import Activity from '../models/Activity.js';
 import ActivityProgress from '../models/ActivityProgress.js';
 import { requireAuth, allowRoles } from '../middleware/auth.js';
 
@@ -19,6 +20,66 @@ function ensureStudent(user) {
     throw error;
   }
   return user;
+}
+
+// El orientador recibe solo datos de seguimiento necesarios para el acompañamiento.
+// No se exponen notas privadas de check-ins ni respuestas escritas de actividades.
+function publicCheckIn(item) {
+  return {
+    id: item._id,
+    date: item.date,
+    mood: item.mood,
+    emotion: item.emotion,
+    intensity: item.intensity,
+    createdAt: item.createdAt,
+    updatedAt: item.updatedAt,
+  };
+}
+
+function publicActivityProgress(item, activity) {
+  return {
+    id: item._id,
+    activityId: item.activityId,
+    activityTitle: activity?.title || item.activityId,
+    activityType: activity?.type || null,
+    status: item.status,
+    startedAt: item.startedAt,
+    completedAt: item.completedAt,
+    createdAt: item.createdAt,
+    updatedAt: item.updatedAt,
+  };
+}
+
+async function getActivityMap(items) {
+  const activityIds = [...new Set(items.map((item) => item.activityId).filter(Boolean))];
+
+  if (activityIds.length === 0) return new Map();
+
+  const activities = await Activity.find({ activityId: { $in: activityIds } })
+    .select('activityId title type')
+    .lean();
+
+  return new Map(activities.map((activity) => [activity.activityId, activity]));
+}
+
+async function getStudentFollowUp(studentId) {
+  const [checkIns, progressItems] = await Promise.all([
+    CheckIn.find({ user: studentId })
+      .sort({ date: -1 })
+      .select('date mood emotion intensity createdAt updatedAt')
+      .lean(),
+    ActivityProgress.find({ user: studentId })
+      .sort({ updatedAt: -1 })
+      .select('activityId status startedAt completedAt createdAt updatedAt')
+      .lean(),
+  ]);
+
+  const activityMap = await getActivityMap(progressItems);
+
+  return {
+    checkIns: checkIns.map(publicCheckIn),
+    activities: progressItems.map((item) => publicActivityProgress(item, activityMap.get(item.activityId))),
+  };
 }
 
 router.get('/overview', async (_req, res, next) => {
@@ -70,15 +131,11 @@ router.get('/students/:studentId', async (req, res, next) => {
         .select('name email grade institution active createdAt')
     );
 
-    const [latestCheckIn, completedActivities] = await Promise.all([
-      CheckIn.find({ user: student._id }).sort({ date: -1 }),
-      ActivityProgress.find({ user: student._id }).sort({ updatedAt: -1 }),
-    ]);
+    const followUp = await getStudentFollowUp(student._id);
 
     res.json({
       student,
-      checkIns: latestCheckIn,
-      activities: completedActivities,
+      ...followUp,
     });
   } catch (error) { next(error); }
 });
@@ -89,9 +146,16 @@ router.get('/students/:studentId/check-ins', async (req, res, next) => {
       return res.status(400).json({ message: 'Identificador de estudiante no válido.' });
     }
 
-    const student = ensureStudent(await User.findOne({ _id: req.params.studentId, role: 'student' }).select('_id'));
-    const items = await CheckIn.find({ user: student._id }).sort({ date: -1 });
-    res.json({ items });
+    const student = ensureStudent(
+      await User.findOne({ _id: req.params.studentId, role: 'student' }).select('_id')
+    );
+
+    const items = await CheckIn.find({ user: student._id })
+      .sort({ date: -1 })
+      .select('date mood emotion intensity createdAt updatedAt')
+      .lean();
+
+    res.json({ items: items.map(publicCheckIn) });
   } catch (error) { next(error); }
 });
 
@@ -101,9 +165,20 @@ router.get('/students/:studentId/activity-progress', async (req, res, next) => {
       return res.status(400).json({ message: 'Identificador de estudiante no válido.' });
     }
 
-    const student = ensureStudent(await User.findOne({ _id: req.params.studentId, role: 'student' }).select('_id'));
-    const items = await ActivityProgress.find({ user: student._id }).sort({ updatedAt: -1 });
-    res.json({ items });
+    const student = ensureStudent(
+      await User.findOne({ _id: req.params.studentId, role: 'student' }).select('_id')
+    );
+
+    const items = await ActivityProgress.find({ user: student._id })
+      .sort({ updatedAt: -1 })
+      .select('activityId status startedAt completedAt createdAt updatedAt')
+      .lean();
+
+    const activityMap = await getActivityMap(items);
+
+    res.json({
+      items: items.map((item) => publicActivityProgress(item, activityMap.get(item.activityId))),
+    });
   } catch (error) { next(error); }
 });
 
