@@ -5,6 +5,7 @@ import crypto from 'node:crypto';
 import User from '../models/User.js';
 import PasswordResetToken from '../models/PasswordResetToken.js';
 import { requireAuth } from '../middleware/auth.js';
+import { writeAudit } from '../utils/audit.js';
 
 const router = Router();
 
@@ -173,6 +174,7 @@ router.post('/reset-password', async (req, res, next) => {
 
     reset.usedAt = new Date();
     await reset.save();
+    await writeAudit({ actor: user._id, action: 'password-reset', entity: 'User', entityId: user._id, summary: 'Restableció su contraseña mediante recuperación' });
     await PasswordResetToken.deleteMany({ user: user._id, _id: { $ne: reset._id } });
 
     res.json({ message: 'Contraseña actualizada correctamente. Ya puedes iniciar sesión.' });
@@ -203,6 +205,8 @@ router.patch('/change-password', requireAuth, async (req, res, next) => {
 
     user.password = await bcrypt.hash(newPassword, 12);
     await user.save();
+
+    await writeAudit({ actor: user._id, action: 'password-change', entity: 'User', entityId: user._id, summary: 'Cambió su contraseña' });
 
     res.json({ message: 'Contraseña actualizada correctamente.' });
   } catch (error) {
