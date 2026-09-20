@@ -129,20 +129,27 @@ function AdminActivitiesPage() {
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [showInactive, setShowInactive] = useState(false);
+  const [search, setSearch] = useState('');
+  const [difficulty, setDifficulty] = useState('all');
+  const [pagination, setPagination] = useState({ page: 1, pages: 1, total: 0 });
 
-  const activeCount = useMemo(() => activities.filter((item) => item.active).length, [activities]);
-  const inactiveCount = activities.length - activeCount;
-  const visibleActivities = useMemo(
-    () => showInactive ? activities : activities.filter((item) => item.active),
-    [activities, showInactive]
-  );
+  const activeCount = useMemo(() => showInactive ? activities.filter((item) => item.active).length : pagination.total, [activities, pagination.total, showInactive]);
+  const inactiveCount = useMemo(() => activities.filter((item) => !item.active).length, [activities]);
+  const visibleActivities = activities;
 
-  const loadActivities = async () => {
+  const loadActivities = async (page = 1) => {
     setLoading(true);
     setError('');
     try {
-      const response = await api.getActivities();
+      const response = await api.getActivities({
+        page,
+        limit: 10,
+        active: showInactive ? '' : 'true',
+        search,
+        difficulty: difficulty === 'all' ? '' : difficulty,
+      });
       setActivities(response.activities || []);
+      setPagination(response.pagination || { page, pages: 1, total: response.activities?.length || 0 });
     } catch (requestError) {
       setError(requestError.message || 'No fue posible cargar las actividades.');
     } finally {
@@ -151,8 +158,9 @@ function AdminActivitiesPage() {
   };
 
   useEffect(() => {
-    loadActivities();
-  }, []);
+    const timer = setTimeout(() => loadActivities(1), 200);
+    return () => clearTimeout(timer);
+  }, [showInactive, search, difficulty]);
 
   const resetForm = () => {
     setForm(emptyForm);
