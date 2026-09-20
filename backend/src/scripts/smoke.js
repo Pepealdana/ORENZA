@@ -346,6 +346,14 @@ async function run() {
   }
   assert(crossInstitutionBlocked, 'El orientador no debe consultar estudiantes de otra institución');
 
+  let crossInstitutionActivityBlocked = false;
+  try {
+    await request('/counselor/students/' + otherStudent.user.id + '/activity-progress', { headers: counselorHeaders });
+  } catch (error) {
+    crossInstitutionActivityBlocked = error.message.includes('-> 404:');
+  }
+  assert(crossInstitutionActivityBlocked, 'El orientador no debe consultar actividades de estudiantes de otra institución');
+
   const auditLogs = await request('/admin/audit-logs?limit=100', { headers: adminHeaders });
   assert(Array.isArray(auditLogs.logs) && auditLogs.logs.length > 0, 'La auditoría no registra operaciones administrativas');
 
