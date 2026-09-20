@@ -2,6 +2,7 @@ import { Router } from 'express';
 import mongoose from 'mongoose';
 import Activity from '../models/Activity.js';
 import { requireAuth, allowRoles } from '../middleware/auth.js';
+import { writeAudit } from '../utils/audit.js';
 
 const router = Router();
 
@@ -301,6 +302,15 @@ router.get('/:id', async (req, res, next) => {
     const activity = await Activity.findOne(filter);
     if (!activity) return res.status(404).json({ message: 'Actividad no encontrada.' });
 
+    await writeAudit({
+      actor: req.user._id,
+      action: 'update',
+      entity: 'Activity',
+      entityId: activity._id,
+      summary: 'Actualizó la actividad ' + activity.title,
+      changes: updates,
+    });
+
     res.json({ activity: publicActivity(activity) });
   } catch (error) {
     next(error);
@@ -323,6 +333,15 @@ router.post('/', async (req, res, next) => {
     if (exists) return res.status(409).json({ message: 'Ya existe una actividad con ese identificador.' });
 
     const activity = await Activity.create(payload);
+
+    await writeAudit({
+      actor: req.user._id,
+      action: 'create',
+      entity: 'Activity',
+      entityId: activity._id,
+      summary: 'Creó la actividad ' + activity.title,
+      changes: { activityId: activity.activityId, active: activity.active },
+    });
 
     res.status(201).json({ activity: publicActivity(activity) });
   } catch (error) {
@@ -413,6 +432,15 @@ router.delete('/:id', async (req, res, next) => {
     );
 
     if (!activity) return res.status(404).json({ message: 'Actividad no encontrada.' });
+
+    await writeAudit({
+      actor: req.user._id,
+      action: 'deactivate',
+      entity: 'Activity',
+      entityId: activity._id,
+      summary: 'Desactivó la actividad ' + activity.title,
+      changes: { active: false },
+    });
 
     res.json({
       message: 'Actividad desactivada correctamente.',
