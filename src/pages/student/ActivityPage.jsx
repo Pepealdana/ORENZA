@@ -76,7 +76,7 @@ function ActivityPage() {
         if (active) setLoading(false);
       });
     return () => { active = false; };
-  }, [activityId]);
+  }, [activityId, activity]);
 
   /*
    * ========================================
