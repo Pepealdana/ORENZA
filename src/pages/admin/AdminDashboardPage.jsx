@@ -30,6 +30,9 @@ function AdminDashboardPage() {
   const [saving, setSaving] = useState(false);
   const [editingUser, setEditingUser] = useState(null);
   const [editForm, setEditForm] = useState({ name: '', email: '', role: 'student', grade: '', institution: '' });
+  const [search, setSearch] = useState('');
+  const [roleFilter, setRoleFilter] = useState('all');
+  const [statusFilter, setStatusFilter] = useState('all');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
 
@@ -123,6 +126,18 @@ function AdminDashboardPage() {
       setSaving(false);
     }
   };
+
+  const filteredUsers = users.filter((item) => {
+    const normalizedSearch = search.trim().toLowerCase();
+    const matchesSearch = !normalizedSearch
+      || item.name.toLowerCase().includes(normalizedSearch)
+      || item.email.toLowerCase().includes(normalizedSearch);
+    const matchesRole = roleFilter === 'all' || item.role === roleFilter;
+    const matchesStatus = statusFilter === 'all'
+      || (statusFilter === 'active' && item.active)
+      || (statusFilter === 'inactive' && !item.active);
+    return matchesSearch && matchesRole && matchesStatus;
+  });
 
   const toggleActive = async (item) => {
     setError('');
@@ -238,7 +253,25 @@ function AdminDashboardPage() {
                 <p className={styles.eyebrow}>Accesos</p>
                 <h2>Usuarios registrados</h2>
               </div>
-              <span className={styles.count}>{users.length}</span>
+              <span className={styles.count}>{filteredUsers.length}{filteredUsers.length !== users.length ? ` / ${users.length}` : ''}</span>
+            </div>
+
+            <div className={styles.filters}>
+              <input
+                value={search}
+                onChange={(event) => setSearch(event.target.value)}
+                placeholder="Buscar por nombre o correo"
+                aria-label="Buscar usuarios"
+              />
+              <select value={roleFilter} onChange={(event) => setRoleFilter(event.target.value)} aria-label="Filtrar por rol">
+                <option value="all">Todos los roles</option>
+                {Object.entries(roleLabels).map(([value, label]) => <option key={value} value={value}>{label}</option>)}
+              </select>
+              <select value={statusFilter} onChange={(event) => setStatusFilter(event.target.value)} aria-label="Filtrar por estado">
+                <option value="all">Todos los estados</option>
+                <option value="active">Activos</option>
+                <option value="inactive">Inactivos</option>
+              </select>
             </div>
 
             <div className={styles.tableWrap}>
@@ -247,7 +280,7 @@ function AdminDashboardPage() {
                   <tr><th>Usuario</th><th>Rol</th><th>Estado</th><th>Acción</th></tr>
                 </thead>
                 <tbody>
-                  {users.map((item) => (
+                  {filteredUsers.map((item) => (
                     <tr key={item.id}>
                       <td><strong>{item.name}</strong><small>{item.email}</small></td>
                       <td><span className={styles.roleLabel}>{roleLabels[item.role] || item.role}</span></td>
