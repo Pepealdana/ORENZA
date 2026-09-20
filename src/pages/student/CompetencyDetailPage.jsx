@@ -21,7 +21,7 @@ import relacionesIllustration from '../../assets/illustrations/screens/relacione
 function CompetencyDetailPage() {
   const { competencyId } = useParams();
   const { completedActivities, loading } = useStudentProgress();
-  const { activities } = useActivities();
+  const { activities: catalogActivities } = useActivities();
 
 
   /*
@@ -101,7 +101,7 @@ function CompetencyDetailPage() {
    * guardadas en localStorage.
    */
 
-  const stats = getCompetencyStats(competency.id, completedActivities, activities);
+  const stats = getCompetencyStats(competency.id, completedActivities, catalogActivities);
 
 
   const {
