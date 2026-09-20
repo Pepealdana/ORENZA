@@ -237,12 +237,6 @@ function DashboardPage() {
   const handleDeleteCheckIn = async () => {
     if (!todayCheckIn?.id) return;
 
-    const confirmed = window.confirm(
-      '¿Quieres eliminar el registro emocional de hoy? Esta acción no se puede deshacer.'
-    );
-
-    if (!confirmed) return;
-
     try {
       await api.deleteCheckIn(todayCheckIn.id);
       setCheckIns((current) => current.filter((item) => item.id !== todayCheckIn.id));
