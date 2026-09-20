@@ -33,6 +33,10 @@ export const api = {
     method: 'POST',
     body: JSON.stringify(payload),
   }),
+  requestPasswordReset: (payload) => request('/auth/request-password-reset', {
+    method: 'POST',
+    body: JSON.stringify(payload),
+  }),
   resetPassword: (payload) => request('/auth/reset-password', {
     method: 'POST',
     body: JSON.stringify(payload),
@@ -53,6 +57,7 @@ export const api = {
     body: JSON.stringify(payload),
   }),
   getActivityProgress: () => request('/student/activities/progress'),
+  getActivityProgressById: (activityId) => request(`/student/activities/progress/${activityId}`),
   saveActivityProgress: (payload) => request('/student/activities/progress', {
     method: 'POST',
     body: JSON.stringify(payload),
@@ -68,6 +73,9 @@ export const api = {
     body: JSON.stringify(payload),
   }),
   getCounselorOverview: () => request('/counselor/overview'),
+  getCounselorStudent: (studentId) => request(`/counselor/students/${studentId}`),
+  getCounselorStudentCheckIns: (studentId) => request(`/counselor/students/${studentId}/check-ins`),
+  getCounselorStudentActivities: (studentId) => request(`/counselor/students/${studentId}/activity-progress`),
 };
 
 export { API_URL };
