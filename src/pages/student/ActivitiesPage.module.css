@@ -805,3 +805,5 @@
     width: min(100%, 330px);
   }
 }
+
+.inProgress { display: inline-flex; align-items: center; gap: 4px; color: var(--color-primary); font-size: .68rem; font-weight: 700; white-space: nowrap; }
