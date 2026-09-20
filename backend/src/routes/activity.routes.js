@@ -46,6 +46,7 @@ function publicActivity(activity) {
     repeatable: activity.repeatable,
     steps: activity.steps,
     order: activity.order,
+    version: activity.version,
     active: activity.active,
     createdAt: activity.createdAt,
     updatedAt: activity.updatedAt,
@@ -389,7 +390,10 @@ router.patch('/:id', async (req, res, next) => {
       return res.status(400).json({ message: 'Una actividad activa debe tener al menos un paso.' });
     }
 
-    const activity = await Activity.findByIdAndUpdate(req.params.id, updates, {
+    const activity = await Activity.findByIdAndUpdate(req.params.id, {
+      $set: updates,
+      $inc: { version: 1 },
+    }, {
       new: true,
       runValidators: true,
     });
