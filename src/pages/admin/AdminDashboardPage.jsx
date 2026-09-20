@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Activity, Building2, Database, LoaderCircle, Save, Settings, ShieldCheck, UserPlus, UsersRound } from 'lucide-react';
+import { Activity, Building2, Database, Edit3, LoaderCircle, Save, Settings, ShieldCheck, UserPlus, UsersRound, X } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { api } from '../../services/api';
 import styles from './AdminDashboardPage.module.css';
@@ -28,6 +28,8 @@ function AdminDashboardPage() {
   const [form, setForm] = useState(emptyForm);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [editingUser, setEditingUser] = useState(null);
+  const [editForm, setEditForm] = useState({ name: '', email: '', role: 'student', grade: '', institution: '' });
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
 
@@ -85,6 +87,53 @@ function AdminDashboardPage() {
       setMessage('Rol actualizado.');
     } catch (requestError) {
       setError(requestError.message || 'No fue posible actualizar el rol.');
+    }
+  };
+
+  const startEdit = (item) => {
+    setError('');
+    setMessage('');
+    setEditingUser(item.id);
+    setEditForm({
+      name: item.name || '',
+      email: item.email || '',
+      role: item.role || 'student',
+      grade: item.grade || '',
+      institution: item.institution || '',
+    });
+  };
+
+  const cancelEdit = () => {
+    setEditingUser(null);
+    setEditForm({ name: '', email: '', role: 'student', grade: '', institution: '' });
+  };
+
+  const updateEditForm = (event) => {
+    setEditForm((current) => ({ ...current, [event.target.name]: event.target.value }));
+  };
+
+  const saveUser = async (event) => {
+    event.preventDefault();
+    setSaving(true);
+    setError('');
+    setMessage('');
+
+    try {
+      const response = await api.updateAdminUser(editingUser, {
+        name: editForm.name,
+        role: editForm.role,
+        grade: editForm.grade,
+        institution: editForm.institution,
+      });
+      setUsers((current) => current.map((item) => item.id === editingUser ? response.user : item));
+      setMessage('Usuario actualizado correctamente.');
+      cancelEdit();
+      const statsResponse = await api.getAdminStats();
+      setStats(statsResponse.stats);
+    } catch (requestError) {
+      setError(requestError.message || 'No fue posible actualizar el usuario.');
+    } finally {
+      setSaving(false);
     }
   };
 
@@ -169,6 +218,33 @@ function AdminDashboardPage() {
             </form>
           </section>
 
+          {editingUser && (
+            <section className={styles.panel}>
+              <div className={styles.panelHeader}>
+                <div>
+                  <p className={styles.eyebrow}>Edición</p>
+                  <h2>Editar usuario</h2>
+                </div>
+                <button type="button" className={styles.iconButton} onClick={cancelEdit} aria-label="Cancelar edición">
+                  <X size={20} />
+                </button>
+              </div>
+              <form className={styles.editForm} onSubmit={saveUser}>
+                <input name="name" value={editForm.name} onChange={updateEditForm} placeholder="Nombre completo" minLength={2} maxLength={100} required />
+                <input name="email" value={editForm.email} readOnly aria-label="Correo electrónico" />
+                <select name="role" value={editForm.role} onChange={updateEditForm}>
+                  {Object.entries(roleLabels).map(([value, label]) => <option key={value} value={value}>{label}</option>)}
+                </select>
+                <input name="grade" value={editForm.grade} onChange={updateEditForm} placeholder="Grado (opcional)" />
+                <input name="institution" value={editForm.institution} onChange={updateEditForm} placeholder="Institución (opcional)" />
+                <div className={styles.editActions}>
+                  <button type="button" className={styles.secondaryButton} onClick={cancelEdit} disabled={saving}>Cancelar</button>
+                  <button type="submit" disabled={saving}><Save size={17} /> {saving ? 'Guardando…' : 'Guardar cambios'}</button>
+                </div>
+              </form>
+            </section>
+          )}
+
           <section className={styles.panel}>
             <div className={styles.panelHeader}>
               <div>
@@ -187,13 +263,18 @@ function AdminDashboardPage() {
                   {users.map((item) => (
                     <tr key={item.id}>
                       <td><strong>{item.name}</strong><small>{item.email}</small></td>
-                      <td>
-                        <select value={item.role} onChange={(event) => updateRole(item.id, event.target.value)}>
-                          {Object.entries(roleLabels).map(([value, label]) => <option key={value} value={value}>{label}</option>)}
-                        </select>
-                      </td>
+                      <td><span className={styles.roleLabel}>{roleLabels[item.role] || item.role}</span></td>
                       <td><span className={item.active ? styles.active : styles.inactive}>{item.active ? 'Activo' : 'Inactivo'}</span></td>
-                      <td><button type="button" className={styles.textButton} onClick={() => toggleActive(item)}>{item.active ? 'Desactivar' : 'Activar'}</button></td>
+                      <td>
+                        <div className={styles.rowActions}>
+                          <button type="button" className={styles.textButton} onClick={() => startEdit(item)} disabled={saving}>
+                            <Edit3 size={15} /> Editar
+                          </button>
+                          <button type="button" className={styles.textButton} onClick={() => toggleActive(item)} disabled={saving}>
+                            {item.active ? 'Desactivar' : 'Activar'}
+                          </button>
+                        </div>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
