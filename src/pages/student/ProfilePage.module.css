@@ -89,3 +89,5 @@
     width: min(100%, 330px);
   }
 }
+
+.profileSuccess,.profileError{margin-top:var(--space-2);padding:12px 14px;border-radius:12px;font-size:.82rem}.profileSuccess{background:var(--color-secondary-soft);color:var(--color-primary)}.profileError{background:#fdecec;color:#a51f1f}.editCard{display:grid;gap:12px;margin-top:var(--space-2);padding:var(--space-3);background:var(--color-white);border:1px solid var(--color-gray-medium);border-radius:var(--radius-card);box-shadow:var(--shadow-1)}.editCard label{display:grid;gap:5px}.editCard label span{font-size:.78rem;font-weight:600;color:var(--color-gray-dark)}.editCard input{width:100%;padding:11px 12px;border:1px solid var(--color-gray-medium);border-radius:12px;background:var(--color-white);color:var(--color-text-primary)}.editActions{display:flex;justify-content:flex-end;gap:8px}.editActions button{border:0;border-radius:12px;padding:10px 15px;cursor:pointer}.editActions button:last-child{background:var(--color-primary);color:var(--color-white)}.settingsLink{border:0;cursor:pointer}
