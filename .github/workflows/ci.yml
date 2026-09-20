@@ -38,3 +38,29 @@ jobs:
         run: node --check src/routes/counselor.routes.js
       - working-directory: backend
         run: node --check src/routes/admin.routes.js
+      - working-directory: backend
+        run: node --check src/routes/activity.routes.js
+      - working-directory: backend
+        run: node --check src/config/db.js
+      - working-directory: backend
+        run: node --check src/middleware/auth.js
+      - working-directory: backend
+        run: node --check src/models/User.js
+      - working-directory: backend
+        run: node --check src/models/Activity.js
+      - working-directory: backend
+        run: node --check src/models/ActivityProgress.js
+      - working-directory: backend
+        run: node --check src/models/CheckIn.js
+      - working-directory: backend
+        run: node --check src/models/Institution.js
+      - working-directory: backend
+        run: node --check src/models/AuditLog.js
+      - working-directory: backend
+        run: node --check src/models/PasswordResetToken.js
+      - working-directory: backend
+        run: node --check src/utils/audit.js
+      - working-directory: backend
+        run: node --check src/scripts/seed.js
+      - working-directory: backend
+        run: node --check src/scripts/smoke.js
