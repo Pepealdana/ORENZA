@@ -186,9 +186,9 @@ function AdminDashboardPage() {
           </section>
 
           <section className={styles.grid} aria-label="Módulos de administración">
-            <article className={styles.cardDisabled} aria-disabled="true">
-              <span><UsersRound /></span><strong>Usuarios</strong><small>Gestión de accesos y roles</small><em>No disponible</em>
-            </article>
+            <Link className={styles.cardLink} to="/administrador#usuarios">
+              <span><UsersRound /></span><strong>Usuarios</strong><small>Gestión de accesos y roles</small><em>Gestionar usuarios</em>
+            </Link>
             <Link className={styles.cardLink} to="/administrador/instituciones">
               <span><Building2 /></span><strong>Instituciones</strong><small>Organización y aislamiento de acceso</small><em>Gestionar instituciones</em>
             </Link>
@@ -249,7 +249,7 @@ function AdminDashboardPage() {
             </section>
           )}
 
-          <section className={styles.panel}>
+          <section className={styles.panel} id="usuarios">
             <div className={styles.panelHeader}>
               <div>
                 <p className={styles.eyebrow}>Accesos</p>
