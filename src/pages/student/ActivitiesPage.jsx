@@ -86,7 +86,7 @@ function ActivitiesPage() {
    * ========================================
    */
 
-  const { completedActivities } = useStudentProgress();
+  const { completedActivities, activityProgress } = useStudentProgress();
   const { activities, loading: activitiesLoading, error: activitiesError } = useActivities();
 
 
@@ -95,6 +95,15 @@ function ActivitiesPage() {
    * consultar rápidamente si una actividad
    * ya fue explorada.
    */
+
+  const inProgressActivityIds = useMemo(
+    () => new Set(
+      activityProgress
+        .filter((item) => item.status === 'in-progress')
+        .map((item) => item.activityId)
+    ),
+    [activityProgress]
+  );
 
   const completedActivityIds =
     useMemo(() => {
@@ -407,6 +416,9 @@ function ActivitiesPage() {
                     activity.id
                   );
 
+                const isInProgress =
+                  inProgressActivityIds.has(activity.id);
+
 
                 return (
                   <article
@@ -561,9 +573,11 @@ function ActivitiesPage() {
                       }
                     >
 
-                      {hasBeenExplored
-                        ? 'Volver a explorar'
-                        : 'Explorar'}
+                      {isInProgress
+                        ? 'Continuar'
+                        : hasBeenExplored
+                          ? 'Volver a explorar'
+                          : 'Explorar'}
 
                       <ArrowRight
                         size={18}
