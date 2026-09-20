@@ -123,7 +123,7 @@ function ActivitiesPage() {
         return activities;
       }
 
-      return getActivitiesForCompetencies(selectedCompetency);
+      return getActivitiesForCompetencies(selectedCompetency, activities);
 
     }, [selectedCompetency, activities]);
 
@@ -618,7 +618,8 @@ function ActivitiesPage() {
  */
 
 function getActivitiesForCompetencies(
-  selectedCompetency
+  selectedCompetency,
+  catalog
 ) {
 
   const competencyMap = {
@@ -632,10 +633,10 @@ function getActivitiesForCompetencies(
     competencyMap[selectedCompetency];
 
   if (!target) {
-    return activities;
+    return catalog;
   }
 
-  return activities.filter(
+  return catalog.filter(
     (activity) =>
       activity.competencies?.primary === target ||
       activity.competencies?.secondary?.includes(target)
