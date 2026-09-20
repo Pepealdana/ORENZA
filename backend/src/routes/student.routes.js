@@ -227,18 +227,6 @@ router.post('/activities/progress', async (req, res, next) => {
 
     if (validationError) return res.status(400).json({ message: validationError });
 
-    const existing = await ActivityProgress.findOne({
-      user: req.user._id,
-      activityId: activityId.trim(),
-    });
-
-    if (existing) {
-      return res.status(409).json({
-        message: 'Ya existe progreso para esta actividad. Utiliza PATCH para actualizarlo.',
-        item: existing,
-      });
-    }
-
     const normalizedActivityId = activityId.trim();
     const activity = await Activity.findOne({
       activityId: normalizedActivityId,
@@ -247,6 +235,18 @@ router.post('/activities/progress', async (req, res, next) => {
 
     if (!activity) {
       return res.status(404).json({ message: 'La actividad no está disponible.' });
+    }
+
+    const existing = await ActivityProgress.findOne({
+      user: req.user._id,
+      activityId: normalizedActivityId,
+    });
+
+    if (existing) {
+      return res.status(409).json({
+        message: 'Ya existe progreso para esta actividad. Utiliza PATCH para actualizarlo.',
+        item: existing,
+      });
     }
 
     const item = await ActivityProgress.create({
@@ -276,6 +276,22 @@ router.patch('/activities/progress/:activityId', async (req, res, next) => {
 
     if (!activity) {
       return res.status(404).json({ message: 'La actividad no está disponible.' });
+    }
+
+    const existing = await ActivityProgress.findOne({
+      user: req.user._id,
+      activityId,
+    });
+
+    if (!existing) {
+      return res.status(404).json({ message: 'Progreso de actividad no encontrado.' });
+    }
+
+    if (existing.status === 'completed' && activity.repeatable === false) {
+      return res.status(409).json({
+        message: 'Esta actividad no es repetible y ya fue completada.',
+        item: existing,
+      });
     }
 
     const updates = {};
