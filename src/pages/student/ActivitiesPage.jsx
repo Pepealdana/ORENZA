@@ -11,7 +11,7 @@ import {
 
 import { Link } from 'react-router-dom';
 
-import activities from '../../data/activities';
+import { useActivities } from '../../hooks/useActivities';
 
 
 import styles from './ActivitiesPage.module.css';
@@ -87,6 +87,7 @@ function ActivitiesPage() {
    */
 
   const { completedActivities } = useStudentProgress();
+  const { activities, loading: activitiesLoading, error: activitiesError } = useActivities();
 
 
   /*
@@ -124,7 +125,7 @@ function ActivitiesPage() {
 
       return getActivitiesForCompetencies(selectedCompetency);
 
-    }, [selectedCompetency]);
+    }, [selectedCompetency, activities]);
 
 
   return (
@@ -319,6 +320,20 @@ function ActivitiesPage() {
 
       </section>
 
+
+      {activitiesError && (
+        <div className={styles.emptyState} role="alert">
+          <h2>No fue posible cargar las experiencias</h2>
+          <p>{activitiesError}</p>
+        </div>
+      )}
+
+      {activitiesLoading && !activitiesError && (
+        <div className={styles.emptyState} aria-live="polite">
+          <h2>Cargando experiencias…</h2>
+          <p>Estamos preparando tu catálogo de actividades.</p>
+        </div>
+      )}
 
       {/* ======================================
           RESULTADOS
