@@ -294,15 +294,6 @@ router.get('/:id', async (req, res, next) => {
     const activity = await Activity.findOne(filter);
     if (!activity) return res.status(404).json({ message: 'Actividad no encontrada.' });
 
-    await writeAudit({
-      actor: req.user._id,
-      action: 'update',
-      entity: 'Activity',
-      entityId: activity._id,
-      summary: 'Actualizó la actividad ' + activity.title,
-      changes: updates,
-    });
-
     res.json({ activity: publicActivity(activity) });
   } catch (error) {
     next(error);
@@ -404,6 +395,15 @@ router.patch('/:id', async (req, res, next) => {
     });
 
     if (!activity) return res.status(404).json({ message: 'Actividad no encontrada.' });
+
+    await writeAudit({
+      actor: req.user._id,
+      action: 'update',
+      entity: 'Activity',
+      entityId: activity._id,
+      summary: 'Actualizó la actividad ' + activity.title,
+      changes: updates,
+    });
 
     res.json({ activity: publicActivity(activity) });
   } catch (error) {
