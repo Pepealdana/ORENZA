@@ -248,6 +248,7 @@ function DashboardPage() {
       setCheckIns((current) => current.filter((item) => item.id !== todayCheckIn.id));
     } catch (error) {
       console.error('No fue posible eliminar el registro emocional:', error);
+      throw error;
     }
   };
 
