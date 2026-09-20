@@ -63,6 +63,7 @@ async function run() {
   assert(registered.token && registered.user.role === 'student', 'Registro/JWT falló');
 
   const token = registered.token;
+  const smokeStudentId = registered.user.id;
   const auth = { Authorization: `Bearer ${token}` };
 
   const me = await request('/auth/me', { headers: auth });
@@ -231,16 +232,69 @@ async function run() {
   const stats = await request('/admin/stats', { headers: adminHeaders });
   assert(typeof stats.stats.total === 'number', 'Estadísticas de administrador fallaron');
 
-  const overview = await request('/counselor/overview', {
-    headers: { Authorization: `Bearer ${(await request('/auth/login', {
-      method: 'POST',
-      body: JSON.stringify({
-        email: process.env.SEED_COUNSELOR_EMAIL || 'orientador@orenza.local',
-        password: process.env.SEED_COUNSELOR_PASSWORD || 'Orientador1234!',
-      }),
-    })).token}` },
+  const counselorLogin = await request('/auth/login', {
+    method: 'POST',
+    body: JSON.stringify({
+      email: process.env.SEED_COUNSELOR_EMAIL || 'orientador@orenza.local',
+      password: process.env.SEED_COUNSELOR_PASSWORD || 'Orientador1234!',
+    }),
   });
+  const counselorHeaders = { Authorization: `Bearer ${counselorLogin.token}` };
+
+  const overview = await request('/counselor/overview', { headers: counselorHeaders });
   assert(Array.isArray(overview.students), 'Consulta del orientador falló');
+  const smokeStudent = overview.students.find((student) => String(student.id) === String(smokeStudentId));
+  assert(smokeStudent && smokeStudent.completedActivities === 1, 'El resumen del orientador no refleja el seguimiento del estudiante');
+
+  const counselorDetail = await request(`/counselor/students/${smokeStudentId}`, {
+    headers: counselorHeaders,
+  });
+  assert(counselorDetail.student.email === studentEmail, 'Detalle del estudiante no consultable por el orientador');
+  assert(counselorDetail.checkIns.length === 1, 'El detalle del orientador no incluye el check-in');
+  assert(counselorDetail.checkIns[0].note === undefined, 'El orientador no debe recibir la reflexión privada del check-in');
+  assert(counselorDetail.activities.length === 1, 'El detalle del orientador no incluye la experiencia');
+  assert(counselorDetail.activities[0].activityTitle === 'Smoke Activity Updated', 'El detalle del orientador no incluye el título de la experiencia');
+  assert(counselorDetail.activities[0].answers === undefined, 'El orientador no debe recibir las respuestas privadas de la experiencia');
+
+  const counselorCheckIns = await request(`/counselor/students/${smokeStudentId}/check-ins`, {
+    headers: counselorHeaders,
+  });
+  assert(counselorCheckIns.items.length === 1 && counselorCheckIns.items[0].note === undefined, 'El endpoint de check-ins del orientador expone contenido privado');
+
+  const counselorActivities = await request(`/counselor/students/${smokeStudentId}/activity-progress`, {
+    headers: counselorHeaders,
+  });
+  assert(counselorActivities.items.length === 1 && counselorActivities.items[0].activityTitle === 'Smoke Activity Updated', 'El endpoint de actividades del orientador no devuelve el resumen esperado');
+  assert(counselorActivities.items[0].answers === undefined, 'El endpoint de actividades del orientador expone respuestas privadas');
+
+  let counselorCannotEditStudent = false;
+  try {
+    await request('/student/profile', {
+      method: 'PATCH',
+      headers: counselorHeaders,
+      body: JSON.stringify({ name: 'No debe cambiar' }),
+    });
+  } catch (error) {
+    counselorCannotEditStudent = error.message.includes('-> 403:');
+  }
+  assert(counselorCannotEditStudent, 'El orientador no debe poder modificar el perfil de un estudiante');
+
+  let counselorCannotCreateCheckIn = false;
+  try {
+    await request('/student/check-ins', {
+      method: 'POST',
+      headers: counselorHeaders,
+      body: JSON.stringify({
+        date: new Date().toISOString().slice(0, 10),
+        mood: 'good',
+        emotion: 'tranquilidad',
+        intensity: 3,
+      }),
+    });
+  } catch (error) {
+    counselorCannotCreateCheckIn = error.message.includes('-> 403:');
+  }
+  assert(counselorCannotCreateCheckIn, 'El orientador no debe poder crear registros emocionales');
 
   const deletedActivity = await request('/activities/' + createdActivity.activity.id, {
     method: 'DELETE',
