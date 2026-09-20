@@ -111,6 +111,7 @@ async function run() {
 
   const activityCatalog = await request('/activities', { headers: auth });
   assert(Array.isArray(activityCatalog.activities), 'Catálogo de actividades no consultable');
+  assert(activityCatalog.pagination?.total === 28, 'La paginación del catálogo no refleja las 28 actividades activas');
   assert(activityCatalog.activities.length === 28, `El catálogo activo debe tener 28 actividades y tiene ${activityCatalog.activities.length}`);
   const catalogActivity = activityCatalog.activities.find((item) => item.activityId === 'reconociendo-mis-fortalezas');
   assert(catalogActivity && catalogActivity.steps?.length === 3, 'La actividad del catálogo no conserva sus pasos');
@@ -209,7 +210,7 @@ async function run() {
     headers: adminHeaders,
     body: JSON.stringify({ title: 'Smoke Activity Updated', active: true }),
   });
-  assert(updatedActivity.activity.title === 'Smoke Activity Updated', 'Actividad no actualizable');
+  assert(updatedActivity.activity.title === 'Smoke Activity Updated' && updatedActivity.activity.version === createdActivity.activity.version + 1, 'Actividad no actualizable/versionable');
 
   const progress = await request('/student/activities/progress', {
     method: 'POST',
