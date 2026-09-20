@@ -13,10 +13,6 @@ import {
 import activities from '../../data/activities';
 import { api } from '../../services/api';
 
-import {
-  getLocalDateString,
-} from '../../utils/dateUtils';
-
 import styles from './ActivityPage.module.css';
 import IdentityVisual from '../../components/visual/IdentityVisual';
 
