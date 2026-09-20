@@ -115,7 +115,7 @@ function CounselorDashboardPage() {
                   <div className={styles.detailList}>
                     <h3>Actividad registrada</h3>
                     {selectedStudent.activities.length === 0 ? <p>No hay actividad guardada.</p> : selectedStudent.activities.map((item) => (
-                      <article key={item._id}><strong>{item.activityId}</strong><span>{item.status === 'completed' ? 'Finalizada' : 'En progreso'}</span></article>
+                      <article key={item._id}><strong>{item.activityTitle || item.activityId}</strong><span>{item.status === 'completed' ? 'Finalizada' : 'En progreso'}</span></article>
                     ))}
                   </div>
                   <div className={styles.detailList}>
