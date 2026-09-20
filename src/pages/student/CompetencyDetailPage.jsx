@@ -107,7 +107,7 @@ function CompetencyDetailPage() {
     totalActivities,
     completedCount,
     progress,
-    completedActivities,
+    completedActivities: competencyCompletedActivities,
   } = stats;
 
 
@@ -122,7 +122,7 @@ function CompetencyDetailPage() {
 
   const completedActivityIds =
     new Set(
-      completedActivities.map(
+      competencyCompletedActivities.map(
         (completedActivity) =>
           completedActivity.activityId
       )
