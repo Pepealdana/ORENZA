@@ -202,9 +202,7 @@ function DashboardPage() {
     };
 
     const intensity = intensityByMood[mood.id] || 3;
-
-    const optimisticCheckIn = {
-      id: `checkin-${Date.now()}`,
+    const payload = {
       date,
       mood: mood.id,
       emotion: emotion.id,
@@ -212,19 +210,10 @@ function DashboardPage() {
       note,
     };
 
-    setCheckIns((current) => [
-      ...current.filter((item) => item.date !== date),
-      optimisticCheckIn,
-    ]);
-
     try {
-      const response = await api.saveCheckIn({
-        date,
-        mood: mood.id,
-        emotion: emotion.id,
-        intensity,
-        note,
-      });
+      const response = todayCheckIn
+        ? await api.updateCheckIn(todayCheckIn.id, payload)
+        : await api.createCheckIn(payload);
 
       const saved = {
         id: response.item._id || response.item.id,
@@ -241,6 +230,24 @@ function DashboardPage() {
       ]);
     } catch (error) {
       console.error('No fue posible sincronizar el registro emocional:', error);
+      throw error;
+    }
+  };
+
+  const handleDeleteCheckIn = async () => {
+    if (!todayCheckIn?.id) return;
+
+    const confirmed = window.confirm(
+      '¿Quieres eliminar el registro emocional de hoy? Esta acción no se puede deshacer.'
+    );
+
+    if (!confirmed) return;
+
+    try {
+      await api.deleteCheckIn(todayCheckIn.id);
+      setCheckIns((current) => current.filter((item) => item.id !== todayCheckIn.id));
+    } catch (error) {
+      console.error('No fue posible eliminar el registro emocional:', error);
     }
   };
 
@@ -284,6 +291,10 @@ function DashboardPage() {
         <EmotionalCheckIn
           onSave={
             handleEmotionalCheckIn
+          }
+
+          onDelete={
+            handleDeleteCheckIn
           }
 
           completed={
