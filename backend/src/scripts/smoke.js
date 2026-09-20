@@ -106,6 +106,15 @@ const createdActivity = await request('/activities', {
     instructions: 'Completar la prueba.',
     estimatedTime: 5,
     order: 999,
+    repeatable: false,
+    steps: [
+      {
+        id: 'step1',
+        type: 'reflection',
+        question: '¿Qué aprendiste en esta prueba?',
+        responseType: 'textarea',
+      },
+    ],
   }),
 });
 assert(createdActivity.activity.activityId === activityId, 'Actividad no creada');
@@ -147,6 +156,15 @@ assert(completed.item.status === 'completed' && completed.item.completedAt, 'Act
 const history = await request('/student/activities/progress', { headers: auth });
 assert(history.items.some((item) => item.activityId === activityId && item.status === 'completed'), 'Historial no consultable');
 
+const deletedProgress = await request('/student/activities/progress/' + activityId, {
+  method: 'DELETE',
+  headers: auth,
+});
+assert(deletedProgress.item.activityId === activityId, 'Progreso no eliminable');
+
+const progressAfterDelete = await request('/student/activities/progress/' + activityId, { headers: auth });
+assert(progressAfterDelete.item === null, 'El progreso eliminado sigue disponible');
+
 const stats = await request('/admin/stats', { headers: adminHeaders });
 assert(typeof stats.stats.total === 'number', 'Estadísticas de administrador fallaron');
 
@@ -161,11 +179,27 @@ const overview = await request('/counselor/overview', {
 });
 assert(Array.isArray(overview.students), 'Consulta del orientador falló');
 
-const deletedActivity = await request(`/activities/${createdActivity.activity.id}`, {
+const deletedActivity = await request('/activities/' + createdActivity.activity.id, {
   method: 'DELETE',
   headers: adminHeaders,
 });
 assert(deletedActivity.activity.active === false, 'Actividad no desactivable');
+
+let inactiveProgressRejected = false;
+try {
+  await request('/student/activities/progress', {
+    method: 'POST',
+    headers: auth,
+    body: JSON.stringify({
+      activityId,
+      status: 'in-progress',
+      answers: { step1: 'no debe guardarse' },
+    }),
+  });
+} catch (error) {
+  inactiveProgressRejected = error.message.includes('-> 404:');
+}
+assert(inactiveProgressRejected, 'Una actividad inactiva no debe aceptar nuevo progreso');
 
 console.log('Smoke test ORENZA: OK');
 console.log(`Usuario de prueba creado: ${studentEmail}`);
