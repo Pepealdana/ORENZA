@@ -95,6 +95,26 @@ const adminLogin = await request('/auth/login', {
 });
 const adminHeaders = { Authorization: `Bearer ${adminLogin.token}` };
 
+let emptyActivityRejected = false;
+try {
+  await request('/activities', {
+    method: 'POST',
+    headers: adminHeaders,
+    body: JSON.stringify({
+      activityId: activityId + '-invalid',
+      title: 'Invalid Smoke Activity',
+      description: 'No debe crearse sin pasos.',
+      category: 'testing',
+      instructions: 'Prueba de validación.',
+      estimatedTime: 5,
+      order: 998,
+    }),
+  });
+} catch (error) {
+  emptyActivityRejected = error.message.includes('-> 400:');
+}
+assert(emptyActivityRejected, 'Una actividad activa sin pasos debe ser rechazada');
+
 const createdActivity = await request('/activities', {
   method: 'POST',
   headers: adminHeaders,
@@ -152,6 +172,21 @@ const completed = await request(`/student/activities/progress/${activityId}`, {
   }),
 });
 assert(completed.item.status === 'completed' && completed.item.completedAt, 'Actividad no actualizable/finalizable');
+
+let nonRepeatableRejected = false;
+try {
+  await request('/student/activities/progress/' + activityId, {
+    method: 'PATCH',
+    headers: auth,
+    body: JSON.stringify({
+      status: 'completed',
+      answers: { step1: 'no debe modificarse' },
+    }),
+  });
+} catch (error) {
+  nonRepeatableRejected = error.message.includes('-> 409:');
+}
+assert(nonRepeatableRejected, 'Una actividad no repetible ya completada debe rechazar una nueva actualización');
 
 const history = await request('/student/activities/progress', { headers: auth });
 assert(history.items.some((item) => item.activityId === activityId && item.status === 'completed'), 'Historial no consultable');
