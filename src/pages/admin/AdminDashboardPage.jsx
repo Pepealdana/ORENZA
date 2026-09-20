@@ -77,19 +77,6 @@ function AdminDashboardPage() {
     }
   };
 
-  const updateRole = async (id, role) => {
-    setError('');
-    setMessage('');
-
-    try {
-      const response = await api.updateAdminUser(id, { role });
-      setUsers((current) => current.map((item) => item.id === id ? response.user : item));
-      setMessage('Rol actualizado.');
-    } catch (requestError) {
-      setError(requestError.message || 'No fue posible actualizar el rol.');
-    }
-  };
-
   const startEdit = (item) => {
     setError('');
     setMessage('');
