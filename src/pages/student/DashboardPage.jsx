@@ -3,7 +3,7 @@ import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 import studentData from '../../data/studentData';
-import activities from '../../data/activities';
+import { useActivities } from '../../hooks/useActivities';
 import resources from '../../data/resources';
 
 import EmotionalCheckIn from '../../components/dashboard/EmotionalCheckIn/EmotionalCheckIn';
@@ -58,6 +58,10 @@ function DashboardPage() {
     setCheckIns,
   } = useStudentProgress();
 
+  const {
+    activities,
+  } = useActivities();
+
   const todayCheckIn = useMemo(
     () => checkIns.find((item) => item.date === getLocalDateString()) || null,
     [checkIns]
@@ -84,7 +88,8 @@ function DashboardPage() {
   const competencyStats =
     getAllCompetencyStats(
       competencies,
-      completedActivities
+      completedActivities,
+      activities
     );
 
 
