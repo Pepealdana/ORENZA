@@ -131,11 +131,19 @@ function AdminDashboardPage() {
             <article><UsersRound size={20} /><strong>{stats?.counselors ?? 0}</strong><span>Orientadores</span></article>
           </section>
 
-          <section className={styles.grid}>
-            <article className={styles.card}><span><UsersRound /></span><strong>Usuarios</strong><small>Gestión de accesos y roles</small></article>
-            <article className={styles.card}><span><Building2 /></span><strong>Instituciones</strong><small>Configuración institucional</small></article>
-            <article className={styles.card}><span><Database /></span><strong>Contenidos</strong><small>Recursos y contenidos generales</small></article>
-            <article className={styles.card}><span><Settings /></span><strong>Configuración</strong><small>Parámetros del sistema</small></article>
+          <section className={styles.grid} aria-label="Módulos de administración">
+            <article className={styles.cardDisabled} aria-disabled="true">
+              <span><UsersRound /></span><strong>Usuarios</strong><small>Gestión de accesos y roles</small><em>No disponible</em>
+            </article>
+            <article className={styles.cardDisabled} aria-disabled="true">
+              <span><Building2 /></span><strong>Instituciones</strong><small>Configuración institucional</small><em>No disponible</em>
+            </article>
+            <a className={styles.cardLink} href="/administrador/contenidos">
+              <span><Database /></span><strong>Contenidos</strong><small>Recursos y contenidos generales</small><em>Gestionar actividades</em>
+            </a>
+            <article className={styles.cardDisabled} aria-disabled="true">
+              <span><Settings /></span><strong>Configuración</strong><small>Parámetros del sistema</small><em>No disponible</em>
+            </article>
           </section>
 
           <section className={styles.panel}>
