@@ -4,6 +4,7 @@ import bcrypt from 'bcryptjs';
 import { connectDB } from '../config/db.js';
 import User from '../models/User.js';
 import Activity from '../models/Activity.js';
+import Institution from '../models/Institution.js';
 import demoActivities from '../data/activities.seed.js';
 
 const demoUsers = [
@@ -33,6 +34,12 @@ const demoUsers = [
 
 
 await connectDB();
+
+await Institution.findOneAndUpdate(
+  { code: 'ORENZA-DEMO' },
+  { name: 'ORENZA Demo', code: 'ORENZA-DEMO', active: true },
+  { upsert: true, new: true, setDefaultsOnInsert: true }
+);
 
 for (const item of demoUsers) {
   const password = await bcrypt.hash(item.password, 12);
