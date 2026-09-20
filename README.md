@@ -183,9 +183,17 @@ El seed prepara:
 - usuarios demo;
 - catálogo oficial de 28 actividades.
 
-Las credenciales demo se imprimen en la salida del comando de seed y deben considerarse exclusivamente de desarrollo/prueba.
+### Credenciales de acceso demo
 
-No se deben reutilizar contraseñas demo ni valores de `JWT_SECRET` en un entorno público.
+Estas cuentas están destinadas exclusivamente a desarrollo, pruebas y demostración local:
+
+| Rol | Correo | Contraseña |
+|---|---|---|
+| Estudiante | `estudiante@orenza.local` | `Estudiante1234!` |
+| Orientador | `orientador@orenza.local` | `Orientador1234!` |
+| Administrador | `admin@orenza.local` | `Admin1234!` |
+
+Las credenciales anteriores corresponden al seed de demostración. No deben reutilizarse en un entorno público o de producción. En despliegues públicos deben utilizarse contraseñas propias y un `JWT_SECRET` seguro y diferente.
 
 ## Scripts
 
@@ -304,7 +312,7 @@ GET    /api/admin/users
 GET    /api/admin/users/:id
 POST   /api/admin/users
 PATCH  /api/admin/users/:id
-DELETE /api/admin/users/:id
+DELETE  /api/admin/users/:id
 
 GET    /api/admin/institutions
 POST   /api/admin/institutions
