@@ -1,16 +1,33 @@
 import { Router } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import crypto from 'node:crypto';
 import User from '../models/User.js';
+import PasswordResetToken from '../models/PasswordResetToken.js';
 import { requireAuth } from '../middleware/auth.js';
 
 const router = Router();
+
+const PASSWORD_MIN_LENGTH = 8;
+const RESET_TOKEN_TTL_MS = 15 * 60 * 1000;
+
+function normalizeEmail(value) {
+  return typeof value === 'string' ? value.trim().toLowerCase() : '';
+}
+
+function validatePassword(password) {
+  return typeof password === 'string' && password.length >= PASSWORD_MIN_LENGTH;
+}
 
 function createToken(user) {
   return jwt.sign(
     { sub: user._id.toString(), role: user.role },
     process.env.JWT_SECRET,
-    { expiresIn: process.env.JWT_EXPIRES_IN || '1d' }
+    {
+      expiresIn: process.env.JWT_EXPIRES_IN || '1d',
+      issuer: 'orenza-api',
+      audience: 'orenza-web',
+    }
   );
 }
 
@@ -22,39 +39,55 @@ function publicUser(user) {
     role: user.role,
     grade: user.grade,
     institution: user.institution,
+    active: user.active,
   };
+}
+
+function hashResetToken(token) {
+  return crypto.createHash('sha256').update(token).digest('hex');
+}
+
+function genericResetResponse(res, extra = {}) {
+  res.json({
+    message: 'Si la cuenta existe, recibirás instrucciones para restablecer la contraseña.',
+    ...extra,
+  });
 }
 
 router.post('/register', async (req, res, next) => {
   try {
-    const { name, email, password, grade = '' } = req.body;
+    const name = typeof req.body.name === 'string' ? req.body.name.trim() : '';
+    const email = normalizeEmail(req.body.email);
+    const password = req.body.password;
+    const grade = typeof req.body.grade === 'string' ? req.body.grade.trim() : '';
 
     if (!name || !email || !password) {
       return res.status(400).json({ message: 'Nombre, correo y contraseña son obligatorios.' });
     }
 
-    if (password.length < 8) {
+    if (name.length < 2 || name.length > 100) {
+      return res.status(400).json({ message: 'El nombre debe tener entre 2 y 100 caracteres.' });
+    }
+
+    if (!validatePassword(password)) {
       return res.status(400).json({ message: 'La contraseña debe tener mínimo 8 caracteres.' });
     }
 
-    const exists = await User.findOne({ email: email.toLowerCase() });
+    const exists = await User.findOne({ email });
     if (exists) {
-      return res.status(409).json({ message: 'El correo ya está registrado.' });
+      return res.status(409).json({ message: 'No fue posible crear la cuenta con esos datos.' });
     }
 
     const passwordHash = await bcrypt.hash(password, 12);
     const user = await User.create({
       name,
-      email: email.toLowerCase(),
+      email,
       password: passwordHash,
       grade,
       role: 'student',
     });
 
-    res.status(201).json({
-      token: createToken(user),
-      user: publicUser(user),
-    });
+    res.status(201).json({ token: createToken(user), user: publicUser(user) });
   } catch (error) {
     next(error);
   }
@@ -62,17 +95,50 @@ router.post('/register', async (req, res, next) => {
 
 router.post('/login', async (req, res, next) => {
   try {
-    const { email, password } = req.body;
-    const user = await User.findOne({ email: email?.toLowerCase() }).select('+password');
+    const email = normalizeEmail(req.body.email);
+    const password = typeof req.body.password === 'string' ? req.body.password : '';
 
-    if (!user || !user.active || !(await bcrypt.compare(password || '', user.password))) {
+    const user = await User.findOne({ email }).select('+password');
+    const passwordHash = user?.password || '$2b$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy';
+
+    if (!user || !user.active || !(await bcrypt.compare(password, passwordHash))) {
       return res.status(401).json({ message: 'Credenciales no válidas.' });
     }
 
-    res.json({
-      token: createToken(user),
-      user: publicUser(user),
-    });
+    res.json({ token: createToken(user), user: publicUser(user) });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post('/request-password-reset', async (req, res, next) => {
+  try {
+    const email = normalizeEmail(req.body.email);
+
+    if (!email) {
+      return genericResetResponse(res);
+    }
+
+    const user = await User.findOne({ email, active: true });
+
+    if (user) {
+      await PasswordResetToken.deleteMany({ user: user._id, usedAt: null });
+
+      const rawToken = crypto.randomBytes(32).toString('hex');
+      await PasswordResetToken.create({
+        user: user._id,
+        tokenHash: hashResetToken(rawToken),
+        expiresAt: new Date(Date.now() + RESET_TOKEN_TTL_MS),
+      });
+
+      // El proyecto no incorpora todavía un servicio de correo.
+      // En desarrollo devolvemos el token para poder probar el flujo end-to-end.
+      if (process.env.NODE_ENV !== 'production') {
+        return genericResetResponse(res, { demoToken: rawToken });
+      }
+    }
+
+    return genericResetResponse(res);
   } catch (error) {
     next(error);
   }
@@ -80,24 +146,34 @@ router.post('/login', async (req, res, next) => {
 
 router.post('/reset-password', async (req, res, next) => {
   try {
-    const { email, newPassword } = req.body;
+    const token = typeof req.body.token === 'string' ? req.body.token.trim() : '';
+    const newPassword = req.body.newPassword;
 
-    if (!email || !newPassword) {
-      return res.status(400).json({ message: 'Correo y nueva contraseña son obligatorios.' });
+    if (!token || !validatePassword(newPassword)) {
+      return res.status(400).json({ message: 'El código de recuperación y la nueva contraseña son obligatorios.' });
     }
 
-    if (newPassword.length < 8) {
-      return res.status(400).json({ message: 'La nueva contraseña debe tener mínimo 8 caracteres.' });
+    const reset = await PasswordResetToken.findOne({
+      tokenHash: hashResetToken(token),
+      usedAt: null,
+      expiresAt: { $gt: new Date() },
+    });
+
+    if (!reset) {
+      return res.status(400).json({ message: 'El código de recuperación no es válido o ya expiró.' });
     }
 
-    const user = await User.findOne({ email: email.toLowerCase() }).select('+password');
-
-    if (!user || !user.active) {
-      return res.status(404).json({ message: 'No encontramos una cuenta activa con ese correo.' });
+    const user = await User.findOne({ _id: reset.user, active: true }).select('+password');
+    if (!user) {
+      return res.status(400).json({ message: 'No fue posible completar la recuperación.' });
     }
 
     user.password = await bcrypt.hash(newPassword, 12);
     await user.save();
+
+    reset.usedAt = new Date();
+    await reset.save();
+    await PasswordResetToken.deleteMany({ user: user._id, _id: { $ne: reset._id } });
 
     res.json({ message: 'Contraseña actualizada correctamente. Ya puedes iniciar sesión.' });
   } catch (error) {
@@ -107,14 +183,15 @@ router.post('/reset-password', async (req, res, next) => {
 
 router.patch('/change-password', requireAuth, async (req, res, next) => {
   try {
-    const { currentPassword, newPassword } = req.body;
+    const currentPassword = typeof req.body.currentPassword === 'string' ? req.body.currentPassword : '';
+    const newPassword = req.body.newPassword;
 
-    if (!currentPassword || !newPassword) {
+    if (!currentPassword || !validatePassword(newPassword)) {
       return res.status(400).json({ message: 'La contraseña actual y la nueva son obligatorias.' });
     }
 
-    if (newPassword.length < 8) {
-      return res.status(400).json({ message: 'La nueva contraseña debe tener mínimo 8 caracteres.' });
+    if (currentPassword === newPassword) {
+      return res.status(400).json({ message: 'La nueva contraseña debe ser diferente a la actual.' });
     }
 
     const user = await User.findById(req.user._id).select('+password');
@@ -122,10 +199,6 @@ router.patch('/change-password', requireAuth, async (req, res, next) => {
 
     if (!matches) {
       return res.status(401).json({ message: 'La contraseña actual no es correcta.' });
-    }
-
-    if (currentPassword === newPassword) {
-      return res.status(400).json({ message: 'La nueva contraseña debe ser diferente a la actual.' });
     }
 
     user.password = await bcrypt.hash(newPassword, 12);

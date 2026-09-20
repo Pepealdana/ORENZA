@@ -33,6 +33,10 @@ export const api = {
     method: 'POST',
     body: JSON.stringify(payload),
   }),
+  requestPasswordReset: (payload) => request('/auth/request-password-reset', {
+    method: 'POST',
+    body: JSON.stringify(payload),
+  }),
   resetPassword: (payload) => request('/auth/reset-password', {
     method: 'POST',
     body: JSON.stringify(payload),
@@ -42,21 +46,65 @@ export const api = {
     body: JSON.stringify(payload),
   }),
   me: () => request('/auth/me'),
+
   getProfile: () => request('/student/profile'),
   updateProfile: (payload) => request('/student/profile', {
     method: 'PATCH',
     body: JSON.stringify(payload),
   }),
+
   getCheckIns: () => request('/student/check-ins'),
+  getCheckIn: (id) => request(`/student/check-ins/${id}`),
+  createCheckIn: (payload) => request('/student/check-ins', {
+    method: 'POST',
+    body: JSON.stringify(payload),
+  }),
+  updateCheckIn: (id, payload) => request(`/student/check-ins/${id}`, {
+    method: 'PATCH',
+    body: JSON.stringify(payload),
+  }),
+  deleteCheckIn: (id) => request(`/student/check-ins/${id}`, {
+    method: 'DELETE',
+  }),
+  // Alias de compatibilidad con el frontend existente.
   saveCheckIn: (payload) => request('/student/check-ins', {
     method: 'POST',
     body: JSON.stringify(payload),
   }),
+
+  getActivities: () => request('/activities'),
+  getActivity: (id) => request(`/activities/${id}`),
+  createActivity: (payload) => request('/activities', {
+    method: 'POST',
+    body: JSON.stringify(payload),
+  }),
+  updateActivity: (id, payload) => request(`/activities/${id}`, {
+    method: 'PATCH',
+    body: JSON.stringify(payload),
+  }),
+  deleteActivity: (id) => request(`/activities/${id}`, {
+    method: 'DELETE',
+  }),
+
   getActivityProgress: () => request('/student/activities/progress'),
+  getActivityProgressById: (activityId) => request(`/student/activities/progress/${activityId}`),
+  createActivityProgress: (payload) => request('/student/activities/progress', {
+    method: 'POST',
+    body: JSON.stringify(payload),
+  }),
+  updateActivityProgress: (activityId, payload) => request(`/student/activities/progress/${activityId}`, {
+    method: 'PATCH',
+    body: JSON.stringify(payload),
+  }),
+  deleteActivityProgress: (activityId) => request(`/student/activities/progress/${activityId}`, {
+    method: 'DELETE',
+  }),
+  // Alias de compatibilidad con el frontend existente.
   saveActivityProgress: (payload) => request('/student/activities/progress', {
     method: 'POST',
     body: JSON.stringify(payload),
   }),
+
   getAdminStats: () => request('/admin/stats'),
   getAdminUsers: () => request('/admin/users'),
   createAdminUser: (payload) => request('/admin/users', {
@@ -67,7 +115,14 @@ export const api = {
     method: 'PATCH',
     body: JSON.stringify(payload),
   }),
+  deleteAdminUser: (id) => request(`/admin/users/${id}`, {
+    method: 'DELETE',
+  }),
+
   getCounselorOverview: () => request('/counselor/overview'),
+  getCounselorStudent: (studentId) => request(`/counselor/students/${studentId}`),
+  getCounselorStudentCheckIns: (studentId) => request(`/counselor/students/${studentId}/check-ins`),
+  getCounselorStudentActivities: (studentId) => request(`/counselor/students/${studentId}/activity-progress`),
 };
 
 export { API_URL };

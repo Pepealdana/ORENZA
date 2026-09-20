@@ -2,30 +2,12 @@ import mongoose from 'mongoose';
 
 const activityProgressSchema = new mongoose.Schema(
   {
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-      required: true,
-      index: true,
-    },
-    activityId: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    status: {
-      type: String,
-      enum: ['in-progress', 'completed'],
-      default: 'in-progress',
-    },
-    answers: {
-      type: mongoose.Schema.Types.Mixed,
-      default: {},
-    },
-    completedAt: {
-      type: Date,
-      default: null,
-    },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true, index: true },
+    activityId: { type: String, required: true, trim: true, maxlength: 120 },
+    status: { type: String, enum: ['in-progress', 'completed'], default: 'in-progress' },
+    answers: { type: mongoose.Schema.Types.Mixed, default: {} },
+    startedAt: { type: Date, default: Date.now },
+    completedAt: { type: Date, default: null },
   },
   { timestamps: true }
 );

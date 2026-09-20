@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -16,12 +16,6 @@ import ActivityCard from '../../components/dashboard/ActivityCard/ActivityCard';
 import ResourceCard from '../../components/dashboard/ResourceCard/ResourceCard';
 
 import {
-  getStoredCheckIns,
-  getTodayCheckIn,
-  saveCheckIn,
-} from '../../utils/emotionalStorage';
-
-import {
   getLocalDateString,
 } from '../../utils/dateUtils';
 
@@ -30,12 +24,11 @@ import {
 } from '../../utils/streakUtils';
 
 import {
-  getCompletedActivities,
-} from '../../utils/activityStorage';
-
-import {
   getAllCompetencyStats,
 } from '../../utils/competencyUtils';
+
+import { useStudentProgress } from '../../hooks/useStudentProgress';
+import { api } from '../../services/api';
 
 import styles from './DashboardPage.module.css';
 import IdentityVisual from '../../components/visual/IdentityVisual';
@@ -59,24 +52,16 @@ function DashboardPage() {
    * ========================================
    */
 
-  const storedCheckIns =
-    getStoredCheckIns();
+  const {
+    checkIns,
+    completedActivities,
+    setCheckIns,
+  } = useStudentProgress();
 
-  const storedTodayCheckIn =
-    getTodayCheckIn();
-
-
-  const [todayCheckIn, setTodayCheckIn] =
-    useState(
-      storedTodayCheckIn
-    );
-
-
-  const [checkIns, setCheckIns] =
-    useState(
-      storedCheckIns
-    );
-
+  const todayCheckIn = useMemo(
+    () => checkIns.find((item) => item.date === getLocalDateString()) || null,
+    [checkIns]
+  );
 
   /*
    * ========================================
@@ -84,12 +69,7 @@ function DashboardPage() {
    * ========================================
    */
 
-  const [currentStreak, setCurrentStreak] =
-    useState(
-      calculateCurrentStreak(
-        storedCheckIns
-      )
-    );
+  const currentStreak = calculateCurrentStreak(checkIns);
 
 
   /*
@@ -103,7 +83,8 @@ function DashboardPage() {
 
   const competencyStats =
     getAllCompetencyStats(
-      competencies
+      competencies,
+      completedActivities
     );
 
 
@@ -112,16 +93,12 @@ function DashboardPage() {
    * ACTIVIDADES RECIENTES
    * ========================================
    *
-   * La fuente de verdad es activityStorage.
+   * La fuente de verdad es el progreso
+   * persistido del estudiante.
    *
-   * activities.js contiene la información
-   * de las actividades.
-   *
-   * No utilizamos studentData.recentActivities.
+   * activities.js contiene el catálogo
+   * de actividades.
    */
-
-  const completedActivities =
-    getCompletedActivities();
 
 
   /*
@@ -204,63 +181,62 @@ function DashboardPage() {
    * ========================================
    */
 
-  const handleEmotionalCheckIn = ({
+  const handleEmotionalCheckIn = async ({
     mood,
     emotion,
+    note = '',
   }) => {
+    const date = getLocalDateString();
 
-    const today =
-      getLocalDateString();
-
-
-    const checkIn = {
-      id:
-        `checkin-${Date.now()}`,
-
-      date:
-        today,
-
-      mood:
-        mood.id,
-
-      emotion:
-        emotion.id,
-
-      intensity:
-        null,
+    const intensityByMood = {
+      'very-good': 5,
+      good: 4,
+      neutral: 3,
+      'not-good': 2,
+      bad: 1,
     };
 
+    const intensity = intensityByMood[mood.id] || 3;
 
-    const savedCheckIns =
-      saveCheckIn(
-        checkIn
-      );
+    const optimisticCheckIn = {
+      id: `checkin-${Date.now()}`,
+      date,
+      mood: mood.id,
+      emotion: emotion.id,
+      intensity,
+      note,
+    };
 
+    setCheckIns((current) => [
+      ...current.filter((item) => item.date !== date),
+      optimisticCheckIn,
+    ]);
 
-    if (!savedCheckIns) {
-      return;
+    try {
+      const response = await api.saveCheckIn({
+        date,
+        mood: mood.id,
+        emotion: emotion.id,
+        intensity,
+        note,
+      });
+
+      const saved = {
+        id: response.item._id || response.item.id,
+        date: response.item.date,
+        mood: response.item.mood,
+        emotion: response.item.emotion,
+        intensity: response.item.intensity,
+        note: response.item.note || '',
+      };
+
+      setCheckIns((current) => [
+        ...current.filter((item) => item.date !== date),
+        saved,
+      ]);
+    } catch (error) {
+      console.error('No fue posible sincronizar el registro emocional:', error);
     }
-
-
-    setTodayCheckIn(
-      checkIn
-    );
-
-
-    setCheckIns(
-      savedCheckIns
-    );
-
-
-    const updatedStreak =
-      calculateCurrentStreak(
-        savedCheckIns
-      );
-
-
-    setCurrentStreak(
-      updatedStreak
-    );
   };
 
 

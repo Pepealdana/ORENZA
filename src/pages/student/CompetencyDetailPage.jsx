@@ -5,9 +5,8 @@ import {
 
 import studentData from '../../data/studentData';
 
-import {
-  getCompetencyStats,
-} from '../../utils/competencyUtils';
+import { getCompetencyStats } from '../../utils/competencyUtils';
+import { useStudentProgress } from '../../hooks/useStudentProgress';
 
 import ProgressBar from '../../components/ui/ProgressBar/ProgressBar';
 
@@ -19,9 +18,8 @@ import relacionesIllustration from '../../assets/illustrations/screens/relacione
 
 
 function CompetencyDetailPage() {
-  const {
-    competencyId,
-  } = useParams();
+  const { competencyId } = useParams();
+  const { completedActivities, loading } = useStudentProgress();
 
 
   /*
@@ -101,10 +99,7 @@ function CompetencyDetailPage() {
    * guardadas en localStorage.
    */
 
-  const stats =
-    getCompetencyStats(
-      competency.id
-    );
+  const stats = getCompetencyStats(competency.id, completedActivities);
 
 
   const {

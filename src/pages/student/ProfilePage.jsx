@@ -1,16 +1,42 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Activity, ArrowRight, BookOpen, CheckCircle2, Mail, Settings, UserRound } from 'lucide-react';
 
 import studentData from '../../data/studentData';
 import { useAuth } from '../../context/AuthContext';
-import { getCompletedActivities } from '../../utils/activityStorage';
+import { api } from '../../services/api';
+import { useStudentProgress } from '../../hooks/useStudentProgress';
 import styles from './ProfilePage.module.css';
 import IdentityVisual from '../../components/visual/IdentityVisual';
 
 function ProfilePage() {
-  const { user } = useAuth();
-  const completedCount = getCompletedActivities().length;
+  const { user, setUser } = useAuth();
+  const [editing, setEditing] = useState(false);
+  const [form, setForm] = useState({ name: user?.name || '', grade: user?.grade || '', institution: user?.institution || '' });
+  const [saving, setSaving] = useState(false);
+  const [message, setMessage] = useState('');
+  const [error, setError] = useState('');
+  const { completedActivities } = useStudentProgress();
+  const completedCount = completedActivities.length;
   const competencyCount = studentData.competencies?.length ?? 0;
+
+  const handleSave = async (event) => {
+    event.preventDefault();
+    setSaving(true);
+    setMessage('');
+    setError('');
+    try {
+      const response = await api.updateProfile(form);
+      setUser(response.user);
+      setForm({ name: response.user.name || '', grade: response.user.grade || '', institution: response.user.institution || '' });
+      setEditing(false);
+      setMessage('Datos actualizados correctamente.');
+    } catch (requestError) {
+      setError(requestError.message || 'No fue posible actualizar el perfil.');
+    } finally {
+      setSaving(false);
+    }
+  };
 
   return (
     <section className={styles.page}>
@@ -30,8 +56,20 @@ function ProfilePage() {
           <p className={styles.role}>Estudiante · {user?.grade || studentData.grade || 'En formación'}</p>
           {(user?.email || studentData.email) && <p className={styles.email}><Mail size={14} aria-hidden="true" />{user?.email || studentData.email}</p>}
         </div>
-        <Link className={styles.settingsLink} to="/estudiante/configuracion" aria-label="Ir a configuración" title="Configuración"><Settings size={19} /></Link>
+        <button type="button" className={styles.settingsLink} onClick={() => { setEditing((current) => !current); setError(''); setMessage(''); }} aria-expanded={editing} aria-label="Editar perfil" title="Editar perfil"><Settings size={19} /></button>
       </section>
+
+      {message && <div className={styles.profileSuccess} role="status">{message}</div>}
+      {error && <div className={styles.profileError} role="alert">{error}</div>}
+
+      {editing && (
+        <form className={styles.editCard} onSubmit={handleSave}>
+          <label><span>Nombre</span><input value={form.name} onChange={(event) => setForm({ ...form, name: event.target.value })} minLength={2} maxLength={100} required /></label>
+          <label><span>Grado</span><input value={form.grade} onChange={(event) => setForm({ ...form, grade: event.target.value })} maxLength={30} /></label>
+          <label><span>Institución</span><input value={form.institution} onChange={(event) => setForm({ ...form, institution: event.target.value })} maxLength={150} /></label>
+          <div className={styles.editActions}><button type="button" onClick={() => setEditing(false)}>Cancelar</button><button type="submit" disabled={saving}>{saving ? 'Guardando…' : 'Guardar cambios'}</button></div>
+        </form>
+      )}
 
       <section className={styles.section} aria-labelledby="journey-summary">
         <div className={styles.sectionTitle}>

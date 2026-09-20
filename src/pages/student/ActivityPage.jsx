@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import {
   ChevronLeft,
@@ -11,14 +11,7 @@ import {
 } from 'react-router-dom';
 
 import activities from '../../data/activities';
-
-import {
-  saveCompletedActivity,
-} from '../../utils/activityStorage';
-
-import {
-  getLocalDateString,
-} from '../../utils/dateUtils';
+import { api } from '../../services/api';
 
 import styles from './ActivityPage.module.css';
 import IdentityVisual from '../../components/visual/IdentityVisual';
@@ -57,9 +50,33 @@ function ActivityPage() {
   const [currentStep, setCurrentStep] =
     useState(0);
 
-  const [responses, setResponses] =
-    useState({});
+  const [responses, setResponses] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState('');
 
+
+  useEffect(() => {
+    let active = true;
+    api.getActivityProgressById(activityId)
+      .then(({ item }) => {
+        if (!active) return;
+        if (item?.answers) {
+          setResponses(item.answers);
+          const answeredSteps = activity?.steps?.map((stepItem, index) => ({ index, answered: item.answers[stepItem.id] !== undefined && item.answers[stepItem.id] !== '' })).filter((entry) => entry.answered) || [];
+          if (item?.status === 'in-progress' && answeredSteps.length > 0) {
+            setCurrentStep(Math.min(answeredSteps[answeredSteps.length - 1].index + 1, (activity?.steps?.length || 1) - 1));
+          }
+        }
+      })
+      .catch(() => {
+        if (active) setError('No fue posible recuperar el progreso guardado.');
+      })
+      .finally(() => {
+        if (active) setLoading(false);
+      });
+    return () => { active = false; };
+  }, [activityId, activity]);
 
   /*
    * ========================================
@@ -140,86 +157,27 @@ function ActivityPage() {
    * ========================================
    */
 
-  const handleNext = () => {
+  const handleNext = async () => {
+    setError('');
+    setSaving(true);
 
-    /*
-     * Si todavía hay pasos,
-     * avanzamos al siguiente.
-     */
+    try {
+      await api.saveActivityProgress({
+        activityId: activity.id,
+        status: isLastStep ? 'completed' : 'in-progress',
+        answers: responses,
+      });
 
-    if (!isLastStep) {
-
-      setCurrentStep(
-        (previous) =>
-          previous + 1
-      );
-
-      return;
+      if (!isLastStep) {
+        setCurrentStep((previous) => previous + 1);
+      } else {
+        navigate('/estudiante/actividades');
+      }
+    } catch (requestError) {
+      setError(requestError.message || 'No fue posible guardar tu progreso.');
+    } finally {
+      setSaving(false);
     }
-
-
-    /*
-     * ======================================
-     * ACTIVIDAD COMPLETADA
-     * ======================================
-     *
-     * Guardamos únicamente los datos
-     * propios de la experiencia realizada.
-     *
-     * El título, descripción, competencias,
-     * dificultad y demás información de la
-     * actividad permanecen en activities.js.
-     */
-
-    const completedActivity = {
-
-      id:
-        `experience-${Date.now()}`,
-
-      activityId:
-        activity.id,
-
-      completedAt:
-        getLocalDateString(),
-
-      responses: {
-        ...responses,
-      },
-
-    };
-
-
-    /*
-     * ======================================
-     * GUARDAR EXPERIENCIA
-     * ======================================
-     */
-
-    const savedActivity =
-      saveCompletedActivity(
-        completedActivity
-      );
-
-
-    /*
-     * Si el almacenamiento falla,
-     * permanecemos en la actividad.
-     */
-
-    if (!savedActivity) {
-      return;
-    }
-
-
-    /*
-     * ======================================
-     * REGRESAR A ACTIVIDADES
-     * ======================================
-     */
-
-    navigate(
-      '/estudiante/actividades'
-    );
   };
 
 
@@ -249,9 +207,8 @@ function ActivityPage() {
    */
 
   return (
-    <section
-      className={styles.page}
-    >
+    <section className={styles.page}>
+      {error && <div className={styles.alert} role="alert">{error}</div>}
 
 
       {/* ======================================
@@ -565,14 +522,11 @@ function ActivityPage() {
             styles.primaryButton
           }
 
-          onClick={
-            handleNext
-          }
+          onClick={handleNext}
+          disabled={saving || loading}
         >
 
-          {isLastStep
-            ? 'Terminar'
-            : 'Continuar'}
+          {saving ? 'Guardando…' : isLastStep ? 'Terminar' : 'Continuar'}
 
 
           {!isLastStep && (

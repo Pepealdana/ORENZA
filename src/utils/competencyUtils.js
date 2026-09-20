@@ -4,10 +4,6 @@
 
 import activities from '../data/activities';
 
-import {
-  getCompletedActivities,
-} from './activityStorage';
-
 
 /*
  * =========================================
@@ -187,7 +183,8 @@ export function getActivitiesForCompetency(
  */
 
 export function getCompletedActivitiesForCompetency(
-  competencyId
+  competencyId,
+  completedActivitiesOverride = []
 ) {
   const competencyActivities =
     getActivitiesForCompetency(
@@ -211,12 +208,13 @@ export function getCompletedActivitiesForCompetency(
 
 
   /*
-   * Obtenemos las experiencias guardadas
-   * en localStorage.
+   * Recibimos las experiencias persistidas
+   * desde el backend mediante el hook de progreso.
    */
 
-  const completedActivities =
-    getCompletedActivities();
+  const completedActivities = Array.isArray(completedActivitiesOverride)
+    ? completedActivitiesOverride
+    : [];
 
 
   /*
@@ -246,7 +244,8 @@ export function getCompletedActivitiesForCompetency(
  */
 
 export function getCompetencyStats(
-  competencyId
+  competencyId,
+  completedActivitiesOverride = null
 ) {
   const competencyActivities =
     getActivitiesForCompetency(
@@ -256,7 +255,8 @@ export function getCompetencyStats(
 
   const completedActivities =
     getCompletedActivitiesForCompetency(
-      competencyId
+      competencyId,
+      completedActivitiesOverride
     );
 
 
@@ -321,7 +321,8 @@ export function getCompetencyStats(
  */
 
 export function getAllCompetencyStats(
-  competencies
+  competencies,
+  completedActivitiesOverride = null
 ) {
   if (
     !Array.isArray(
@@ -337,7 +338,8 @@ export function getAllCompetencyStats(
       ...competency,
 
       ...getCompetencyStats(
-        competency.id
+        competency.id,
+        completedActivitiesOverride
       ),
     })
   );
