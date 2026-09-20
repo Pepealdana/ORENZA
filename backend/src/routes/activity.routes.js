@@ -56,11 +56,11 @@ function validObjectId(id) {
 }
 
 function validateSteps(steps, { required = false } = {}) {
-  if (steps === undefined) return '';
-
   if (required && (!Array.isArray(steps) || steps.length === 0)) {
     return 'La actividad debe tener al menos un paso.';
   }
+
+  if (steps === undefined) return '';
 
   if (!Array.isArray(steps)) {
     return 'Los pasos de la actividad deben ser un arreglo.';
