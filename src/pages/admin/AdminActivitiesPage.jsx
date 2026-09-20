@@ -128,8 +128,14 @@ function AdminActivitiesPage() {
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+  const [showInactive, setShowInactive] = useState(false);
 
   const activeCount = useMemo(() => activities.filter((item) => item.active).length, [activities]);
+  const inactiveCount = activities.length - activeCount;
+  const visibleActivities = useMemo(
+    () => showInactive ? activities : activities.filter((item) => item.active),
+    [activities, showInactive]
+  );
 
   const loadActivities = async () => {
     setLoading(true);
@@ -385,7 +391,13 @@ function AdminActivitiesPage() {
       <section className={styles.panel}>
         <div className={styles.panelHeader}>
           <div><p className={styles.eyebrow}>Catálogo</p><h2>Actividades registradas</h2></div>
-          <span className={styles.count}>{activities.length}</span>
+          <div className={styles.catalogMeta}>
+            <label className={styles.toggleInactive}>
+              <input type="checkbox" checked={showInactive} onChange={(event) => setShowInactive(event.target.checked)} />
+              Mostrar inactivas ({inactiveCount})
+            </label>
+            <span className={styles.count}>{visibleActivities.length}</span>
+          </div>
         </div>
 
         {loading ? (
@@ -395,7 +407,7 @@ function AdminActivitiesPage() {
             <table>
               <thead><tr><th>Actividad</th><th>Competencia</th><th>Tipo</th><th>Orden</th><th>Estado</th><th>Acciones</th></tr></thead>
               <tbody>
-                {activities.map((activity) => (
+                {visibleActivities.map((activity) => (
                   <tr key={activity.id}>
                     <td><strong>{activity.title}</strong><small>{activity.activityId}</small></td>
                     <td>{COMPETENCY_OPTIONS.find(([value]) => value === activity.competencies?.primary)?.[1] || activity.competencies?.primary || '—'}</td>
