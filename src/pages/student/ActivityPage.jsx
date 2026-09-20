@@ -45,6 +45,7 @@ function ActivityPage() {
 
   const [responses, setResponses] = useState({});
   const [progressExists, setProgressExists] = useState(false);
+  const [progressStatus, setProgressStatus] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
@@ -105,6 +106,7 @@ function ActivityPage() {
         if (!active) return;
 
         setProgressExists(Boolean(item));
+        setProgressStatus(item?.status || null);
 
         if (item?.answers) {
           setResponses(item.answers);
@@ -219,6 +221,32 @@ function ActivityPage() {
 
   /*
    * ========================================
+   * ACTIVIDAD NO REPETIBLE YA COMPLETADA
+   * ========================================
+   */
+
+  if (progressStatus === 'completed' && activity.repeatable === false) {
+    return (
+      <section className={styles.page}>
+        <button
+          type="button"
+          className={styles.backButton}
+          onClick={() => navigate('/estudiante/actividades')}
+        >
+          <ChevronLeft size={20} aria-hidden="true" />
+          Volver a actividades
+        </button>
+
+        <div className={styles.alert} role="status">
+          <strong>Ya completaste esta experiencia.</strong>
+          <p>Esta actividad no es repetible y ya forma parte de tu recorrido.</p>
+        </div>
+      </section>
+    );
+  }
+
+  /*
+   * ========================================
    * INFORMACIÓN DEL PASO ACTUAL
    * ========================================
    */
@@ -281,6 +309,8 @@ function ActivityPage() {
         await api.createActivityProgress(payload);
         setProgressExists(true);
       }
+
+      setProgressStatus(isLastStep ? 'completed' : 'in-progress');
 
       if (!isLastStep) {
         setCurrentStep((previous) => previous + 1);
