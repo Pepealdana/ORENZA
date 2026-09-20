@@ -248,9 +248,43 @@ function normalizeActivityPayload(payload) {
 // Lectura para cualquier usuario autenticado.
 router.get('/', async (req, res, next) => {
   try {
+    const page = Math.max(1, Number.parseInt(req.query.page, 10) || 1);
+    const limit = Math.min(100, Math.max(1, Number.parseInt(req.query.limit, 10) || 100));
+    const filter = req.user.role === 'admin' ? {} : { active: true };
+    const search = String(req.query.search || '').trim();
+    const category = String(req.query.category || '').trim();
+    const difficulty = String(req.query.difficulty || '').trim();
+    const active = req.query.active;
+
+    if (search) {
+      const escaped = search.replace(/[.*+?^()|[\\]\\\\]/g, '\\\\router.get('/', async (req, res, next) => {
+  try {
     const filter = req.user.role === 'admin' ? {} : { active: true };
     const activities = await Activity.find(filter).sort({ order: 1, title: 1 });
     res.json({ activities: activities.map(publicActivity) });
+  } catch (error) {
+    next(error);
+  }
+});');
+      const pattern = new RegExp(escaped, 'i');
+      filter.$or = [{ title: pattern }, { activityId: pattern }, { description: pattern }];
+    }
+    if (category) filter.category = category;
+    if (['easy', 'medium', 'hard'].includes(difficulty)) filter.difficulty = difficulty;
+    if (req.user.role === 'admin' && (active === 'true' || active === 'false')) {
+      filter.active = active === 'true';
+    }
+
+    const skip = (page - 1) * limit;
+    const [activities, total] = await Promise.all([
+      Activity.find(filter).sort({ order: 1, title: 1 }).skip(skip).limit(limit),
+      Activity.countDocuments(filter),
+    ]);
+
+    res.json({
+      activities: activities.map(publicActivity),
+      pagination: { page, limit, total, pages: Math.ceil(total / limit) },
+    });
   } catch (error) {
     next(error);
   }
