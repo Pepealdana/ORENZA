@@ -7,15 +7,43 @@ const router = Router();
 
 router.use(requireAuth);
 
+const ALLOWED_TYPES = [
+  'reflection',
+  'emotional',
+  'situation',
+  'decision',
+  'creative',
+  'journal',
+  'observation',
+  'challenge',
+  'exploration',
+];
+
+const ALLOWED_RESPONSE_TYPES = [
+  'textarea',
+  'single-choice',
+  'text',
+];
+
+const ALLOWED_DIFFICULTIES = ['easy', 'medium', 'hard'];
+
 function publicActivity(activity) {
   return {
     id: activity._id,
     activityId: activity.activityId,
     title: activity.title,
     description: activity.description,
+    purpose: activity.purpose,
+    type: activity.type,
     category: activity.category,
     instructions: activity.instructions,
     estimatedTime: activity.estimatedTime,
+    ageRange: activity.ageRange,
+    competencies: activity.competencies,
+    emotions: activity.emotions,
+    difficulty: activity.difficulty,
+    repeatable: activity.repeatable,
+    steps: activity.steps,
     order: activity.order,
     active: activity.active,
     createdAt: activity.createdAt,
@@ -27,26 +55,190 @@ function validObjectId(id) {
   return mongoose.Types.ObjectId.isValid(id);
 }
 
-function validateActivityFields({ activityId, title, description = '', category = '', instructions = '', estimatedTime = 10, order = 0 }) {
-  if (!activityId || typeof activityId !== 'string' || !activityId.trim()) return 'activityId es obligatorio.';
-  if (!title || typeof title !== 'string' || title.trim().length < 2 || title.trim().length > 150) {
-    return 'El título debe tener entre 2 y 150 caracteres.';
-  }
-  if (typeof description !== 'string' || description.length > 500) return 'La descripción no puede superar 500 caracteres.';
-  if (typeof category !== 'string' || category.length > 80) return 'La categoría no puede superar 80 caracteres.';
-  if (typeof instructions !== 'string' || instructions.length > 3000) return 'Las instrucciones no pueden superar 3000 caracteres.';
+function validateSteps(steps) {
+  if (steps === undefined) return '';
 
-  const numericTime = Number(estimatedTime);
-  if (!Number.isInteger(numericTime) || numericTime < 1 || numericTime > 180) {
-    return 'El tiempo estimado debe ser un entero entre 1 y 180 minutos.';
+  if (!Array.isArray(steps)) {
+    return 'Los pasos de la actividad deben ser un arreglo.';
   }
 
-  const numericOrder = Number(order);
-  if (!Number.isInteger(numericOrder) || numericOrder < 0) {
-    return 'El orden debe ser un entero mayor o igual a 0.';
+  for (const step of steps) {
+    if (!step || typeof step !== 'object') {
+      return 'Cada paso de la actividad debe ser un objeto válido.';
+    }
+
+    if (!step.id || typeof step.id !== 'string') {
+      return 'Cada paso debe tener un identificador.';
+    }
+
+    if (!step.type || typeof step.type !== 'string') {
+      return 'Cada paso debe tener un tipo.';
+    }
+
+    if (!step.question || typeof step.question !== 'string') {
+      return 'Cada paso debe tener una pregunta o instrucción.';
+    }
+
+    if (!step.responseType || !ALLOWED_RESPONSE_TYPES.includes(step.responseType)) {
+      return 'El tipo de respuesta de un paso no es válido.';
+    }
+
+    if (step.options !== undefined && !Array.isArray(step.options)) {
+      return 'Las opciones de un paso deben ser un arreglo.';
+    }
+
+    if (Array.isArray(step.options)) {
+      for (const option of step.options) {
+        if (!option?.id || !option?.label) {
+          return 'Cada opción debe tener identificador y etiqueta.';
+        }
+      }
+    }
   }
 
   return '';
+}
+
+function validateActivityFields(payload, { partial = false } = {}) {
+  const {
+    activityId,
+    title,
+    description,
+    purpose,
+    type,
+    category,
+    instructions,
+    estimatedTime,
+    ageRange,
+    competencies,
+    emotions,
+    difficulty,
+    repeatable,
+    steps,
+    order,
+  } = payload;
+
+  if (!partial || activityId !== undefined) {
+    if (!activityId || typeof activityId !== 'string' || !activityId.trim()) {
+      return 'activityId es obligatorio.';
+    }
+  }
+
+  if (!partial || title !== undefined) {
+    if (!title || typeof title !== 'string' || title.trim().length < 2 || title.trim().length > 150) {
+      return 'El título debe tener entre 2 y 150 caracteres.';
+    }
+  }
+
+  for (const [field, maxLength, label] of [
+    ['description', 500, 'La descripción'],
+    ['purpose', 500, 'El propósito'],
+    ['category', 80, 'La categoría'],
+    ['instructions', 3000, 'Las instrucciones'],
+  ]) {
+    if (payload[field] !== undefined && (typeof payload[field] !== 'string' || payload[field].length > maxLength)) {
+      return label + ' no puede superar ' + maxLength + ' caracteres.';
+    }
+  }
+
+  if (type !== undefined && (!ALLOWED_TYPES.includes(type))) {
+    return 'El tipo de actividad no es válido.';
+  }
+
+  if (estimatedTime !== undefined) {
+    const numericTime = Number(estimatedTime);
+    if (!Number.isInteger(numericTime) || numericTime < 1 || numericTime > 180) {
+      return 'El tiempo estimado debe ser un entero entre 1 y 180 minutos.';
+    }
+  }
+
+  if (ageRange !== undefined) {
+    if (!ageRange || !Number.isInteger(Number(ageRange.min)) || !Number.isInteger(Number(ageRange.max))) {
+      return 'El rango de edad no es válido.';
+    }
+
+    if (Number(ageRange.min) < 0 || Number(ageRange.max) > 100 || Number(ageRange.min) > Number(ageRange.max)) {
+      return 'El rango de edad no es válido.';
+    }
+  }
+
+  if (competencies !== undefined) {
+    if (!competencies || typeof competencies !== 'object' || typeof competencies.primary !== 'string') {
+      return 'Las competencias de la actividad no son válidas.';
+    }
+
+    if (competencies.secondary !== undefined && !Array.isArray(competencies.secondary)) {
+      return 'Las competencias secundarias deben ser un arreglo.';
+    }
+  }
+
+  if (emotions !== undefined && !Array.isArray(emotions)) {
+    return 'Las emociones deben ser un arreglo.';
+  }
+
+  if (difficulty !== undefined && !ALLOWED_DIFFICULTIES.includes(difficulty)) {
+    return 'La dificultad de la actividad no es válida.';
+  }
+
+  if (repeatable !== undefined && typeof repeatable !== 'boolean') {
+    return 'El indicador repeatable no es válido.';
+  }
+
+  const stepsError = validateSteps(steps);
+  if (stepsError) return stepsError;
+
+  if (order !== undefined) {
+    const numericOrder = Number(order);
+    if (!Number.isInteger(numericOrder) || numericOrder < 0) {
+      return 'El orden debe ser un entero mayor o igual a 0.';
+    }
+  }
+
+  return '';
+}
+
+function normalizeActivityPayload(payload) {
+  const normalized = { ...payload };
+
+  if (normalized.activityId !== undefined) {
+    normalized.activityId = String(normalized.activityId).trim().toLowerCase();
+  }
+
+  for (const field of ['title', 'description', 'purpose', 'type', 'category', 'instructions']) {
+    if (normalized[field] !== undefined) {
+      normalized[field] = String(normalized[field]).trim();
+    }
+  }
+
+  if (normalized.estimatedTime !== undefined) {
+    normalized.estimatedTime = Number(normalized.estimatedTime);
+  }
+
+  if (normalized.order !== undefined) {
+    normalized.order = Number(normalized.order);
+  }
+
+  if (normalized.ageRange) {
+    normalized.ageRange = {
+      min: Number(normalized.ageRange.min),
+      max: Number(normalized.ageRange.max),
+    };
+  }
+
+  if (normalized.competencies) {
+    normalized.competencies = {
+      primary: String(normalized.competencies.primary).trim(),
+      secondary: Array.isArray(normalized.competencies.secondary)
+        ? normalized.competencies.secondary.map((item) => String(item).trim()).filter(Boolean)
+        : [],
+    };
+  }
+
+  if (Array.isArray(normalized.emotions)) {
+    normalized.emotions = normalized.emotions.map((item) => String(item).trim()).filter(Boolean);
+  }
+
+  return normalized;
 }
 
 // Lectura para cualquier usuario autenticado.
@@ -55,7 +247,9 @@ router.get('/', async (req, res, next) => {
     const filter = req.user.role === 'admin' ? {} : { active: true };
     const activities = await Activity.find(filter).sort({ order: 1, title: 1 });
     res.json({ activities: activities.map(publicActivity) });
-  } catch (error) { next(error); }
+  } catch (error) {
+    next(error);
+  }
 });
 
 router.get('/:id', async (req, res, next) => {
@@ -70,7 +264,9 @@ router.get('/:id', async (req, res, next) => {
     if (!activity) return res.status(404).json({ message: 'Actividad no encontrada.' });
 
     res.json({ activity: publicActivity(activity) });
-  } catch (error) { next(error); }
+  } catch (error) {
+    next(error);
+  }
 });
 
 // Administración del catálogo.
@@ -78,46 +274,20 @@ router.use(allowRoles('admin'));
 
 router.post('/', async (req, res, next) => {
   try {
-    const {
-      activityId,
-      title,
-      description = '',
-      category = 'general',
-      instructions = '',
-      estimatedTime = 10,
-      order = 0,
-      active = true,
-    } = req.body;
-
-    const validationError = validateActivityFields({
-      activityId,
-      title,
-      description,
-      category,
-      instructions,
-      estimatedTime,
-      order,
-    });
+    const payload = normalizeActivityPayload(req.body);
+    const validationError = validateActivityFields(payload);
 
     if (validationError) return res.status(400).json({ message: validationError });
 
-    const normalizedId = activityId.trim().toLowerCase();
-    const exists = await Activity.findOne({ activityId: normalizedId });
+    const exists = await Activity.findOne({ activityId: payload.activityId });
     if (exists) return res.status(409).json({ message: 'Ya existe una actividad con ese identificador.' });
 
-    const activity = await Activity.create({
-      activityId: normalizedId,
-      title: title.trim(),
-      description: description.trim(),
-      category: category.trim(),
-      instructions: instructions.trim(),
-      estimatedTime: Number(estimatedTime),
-      order: Number(order),
-      active: Boolean(active),
-    });
+    const activity = await Activity.create(payload);
 
     res.status(201).json({ activity: publicActivity(activity) });
-  } catch (error) { next(error); }
+  } catch (error) {
+    next(error);
+  }
 });
 
 router.patch('/:id', async (req, res, next) => {
@@ -126,51 +296,41 @@ router.patch('/:id', async (req, res, next) => {
       return res.status(400).json({ message: 'Identificador de actividad no válido.' });
     }
 
-    const allowed = ['activityId', 'title', 'description', 'category', 'instructions', 'estimatedTime', 'order', 'active'];
-    const updates = Object.fromEntries(Object.entries(req.body).filter(([key]) => allowed.includes(key)));
+    const updates = normalizeActivityPayload(
+      Object.fromEntries(
+        Object.entries(req.body).filter(([key]) => [
+          'activityId',
+          'title',
+          'description',
+          'purpose',
+          'type',
+          'category',
+          'instructions',
+          'estimatedTime',
+          'ageRange',
+          'competencies',
+          'emotions',
+          'difficulty',
+          'repeatable',
+          'steps',
+          'order',
+          'active',
+        ].includes(key))
+      )
+    );
+
+    const validationError = validateActivityFields(updates, { partial: true });
+    if (validationError) return res.status(400).json({ message: validationError });
 
     if (updates.activityId !== undefined) {
-      updates.activityId = String(updates.activityId).trim().toLowerCase();
-      if (!updates.activityId) return res.status(400).json({ message: 'activityId es obligatorio.' });
-
       const duplicate = await Activity.findOne({
         activityId: updates.activityId,
         _id: { $ne: req.params.id },
       });
-      if (duplicate) return res.status(409).json({ message: 'Ya existe una actividad con ese identificador.' });
-    }
 
-    if (updates.title !== undefined) {
-      updates.title = String(updates.title).trim();
-      if (updates.title.length < 2 || updates.title.length > 150) {
-        return res.status(400).json({ message: 'El título debe tener entre 2 y 150 caracteres.' });
+      if (duplicate) {
+        return res.status(409).json({ message: 'Ya existe una actividad con ese identificador.' });
       }
-    }
-
-    for (const field of ['description', 'category', 'instructions']) {
-      if (updates[field] !== undefined) updates[field] = String(updates[field]).trim();
-    }
-
-    if (updates.description !== undefined && updates.description.length > 500) return res.status(400).json({ message: 'La descripción no puede superar 500 caracteres.' });
-    if (updates.category !== undefined && updates.category.length > 80) return res.status(400).json({ message: 'La categoría no puede superar 80 caracteres.' });
-    if (updates.instructions !== undefined && updates.instructions.length > 3000) return res.status(400).json({ message: 'Las instrucciones no pueden superar 3000 caracteres.' });
-
-    if (updates.estimatedTime !== undefined) {
-      updates.estimatedTime = Number(updates.estimatedTime);
-      if (!Number.isInteger(updates.estimatedTime) || updates.estimatedTime < 1 || updates.estimatedTime > 180) {
-        return res.status(400).json({ message: 'El tiempo estimado debe ser un entero entre 1 y 180 minutos.' });
-      }
-    }
-
-    if (updates.order !== undefined) {
-      updates.order = Number(updates.order);
-      if (!Number.isInteger(updates.order) || updates.order < 0) {
-        return res.status(400).json({ message: 'El orden debe ser un entero mayor o igual a 0.' });
-      }
-    }
-
-    if (updates.active !== undefined && typeof updates.active !== 'boolean') {
-      return res.status(400).json({ message: 'El estado de la actividad no es válido.' });
     }
 
     if (Object.keys(updates).length === 0) {
@@ -185,7 +345,9 @@ router.patch('/:id', async (req, res, next) => {
     if (!activity) return res.status(404).json({ message: 'Actividad no encontrada.' });
 
     res.json({ activity: publicActivity(activity) });
-  } catch (error) { next(error); }
+  } catch (error) {
+    next(error);
+  }
 });
 
 router.delete('/:id', async (req, res, next) => {
@@ -202,8 +364,13 @@ router.delete('/:id', async (req, res, next) => {
 
     if (!activity) return res.status(404).json({ message: 'Actividad no encontrada.' });
 
-    res.json({ message: 'Actividad desactivada correctamente.', activity: publicActivity(activity) });
-  } catch (error) { next(error); }
+    res.json({
+      message: 'Actividad desactivada correctamente.',
+      activity: publicActivity(activity),
+    });
+  } catch (error) {
+    next(error);
+  }
 });
 
 export default router;
