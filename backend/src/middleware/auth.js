@@ -4,15 +4,17 @@ import User from '../models/User.js';
 export async function requireAuth(req, res, next) {
   try {
     const header = req.headers.authorization || '';
-    const token = header.startsWith('Bearer ')
-      ? header.slice(7)
-      : null;
+    const token = header.startsWith('Bearer ') ? header.slice(7).trim() : null;
 
     if (!token) {
       return res.status(401).json({ message: 'Token requerido.' });
     }
 
-    const payload = jwt.verify(token, process.env.JWT_SECRET);
+    const payload = jwt.verify(token, process.env.JWT_SECRET, {
+      issuer: 'orenza-api',
+      audience: 'orenza-web',
+    });
+
     const user = await User.findById(payload.sub);
 
     if (!user || !user.active) {
@@ -28,7 +30,7 @@ export async function requireAuth(req, res, next) {
 
 export function allowRoles(...roles) {
   return (req, res, next) => {
-    if (!roles.includes(req.user.role)) {
+    if (!req.user || !roles.includes(req.user.role)) {
       return res.status(403).json({ message: 'No tienes permisos para esta operación.' });
     }
     next();
