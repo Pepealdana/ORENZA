@@ -34,6 +34,7 @@ function AdminDashboardPage() {
   const [search, setSearch] = useState('');
   const [roleFilter, setRoleFilter] = useState('all');
   const [statusFilter, setStatusFilter] = useState('all');
+  const [institutionFilter, setInstitutionFilter] = useState('all');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [userPagination, setUserPagination] = useState({ page: 1, pages: 1, total: 0 });
@@ -51,6 +52,7 @@ function AdminDashboardPage() {
           search,
           role: roleFilter === 'all' ? '' : roleFilter,
           active: statusFilter === 'all' ? '' : statusFilter === 'active' ? 'true' : 'false',
+          institution: institutionFilter === 'all' ? '' : institutionFilter,
         }),
         api.getAdminInstitutions({ limit: 100, active: 'true' }),
       ]);
@@ -68,7 +70,7 @@ function AdminDashboardPage() {
   useEffect(() => {
     const timer = setTimeout(() => loadData(1), 250);
     return () => clearTimeout(timer);
-  }, [search, roleFilter, statusFilter]);
+  }, [search, roleFilter, statusFilter, institutionFilter]);
 
   const updateForm = (event) => {
     setForm((current) => ({ ...current, [event.target.name]: event.target.value }));
@@ -273,6 +275,10 @@ function AdminDashboardPage() {
                 <option value="all">Todos los estados</option>
                 <option value="active">Activos</option>
                 <option value="inactive">Inactivos</option>
+              </select>
+              <select value={institutionFilter} onChange={(event) => setInstitutionFilter(event.target.value)} aria-label="Filtrar por institución">
+                <option value="all">Todas las instituciones</option>
+                {institutions.map((item) => <option key={item.id} value={item.name}>{item.name}</option>)}
               </select>
             </div>
 
