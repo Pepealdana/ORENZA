@@ -220,15 +220,6 @@ async function run() {
   const history = await request('/student/activities/progress', { headers: auth });
   assert(history.items.some((item) => item.activityId === activityId && item.status === 'completed'), 'Historial no consultable');
 
-  const deletedProgress = await request('/student/activities/progress/' + activityId, {
-    method: 'DELETE',
-    headers: auth,
-  });
-  assert(deletedProgress.item.activityId === activityId, 'Progreso no eliminable');
-
-  const progressAfterDelete = await request('/student/activities/progress/' + activityId, { headers: auth });
-  assert(progressAfterDelete.item === null, 'El progreso eliminado sigue disponible');
-
   const stats = await request('/admin/stats', { headers: adminHeaders });
   assert(typeof stats.stats.total === 'number', 'Estadísticas de administrador fallaron');
 
@@ -295,6 +286,15 @@ async function run() {
     counselorCannotCreateCheckIn = error.message.includes('-> 403:');
   }
   assert(counselorCannotCreateCheckIn, 'El orientador no debe poder crear registros emocionales');
+
+  const deletedProgress = await request('/student/activities/progress/' + activityId, {
+    method: 'DELETE',
+    headers: auth,
+  });
+  assert(deletedProgress.item.activityId === activityId, 'Progreso no eliminable');
+
+  const progressAfterDelete = await request('/student/activities/progress/' + activityId, { headers: auth });
+  assert(progressAfterDelete.item === null, 'El progreso eliminado sigue disponible');
 
   const deletedActivity = await request('/activities/' + createdActivity.activity.id, {
     method: 'DELETE',
