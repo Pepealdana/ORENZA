@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import {
   ChevronLeft,
@@ -10,7 +10,6 @@ import {
   useParams,
 } from 'react-router-dom';
 
-import activities from '../../data/activities';
 import { api } from '../../services/api';
 
 import styles from './ActivityPage.module.css';
@@ -31,14 +30,8 @@ function ActivityPage() {
    * ========================================
    */
 
-  const activity = useMemo(
-    () =>
-      activities.find(
-        (item) =>
-          item.id === activityId
-      ),
-    [activityId]
-  );
+  const [activity, setActivity] = useState(null);
+  const [activityLoading, setActivityLoading] = useState(true);
 
 
   /*
@@ -58,24 +51,98 @@ function ActivityPage() {
 
   useEffect(() => {
     let active = true;
+
+    setActivityLoading(true);
+    setActivity(null);
+    setError('');
+
+    api.getActivity(activityId)
+      .then(({ activity: loadedActivity }) => {
+        if (active) setActivity({
+          id: loadedActivity.activityId,
+          backendId: loadedActivity.id,
+          title: loadedActivity.title,
+          description: loadedActivity.description || '',
+          purpose: loadedActivity.purpose || '',
+          type: loadedActivity.type || loadedActivity.category || 'exploration',
+          estimatedTime: loadedActivity.estimatedTime,
+          ageRange: loadedActivity.ageRange || { min: 13, max: 18 },
+          competencies: loadedActivity.competencies || { primary: 'general', secondary: [] },
+          emotions: loadedActivity.emotions || [],
+          difficulty: loadedActivity.difficulty || 'easy',
+          repeatable: loadedActivity.repeatable !== false,
+          steps: loadedActivity.steps || [],
+          order: loadedActivity.order || 0,
+          active: loadedActivity.active !== false,
+        });
+      })
+      .catch((requestError) => {
+        if (active) {
+          setError(requestError.message || 'No fue posible cargar la actividad.');
+          setActivity(null);
+        }
+      })
+      .finally(() => {
+        if (active) setActivityLoading(false);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [activityId]);
+
+
+  useEffect(() => {
+    if (!activity) return undefined;
+
+    let active = true;
+
+    setLoading(true);
+
     api.getActivityProgressById(activityId)
       .then(({ item }) => {
         if (!active) return;
+
         if (item?.answers) {
           setResponses(item.answers);
-          const answeredSteps = activity?.steps?.map((stepItem, index) => ({ index, answered: item.answers[stepItem.id] !== undefined && item.answers[stepItem.id] !== '' })).filter((entry) => entry.answered) || [];
-          if (item?.status === 'in-progress' && answeredSteps.length > 0) {
-            setCurrentStep(Math.min(answeredSteps[answeredSteps.length - 1].index + 1, (activity?.steps?.length || 1) - 1));
+
+          const answeredSteps = activity.steps
+            ?.map((stepItem, index) => ({
+              index,
+              answered:
+                item.answers[stepItem.id] !== undefined &&
+                item.answers[stepItem.id] !== '',
+            }))
+            .filter((entry) => entry.answered) || [];
+
+          if (item.status === 'in-progress' && answeredSteps.length > 0) {
+            setCurrentStep(
+              Math.min(
+                answeredSteps[answeredSteps.length - 1].index + 1,
+                Math.max((activity.steps?.length || 1) - 1, 0)
+              )
+            );
+          }
+
+          if (item.status === 'completed') {
+            setCurrentStep(
+              Math.max((activity.steps?.length || 1) - 1, 0)
+            );
           }
         }
       })
-      .catch(() => {
-        if (active) setError('No fue posible recuperar el progreso guardado.');
+      .catch((requestError) => {
+        if (active) {
+          setError(requestError.message || 'No fue posible recuperar el progreso guardado.');
+        }
       })
       .finally(() => {
         if (active) setLoading(false);
       });
-    return () => { active = false; };
+
+    return () => {
+      active = false;
+    };
   }, [activityId, activity]);
 
   /*
