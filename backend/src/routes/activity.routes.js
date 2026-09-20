@@ -103,7 +103,7 @@ function validateSteps(steps, { required = false } = {}) {
   return '';
 }
 
-function validateActivityFields(payload, { partial = false } = {}) {
+function validateActivityFields(payload, { partial = false, requireSteps = false } = {}) {
   const {
     activityId,
     title,
@@ -188,7 +188,7 @@ function validateActivityFields(payload, { partial = false } = {}) {
     return 'El indicador repeatable no es válido.';
   }
 
-  const stepsError = validateSteps(steps);
+  const stepsError = validateSteps(steps, { required: requireSteps });
   if (stepsError) return stepsError;
 
   if (order !== undefined) {
@@ -279,12 +279,11 @@ router.use(allowRoles('admin'));
 router.post('/', async (req, res, next) => {
   try {
     const payload = normalizeActivityPayload(req.body);
-    const validationError = validateActivityFields(payload);
+    const validationError = validateActivityFields(payload, {
+      requireSteps: payload.active !== false,
+    });
 
     if (validationError) return res.status(400).json({ message: validationError });
-
-    const stepsError = validateSteps(payload.steps, { required: true });
-    if (stepsError) return res.status(400).json({ message: stepsError });
 
     const exists = await Activity.findOne({ activityId: payload.activityId });
     if (exists) return res.status(409).json({ message: 'Ya existe una actividad con ese identificador.' });
