@@ -55,8 +55,12 @@ function validObjectId(id) {
   return mongoose.Types.ObjectId.isValid(id);
 }
 
-function validateSteps(steps) {
+function validateSteps(steps, { required = false } = {}) {
   if (steps === undefined) return '';
+
+  if (required && (!Array.isArray(steps) || steps.length === 0)) {
+    return 'La actividad debe tener al menos un paso.';
+  }
 
   if (!Array.isArray(steps)) {
     return 'Los pasos de la actividad deben ser un arreglo.';
@@ -279,6 +283,9 @@ router.post('/', async (req, res, next) => {
 
     if (validationError) return res.status(400).json({ message: validationError });
 
+    const stepsError = validateSteps(payload.steps, { required: true });
+    if (stepsError) return res.status(400).json({ message: stepsError });
+
     const exists = await Activity.findOne({ activityId: payload.activityId });
     if (exists) return res.status(409).json({ message: 'Ya existe una actividad con ese identificador.' });
 
@@ -335,6 +342,16 @@ router.patch('/:id', async (req, res, next) => {
 
     if (Object.keys(updates).length === 0) {
       return res.status(400).json({ message: 'No hay cambios válidos para guardar.' });
+    }
+
+    const currentActivity = await Activity.findById(req.params.id);
+    if (!currentActivity) return res.status(404).json({ message: 'Actividad no encontrada.' });
+
+    const finalActive = updates.active === undefined ? currentActivity.active : updates.active;
+    const finalSteps = updates.steps === undefined ? currentActivity.steps : updates.steps;
+
+    if (finalActive && (!Array.isArray(finalSteps) || finalSteps.length === 0)) {
+      return res.status(400).json({ message: 'Una actividad activa debe tener al menos un paso.' });
     }
 
     const activity = await Activity.findByIdAndUpdate(req.params.id, updates, {
