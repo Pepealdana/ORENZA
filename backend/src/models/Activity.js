@@ -66,6 +66,7 @@ const activitySchema = new mongoose.Schema(
     repeatable: { type: Boolean, default: true },
     steps: { type: [activityStepSchema], default: [] },
     order: { type: Number, default: 0, min: 0 },
+    version: { type: Number, default: 1, min: 1 },
     active: { type: Boolean, default: true },
   },
   { timestamps: true }
