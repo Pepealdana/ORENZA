@@ -271,6 +271,9 @@ async function run() {
   const stats = await request('/admin/stats', { headers: adminHeaders });
   assert(typeof stats.stats.total === 'number', 'Estadísticas de administrador fallaron');
 
+  const adminUsersPage = await request('/admin/users?page=1&limit=1&institution=ORENZA%20Demo', { headers: adminHeaders });
+  assert(adminUsersPage.pagination?.limit === 1 && typeof adminUsersPage.pagination.total === 'number', 'La paginación y filtros de usuarios fallaron');
+
   const counselorLogin = await request('/auth/login', {
     method: 'POST',
     body: JSON.stringify({
