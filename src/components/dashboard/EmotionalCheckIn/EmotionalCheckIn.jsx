@@ -97,6 +97,8 @@ function EmotionalCheckIn({
     useState(null);
 
   const [note, setNote] = useState('');
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   /*
    * Busca la información completa de la emoción
@@ -151,10 +153,28 @@ function EmotionalCheckIn({
     setStep(mood && emotion ? 3 : 1);
   };
 
-  const handleDelete = async () => {
-    if (!onDelete) return;
-    await onDelete();
-    handleRestart();
+  const openDeleteConfirm = () => {
+    setShowDeleteConfirm(true);
+  };
+
+  const closeDeleteConfirm = () => {
+    if (!deleting) {
+      setShowDeleteConfirm(false);
+    }
+  };
+
+  const confirmDelete = async () => {
+    if (!onDelete || deleting) return;
+
+    setDeleting(true);
+
+    try {
+      await onDelete();
+      setShowDeleteConfirm(false);
+      handleRestart();
+    } finally {
+      setDeleting(false);
+    }
   };
 
   /*
@@ -163,8 +183,9 @@ function EmotionalCheckIn({
    */
   if (step === 4) {
     return (
-      <section className={styles.card}>
-        <div className={styles.completed}>
+      <>
+        <section className={styles.card}>
+          <div className={styles.completed}>
 
           <div className={styles.completedIcon}>
             <Check size={28} />
@@ -208,7 +229,7 @@ function EmotionalCheckIn({
               <button
                 type="button"
                 className={styles.dangerButton}
-                onClick={handleDelete}
+                onClick={openDeleteConfirm}
               >
                 Eliminar registro
               </button>
@@ -223,8 +244,58 @@ function EmotionalCheckIn({
             Registrar otro momento
           </button>
 
-        </div>
-      </section>
+          </div>
+        </section>
+
+        {showDeleteConfirm && (
+          <div
+            className={styles.modalBackdrop}
+            role="presentation"
+            onMouseDown={closeDeleteConfirm}
+          >
+            <div
+              className={styles.modal}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="delete-checkin-title"
+              onMouseDown={(event) => event.stopPropagation()}
+            >
+              <div className={styles.modalIcon} aria-hidden="true">
+                <Heart size={21} />
+              </div>
+
+              <h3 id="delete-checkin-title">
+                Eliminar registro emocional
+              </h3>
+
+              <p>
+                ¿Quieres eliminar el registro emocional de hoy?
+                Esta acción no se puede deshacer.
+              </p>
+
+              <div className={styles.modalActions}>
+                <button
+                  type="button"
+                  className={styles.modalCancel}
+                  onClick={closeDeleteConfirm}
+                  disabled={deleting}
+                >
+                  Cancelar
+                </button>
+
+                <button
+                  type="button"
+                  className={styles.modalDelete}
+                  onClick={confirmDelete}
+                  disabled={deleting}
+                >
+                  {deleting ? 'Eliminando…' : 'Eliminar registro'}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </>
     );
   }
 
