@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import {
   ChevronLeft,
@@ -12,10 +12,6 @@ import {
 
 import activities from '../../data/activities';
 import { api } from '../../services/api';
-
-import {
-  saveCompletedActivity,
-} from '../../utils/activityStorage';
 
 import {
   getLocalDateString,
@@ -58,9 +54,27 @@ function ActivityPage() {
   const [currentStep, setCurrentStep] =
     useState(0);
 
-  const [responses, setResponses] =
-    useState({});
+  const [responses, setResponses] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState('');
 
+
+  useEffect(() => {
+    let active = true;
+    api.getActivityProgressById(activityId)
+      .then(({ item }) => {
+        if (!active) return;
+        if (item?.answers) setResponses(item.answers);
+      })
+      .catch(() => {
+        if (active) setError('No fue posible recuperar el progreso guardado.');
+      })
+      .finally(() => {
+        if (active) setLoading(false);
+      });
+    return () => { active = false; };
+  }, [activityId]);
 
   /*
    * ========================================
@@ -142,85 +156,26 @@ function ActivityPage() {
    */
 
   const handleNext = async () => {
-
-    /*
-     * Si todavía hay pasos,
-     * avanzamos al siguiente.
-     */
-
-    if (!isLastStep) {
-
-      setCurrentStep(
-        (previous) =>
-          previous + 1
-      );
-
-      return;
-    }
-
-
-    /*
-     * ======================================
-     * ACTIVIDAD COMPLETADA
-     * ======================================
-     *
-     * Guardamos únicamente los datos
-     * propios de la experiencia realizada.
-     *
-     * El título, descripción, competencias,
-     * dificultad y demás información de la
-     * actividad permanecen en activities.js.
-     */
-
-    const completedActivity = {
-
-      id:
-        `experience-${Date.now()}`,
-
-      activityId:
-        activity.id,
-
-      completedAt:
-        getLocalDateString(),
-
-      responses: {
-        ...responses,
-      },
-
-    };
-
-
-    /*
-     * ======================================
-     * GUARDAR EXPERIENCIA
-     * ======================================
-     */
+    setError('');
+    setSaving(true);
 
     try {
       await api.saveActivityProgress({
         activityId: activity.id,
-        status: 'completed',
+        status: isLastStep ? 'completed' : 'in-progress',
         answers: responses,
       });
-    } catch (error) {
-      console.error('No fue posible sincronizar la actividad con el servidor:', error);
 
-      const savedActivity = saveCompletedActivity(completedActivity);
-      if (!savedActivity) {
-        return;
+      if (!isLastStep) {
+        setCurrentStep((previous) => previous + 1);
+      } else {
+        navigate('/estudiante/actividades');
       }
+    } catch (requestError) {
+      setError(requestError.message || 'No fue posible guardar tu progreso.');
+    } finally {
+      setSaving(false);
     }
-
-
-    /*
-     * ======================================
-     * REGRESAR A ACTIVIDADES
-     * ======================================
-     */
-
-    navigate(
-      '/estudiante/actividades'
-    );
   };
 
 
@@ -250,9 +205,8 @@ function ActivityPage() {
    */
 
   return (
-    <section
-      className={styles.page}
-    >
+    <section className={styles.page}>
+      {error && <div className={styles.alert} role="alert">{error}</div>}
 
 
       {/* ======================================
@@ -566,14 +520,11 @@ function ActivityPage() {
             styles.primaryButton
           }
 
-          onClick={
-            handleNext
-          }
+          onClick={handleNext}
+          disabled={saving || loading}
         >
 
-          {isLastStep
-            ? 'Terminar'
-            : 'Continuar'}
+          {saving ? 'Guardando…' : isLastStep ? 'Terminar' : 'Continuar'}
 
 
           {!isLastStep && (
