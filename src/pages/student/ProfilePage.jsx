@@ -66,7 +66,7 @@ function ProfilePage() {
         <form className={styles.editCard} onSubmit={handleSave}>
           <label><span>Nombre</span><input value={form.name} onChange={(event) => setForm({ ...form, name: event.target.value })} minLength={2} maxLength={100} required /></label>
           <label><span>Grado</span><input value={form.grade} onChange={(event) => setForm({ ...form, grade: event.target.value })} maxLength={30} /></label>
-          <label><span>Institución</span><input value={form.institution} onChange={(event) => setForm({ ...form, institution: event.target.value })} maxLength={150} /></label>
+          <label><span>Institución</span><input value={form.institution} readOnly aria-readonly="true" /></label>
           <div className={styles.editActions}><button type="button" onClick={() => setEditing(false)}>Cancelar</button><button type="submit" disabled={saving}>{saving ? 'Guardando…' : 'Guardar cambios'}</button></div>
         </form>
       )}
