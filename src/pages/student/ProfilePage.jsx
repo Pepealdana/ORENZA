@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Activity, ArrowRight, BookOpen, CheckCircle2, Mail, Settings, UserRound } from 'lucide-react';
 
