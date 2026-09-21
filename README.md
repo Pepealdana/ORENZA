@@ -11,7 +11,7 @@ Rama de trabajo actual: `feature/backend-mvp`
 El MVP integra:
 
 - autenticación con JWT;
-- roles de estudiante, orientador, docente y administrador;
+- roles de estudiante, orientador, docente y administrador, con módulos funcionales para estudiante, orientador y administrador;
 - gestión de usuarios;
 - gestión de instituciones;
 - aislamiento de estudiantes por institución para orientadores;
@@ -346,7 +346,7 @@ En desarrollo, el endpoint devuelve un `demoToken` para permitir pruebas end-to-
 
 El proyecto dispone de:
 
-- lint y build del frontend;
+- build de producción del frontend;
 - comprobaciones de sintaxis del backend mediante CI;
 - smoke test de integración para autenticación, perfiles, check-ins, actividades, progreso, administración, auditoría, privacidad del orientador y aislamiento institucional.
 
@@ -397,4 +397,4 @@ El MVP queda delimitado a la gestión y seguimiento preventivo de estudiantes me
 7. consulta del orientador;
 8. auditoría administrativa.
 
-El siguiente ciclo del proyecto corresponde a pruebas de producción local, despliegue y documentación técnica. No se añaden nuevas funcionalidades de negocio antes de cerrar ese ciclo.
+El MVP se encuentra en fase de revisión técnica y funcional. El despliegue público y la documentación técnica ampliada se realizarán posteriormente, una vez recibidas las observaciones de revisión.
