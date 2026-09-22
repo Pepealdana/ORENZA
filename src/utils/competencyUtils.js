@@ -169,7 +169,8 @@ function getPrimaryActivityCompetency(
 
 export function getActivitiesForCompetency(
   competencyId,
-  activitiesOverride = null
+  activitiesOverride = null,
+  options = {}
 ) {
   const normalizedCompetencyId =
     normalizeCompetencyId(
@@ -188,12 +189,24 @@ export function getActivitiesForCompetency(
     ? activitiesOverride
     : activities;
 
-  return catalog.filter(
-    (activity) =>
-      getPrimaryActivityCompetency(
-        activity
-      ) === normalizedCompetencyId
-  );
+  const { includeSecondary = false } = options;
+
+  return catalog.filter((activity) => {
+    if (
+      getPrimaryActivityCompetency(activity) ===
+      normalizedCompetencyId
+    ) {
+      return true;
+    }
+
+    if (!includeSecondary) {
+      return false;
+    }
+
+    return getActivityCompetencies(activity).includes(
+      normalizedCompetencyId
+    );
+  });
 }
 
 
