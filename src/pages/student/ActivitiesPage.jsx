@@ -12,6 +12,7 @@ import {
 import { Link } from 'react-router-dom';
 
 import { useActivities } from '../../hooks/useActivities';
+import { getActivitiesForCompetency } from '../../utils/competencyUtils';
 
 
 import styles from './ActivitiesPage.module.css';
@@ -132,7 +133,7 @@ function ActivitiesPage() {
         return activities;
       }
 
-      return getActivitiesForCompetencies(selectedCompetency, activities);
+      return getActivitiesForCompetency(selectedCompetency, activities);
 
     }, [selectedCompetency, activities]);
 
@@ -621,39 +622,6 @@ function ActivitiesPage() {
       </section>
 
     </section>
-  );
-}
-
-
-/*
- * ========================================
- * FILTRO DE ACTIVIDADES POR COMPETENCIA
- * ========================================
- */
-
-function getActivitiesForCompetencies(
-  selectedCompetency,
-  catalog
-) {
-
-  const competencyMap = {
-    autoconocimiento: 'autoconocimiento',
-    autorregulacion: 'autorregulacion',
-    empatia: 'empatia',
-    relaciones: 'relaciones-positivas',
-  };
-
-  const target =
-    competencyMap[selectedCompetency];
-
-  if (!target) {
-    return catalog;
-  }
-
-  return catalog.filter(
-    (activity) =>
-      activity.competencies?.primary === target ||
-      activity.competencies?.secondary?.includes(target)
   );
 }
 
