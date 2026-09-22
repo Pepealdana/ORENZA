@@ -133,7 +133,9 @@ function ActivitiesPage() {
         return activities;
       }
 
-      return getActivitiesForCompetency(selectedCompetency, activities);
+      return getActivitiesForCompetency(selectedCompetency, activities, {
+        includeSecondary: true,
+      });
 
     }, [selectedCompetency, activities]);
 
