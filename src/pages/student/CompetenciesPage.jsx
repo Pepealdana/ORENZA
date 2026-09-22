@@ -3,6 +3,7 @@ import { useStudentProgress } from '../../hooks/useStudentProgress';
 import studentData from '../../data/studentData';
 import CompetencyList from '../../components/competencies/CompetencyList/CompetencyList';
 import { getAllCompetencyStats } from '../../utils/competencyUtils';
+import { useActivities } from '../../hooks/useActivities';
 import styles from './CompetenciesPage.module.css';
 import personalIcon from '../../assets/illustrations/icons/personal.png';
 import emocionalIcon from '../../assets/illustrations/icons/emocional.png';
@@ -44,7 +45,12 @@ const dimensions = [
 function CompetenciesPage() {
   const { competencies } = studentData;
   const { completedActivities } = useStudentProgress();
-  const competencyStats = getAllCompetencyStats(competencies, completedActivities);
+  const { activities: catalogActivities } = useActivities();
+  const competencyStats = getAllCompetencyStats(
+    competencies,
+    completedActivities,
+    catalogActivities
+  );
 
   return (
     <section className={styles.page}>
