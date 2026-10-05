@@ -479,7 +479,7 @@ function ActivitiesPage() {
 
                         </span>
 
-                      ) : activity.repeatable ? (
+                      ) : isInProgress ? (
 
                         <span
                           className={
@@ -492,11 +492,23 @@ function ActivitiesPage() {
                             aria-hidden="true"
                           />
 
-                          Puedes volver
+                          En progreso
 
                         </span>
 
-                      ) : null}
+                      ) : (
+
+                        <span
+                          className={
+                            styles.repeatable
+                          }
+                        >
+
+                          Disponible
+
+                        </span>
+
+                      )}
 
                     </div>
 
