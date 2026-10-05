@@ -28,7 +28,7 @@ function AdminInstitutionsPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [search, showInactive]);
 
   useEffect(() => { load(); }, [load]);
 
