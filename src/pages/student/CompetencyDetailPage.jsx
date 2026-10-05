@@ -3,7 +3,7 @@ import {
   useParams,
 } from 'react-router-dom';
 
-import studentData from '../../data/studentData';
+import studentContent from '../../data/studentContent';
 
 import { getCompetencyStats } from '../../utils/competencyUtils';
 import { useStudentProgress } from '../../hooks/useStudentProgress';
@@ -31,14 +31,14 @@ function CompetencyDetailPage() {
    */
 
   const competencyIndex =
-    studentData.competencies.findIndex(
+    studentContent.competencies.findIndex(
       (item) =>
         item.id === competencyId
     );
 
 
   const competency =
-    studentData.competencies[
+    studentContent.competencies[
       competencyIndex
     ];
 
@@ -395,7 +395,7 @@ function CompetencyDetailPage() {
           <Link
             to={
               `/estudiante/competencias/${
-                studentData.competencies[
+                studentContent.competencies[
                   competencyIndex - 1
                 ].id
               }`
@@ -415,12 +415,12 @@ function CompetencyDetailPage() {
 
 
         {competencyIndex <
-          studentData.competencies.length - 1 ? (
+          studentContent.competencies.length - 1 ? (
 
           <Link
             to={
               `/estudiante/competencias/${
-                studentData.competencies[
+                studentContent.competencies[
                   competencyIndex + 1
                 ].id
               }`
