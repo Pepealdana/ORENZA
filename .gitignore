@@ -30,3 +30,6 @@ backend/.env
 backend/.env.*
 !.env.example
 !backend/.env.example
+
+# Local backups
+backend_backup/
