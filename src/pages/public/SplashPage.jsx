@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight, HeartHandshake, Sparkles, UserRound } from 'lucide-react';
 
-import orenzaLogo from '../../assets/orenza_hor.svg';
+import orenzaLogo from '../../assets/orenza_hor.png';
 import IdentityVisual from '../../components/visual/IdentityVisual';
 import styles from './SplashPage.module.css';
 
