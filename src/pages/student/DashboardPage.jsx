@@ -71,6 +71,14 @@ function DashboardPage() {
 
   const currentStreak = calculateCurrentStreak(checkIns);
 
+  /*
+   * La actividad sugerida debe reflejar el mismo estado
+   * persistido que utiliza el catálogo de experiencias.
+   */
+  const suggestedActivityCompleted = completedActivities.some(
+    (item) => item.activityId === today.suggestedActivity.id
+  );
+
 
   /*
    * ========================================
@@ -399,7 +407,7 @@ function DashboardPage() {
               .title
           }
 
-          status="recommended"
+          status={suggestedActivityCompleted ? 'completed' : 'recommended'}
 
           date={today.suggestedActivity.estimatedTime}
           activityId={today.suggestedActivity.id}

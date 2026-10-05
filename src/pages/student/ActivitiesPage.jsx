@@ -133,9 +133,13 @@ function ActivitiesPage() {
         return activities;
       }
 
-      return getActivitiesForCompetency(selectedCompetency, activities, {
-        includeSecondary: true,
-      });
+      /*
+       * Los filtros de competencia utilizan la competencia
+       * principal de cada experiencia para mantener el mismo
+       * universo de actividades que usan los indicadores de
+       * progreso de Mis competencias.
+       */
+      return getActivitiesForCompetency(selectedCompetency, activities);
 
     }, [selectedCompetency, activities]);
 
@@ -222,7 +226,7 @@ function ActivitiesPage() {
           </strong>
 
           <span>
-            experiencias exploradas
+            experiencias únicas exploradas
           </span>
 
         </div>
