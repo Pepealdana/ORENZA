@@ -479,24 +479,36 @@ function ActivitiesPage() {
 
                         </span>
 
-                      ) : activity.repeatable ? (
+                      ) : isInProgress ? (
 
                         <span
                           className={
-                            styles.repeatable
+                            styles.inProgress
                           }
                         >
 
-                          <RotateCcw
+                          <Clock3
                             size={14}
                             aria-hidden="true"
                           />
 
-                          Puedes volver
+                          En progreso
 
                         </span>
 
-                      ) : null}
+                      ) : (
+
+                        <span
+                          className={
+                            styles.available
+                          }
+                        >
+
+                          Disponible
+
+                        </span>
+
+                      )}
 
                     </div>
 
