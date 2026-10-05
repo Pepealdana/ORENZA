@@ -65,12 +65,12 @@ function AdminDashboardPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [search, roleFilter, statusFilter, institutionFilter]);
 
   useEffect(() => {
     const timer = setTimeout(() => loadData(1), 250);
     return () => clearTimeout(timer);
-  }, [search, roleFilter, statusFilter, institutionFilter]);
+  }, [loadData]);
 
   const updateForm = (event) => {
     setForm((current) => ({ ...current, [event.target.name]: event.target.value }));
