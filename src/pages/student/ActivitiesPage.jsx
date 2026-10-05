@@ -5,7 +5,6 @@ import {
   ArrowRight,
   Check,
   Clock3,
-  RotateCcw,
   Sparkles,
 } from 'lucide-react';
 
