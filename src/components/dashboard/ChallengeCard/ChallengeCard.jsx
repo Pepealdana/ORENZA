@@ -6,6 +6,7 @@ function ChallengeCard({
   title,
   description,
   estimatedTime,
+  onAction,
 }) {
   return (
     <article className={styles.card}>
@@ -35,6 +36,8 @@ function ChallengeCard({
         <button
           type="button"
           className={styles.action}
+          onClick={onAction}
+          disabled={!onAction}
         >
           Lo intentaré
           <ArrowRight size={18} aria-hidden="true" />
