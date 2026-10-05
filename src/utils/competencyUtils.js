@@ -2,18 +2,15 @@
    ORENZA — UTILIDADES DE COMPETENCIAS
    ========================================= */
 
-import activities from '../data/activities';
-
 
 /*
  * =========================================
  * NORMALIZAR ID DE COMPETENCIA
  * =========================================
  *
- * Algunos datos históricos del proyecto
- * utilizan "relaciones-positivas",
- * mientras que la competencia oficial
- * de studentData utiliza "relaciones".
+ * Algunos datos históricos del proyecto utilizan
+ * "relaciones-positivas". La competencia oficial
+ * de la interfaz utiliza "relaciones".
  *
  * Aquí mantenemos un único identificador
  * para realizar las comparaciones.
@@ -52,7 +49,7 @@ function normalizeCompetencyId(
  * OBTENER COMPETENCIAS DE UNA ACTIVIDAD
  * =========================================
  *
- * La estructura actual de activities.js es:
+ * La estructura del catálogo de actividades es:
  *
  * competencies: {
  *   primary: 'autoconocimiento',
@@ -169,7 +166,7 @@ function getPrimaryActivityCompetency(
 
 export function getActivitiesForCompetency(
   competencyId,
-  activitiesOverride = null,
+  activitiesOverride = [],
   options = {}
 ) {
   const normalizedCompetencyId =
@@ -187,7 +184,7 @@ export function getActivitiesForCompetency(
 
   const catalog = Array.isArray(activitiesOverride)
     ? activitiesOverride
-    : activities;
+    : [];
 
   const { includeSecondary = false } = options;
 
@@ -219,7 +216,7 @@ export function getActivitiesForCompetency(
 export function getCompletedActivitiesForCompetency(
   competencyId,
   completedActivitiesOverride = [],
-  activitiesOverride = null
+  activitiesOverride = []
 ) {
   const competencyActivities =
     getActivitiesForCompetency(
@@ -282,7 +279,7 @@ export function getCompletedActivitiesForCompetency(
 export function getCompetencyStats(
   competencyId,
   completedActivitiesOverride = null,
-  activitiesOverride = null
+  activitiesOverride = []
 ) {
   const competencyActivities =
     getActivitiesForCompetency(
@@ -418,7 +415,7 @@ export function getActivitiesForCompetencies(
 
   const catalog = Array.isArray(activitiesOverride)
     ? activitiesOverride
-    : activities;
+    : [];
 
   return catalog.filter(
     (activity) =>
