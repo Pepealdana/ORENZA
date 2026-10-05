@@ -347,12 +347,15 @@ En desarrollo, el endpoint devuelve un `demoToken` para permitir pruebas end-to-
 El proyecto dispone de:
 
 - build de producción del frontend;
+- pruebas unitarias básicas de reglas de competencias, progreso y rachas;
 - comprobaciones de sintaxis del backend mediante CI;
 - smoke test de integración para autenticación, perfiles, check-ins, actividades, progreso, administración, auditoría, privacidad del orientador y aislamiento institucional.
 
 Comando:
 
 ```bash
+npm test
+
 cd backend
 npm run test:smoke
 ```
