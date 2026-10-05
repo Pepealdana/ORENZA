@@ -1,6 +1,6 @@
 import { Target } from 'lucide-react';
 import { useStudentProgress } from '../../hooks/useStudentProgress';
-import studentData from '../../data/studentData';
+import studentContent from '../../data/studentContent';
 import CompetencyList from '../../components/competencies/CompetencyList/CompetencyList';
 import { getAllCompetencyStats } from '../../utils/competencyUtils';
 import { useActivities } from '../../hooks/useActivities';
@@ -43,7 +43,7 @@ const dimensions = [
 ];
 
 function CompetenciesPage() {
-  const { competencies } = studentData;
+  const { competencies } = studentContent;
   const { completedActivities } = useStudentProgress();
   const { activities: catalogActivities } = useActivities();
   const competencyStats = getAllCompetencyStats(
