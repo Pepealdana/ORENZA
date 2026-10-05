@@ -1,6 +1,6 @@
 import {
   getLocalDateString,
-} from './dateUtils';
+} from './dateUtils.js';
 
 function calculateCurrentStreak(checkIns) {
   if (!Array.isArray(checkIns) || checkIns.length === 0) {

@@ -6,7 +6,7 @@ ORENZA tiene un enfoque preventivo y educativo. Sus registros sirven como apoyo 
 
 ## Estado del proyecto
 
-Rama de trabajo actual: `feature/backend-mvp`
+Rama oficial: `main`
 
 El MVP integra:
 
@@ -204,6 +204,7 @@ npm run dev
 npm run build
 npm run preview
 npm run lint
+npm test
 ```
 
 ### Backend

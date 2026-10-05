@@ -109,11 +109,7 @@ function validateActivityFields(payload, { partial = false, requireSteps = false
   const {
     activityId,
     title,
-    description,
-    purpose,
     type,
-    category,
-    instructions,
     estimatedTime,
     ageRange,
     competencies,

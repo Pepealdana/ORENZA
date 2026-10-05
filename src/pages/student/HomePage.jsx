@@ -8,27 +8,15 @@ import styles from './HomePage.module.css';
 
 function HomePage() {
   const { user } = useAuth();
-  const {
   const { today } = studentContent;
   const name = user?.name || 'Estudiante';
 
   return (
     <section className={styles.page}>
-
-      {/* ========================================
-          BIENVENIDA
-          ======================================== */}
-
       <header className={styles.header}>
         <div className={styles.headerCopy}>
-          <p className={styles.eyebrow}>
-            Bienvenido a ORENZA
-          </p>
-
-          <h1 className={styles.title}>
-            Hola, {name}
-          </h1>
-
+          <p className={styles.eyebrow}>Bienvenido a ORENZA</p>
+          <h1 className={styles.title}>Hola, {name}</h1>
           <p className={styles.description}>
             Este es un espacio para conocerte,
             explorar lo que sientes y descubrir
@@ -36,149 +24,64 @@ function HomePage() {
             en ti.
           </p>
         </div>
-
         <div className={styles.headerVisual}>
           <IdentityVisual variant="inicio" />
         </div>
       </header>
 
-
-      {/* ========================================
-          CONTINUAR
-          ======================================== */}
-
       <section className={styles.section}>
-
         <div className={styles.sectionHeader}>
-
-          <p className={styles.eyebrow}>
-            Para continuar
-          </p>
-
-          <h2>
-            ¿Qué quieres explorar hoy?
-          </h2>
-
+          <p className={styles.eyebrow}>Para continuar</p>
+          <h2>¿Qué quieres explorar hoy?</h2>
         </div>
-
 
         <div className={styles.actions}>
-
-          <Link
-            to="/estudiante/dashboard"
-            className={styles.actionCard}
-          >
-
-            <span className={styles.actionTitle}>
-              Mi proceso
-            </span>
-
+          <Link to="/estudiante/dashboard" className={styles.actionCard}>
+            <span className={styles.actionTitle}>Mi proceso</span>
             <span className={styles.actionDescription}>
-              Revisa tu recorrido, tus emociones
-              y tu progreso.
+              Revisa tu recorrido, tus emociones y tu progreso.
             </span>
-
-            <span className={styles.actionLink}>
-              Ver mi proceso →
-            </span>
-
+            <span className={styles.actionLink}>Ver mi proceso →</span>
           </Link>
 
-
-          <Link
-            to="/estudiante/actividades"
-            className={styles.actionCard}
-          >
-
-            <span className={styles.actionTitle}>
-              Explorar actividades
-            </span>
-
+          <Link to="/estudiante/actividades" className={styles.actionCard}>
+            <span className={styles.actionTitle}>Explorar actividades</span>
             <span className={styles.actionDescription}>
-              Elige una experiencia y dedica
-              unos minutos a conocerte mejor.
+              Elige una experiencia y dedica unos minutos a conocerte mejor.
             </span>
-
-            <span className={styles.actionLink}>
-              Ver actividades →
-            </span>
-
+            <span className={styles.actionLink}>Ver actividades →</span>
           </Link>
 
-
-          <Link
-            to="/estudiante/competencias"
-            className={styles.actionCard}
-          >
-
-            <span className={styles.actionTitle}>
-              Mis competencias
-            </span>
-
+          <Link to="/estudiante/competencias" className={styles.actionCard}>
+            <span className={styles.actionTitle}>Mis competencias</span>
             <span className={styles.actionDescription}>
-              Conoce las habilidades socioemocionales
-              que estás desarrollando.
+              Conoce las habilidades socioemocionales que estás desarrollando.
             </span>
-
-            <span className={styles.actionLink}>
-              Ver competencias →
-            </span>
-
+            <span className={styles.actionLink}>Ver competencias →</span>
           </Link>
 
-
-          <Link
-            to="/estudiante/recorrido"
-            className={styles.actionCard}
-          >
-
-            <span className={styles.actionTitle}>
-              Mi recorrido
-            </span>
-
+          <Link to="/estudiante/recorrido" className={styles.actionCard}>
+            <span className={styles.actionTitle}>Mi recorrido</span>
             <span className={styles.actionDescription}>
-              Mira los momentos y experiencias
-              que has ido registrando.
+              Mira los momentos y experiencias que has ido registrando.
             </span>
-
-            <span className={styles.actionLink}>
-              Ver recorrido →
-            </span>
-
+            <span className={styles.actionLink}>Ver recorrido →</span>
           </Link>
-
         </div>
-
       </section>
-
-
-      {/* ========================================
-          SUGERENCIA DEL DÍA
-          ======================================== */}
 
       <section className={styles.highlight}>
         <IdentityVisual variant="recorrido" size="compact" />
-
         <div>
-
-          <p className={styles.eyebrow}>
-            Una sugerencia para hoy
-          </p>
-
-          <h2>
-            {today.suggestedActivity.title}
-          </h2>
-
+          <p className={styles.eyebrow}>Una sugerencia para hoy</p>
+          <h2>{today.suggestedActivity.title}</h2>
           <p className={styles.highlightDescription}>
             {today.suggestedActivity.description}
           </p>
-
           <p className={styles.highlightTime}>
             {today.suggestedActivity.estimatedTime}
           </p>
-
         </div>
-
 
         <Link
           to={`/estudiante/actividades/${today.suggestedActivity.id}`}
@@ -186,38 +89,18 @@ function HomePage() {
         >
           Explorar actividad
         </Link>
-
       </section>
 
-
-      {/* ========================================
-          RETO
-          ======================================== */}
-
       <section className={styles.challenge}>
-
         <div>
-
-          <p className={styles.eyebrow}>
-            Reto de hoy
-          </p>
-
-          <h2>
-            {today.challenge.title}
-          </h2>
-
-          <p>
-            {today.challenge.description}
-          </p>
-
+          <p className={styles.eyebrow}>Reto de hoy</p>
+          <h2>{today.challenge.title}</h2>
+          <p>{today.challenge.description}</p>
         </div>
-
         <span className={styles.challengeTime}>
           {today.challenge.estimatedTime}
         </span>
-
       </section>
-
     </section>
   );
 }
