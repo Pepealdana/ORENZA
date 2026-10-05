@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ArrowLeft, Check, Edit3, LoaderCircle, Plus, Save, Trash2, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { api } from '../../services/api';
@@ -137,7 +137,7 @@ function AdminActivitiesPage() {
   const inactiveCount = useMemo(() => activities.filter((item) => !item.active).length, [activities]);
   const visibleActivities = activities;
 
-  const loadActivities = async (page = 1) => {
+  const loadActivities = useCallback(async (page = 1) => {
     setLoading(true);
     setError('');
     try {
