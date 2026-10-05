@@ -38,7 +38,6 @@ function DashboardPage() {
   const navigate = useNavigate();
   const { user } = useAuth();
 
-  const {
   const { today, competencies } = studentContent;
   const name = user?.name || 'Estudiante';
 
