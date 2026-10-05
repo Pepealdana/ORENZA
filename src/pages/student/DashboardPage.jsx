@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
-import studentData from '../../data/studentData';
+import studentContent from '../../data/studentContent';
 import { useActivities } from '../../hooks/useActivities';
 import resources from '../../data/resources';
 
@@ -39,11 +39,8 @@ function DashboardPage() {
   const { user } = useAuth();
 
   const {
-    today,
-    competencies,
-  } = studentData;
-
-  const name = user?.name || studentData.name;
+  const { today, competencies } = studentContent;
+  const name = user?.name || 'Estudiante';
 
 
   /*
@@ -364,6 +361,10 @@ function DashboardPage() {
           estimatedTime={
             today.challenge.estimatedTime
           }
+
+          onAction={() => {
+            navigate('/estudiante/actividades');
+          }}
         />
 
       </section>
