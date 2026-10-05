@@ -483,11 +483,11 @@ function ActivitiesPage() {
 
                         <span
                           className={
-                            styles.repeatable
+                            styles.inProgress
                           }
                         >
 
-                          <RotateCcw
+                          <Clock3
                             size={14}
                             aria-hidden="true"
                           />
@@ -500,7 +500,7 @@ function ActivitiesPage() {
 
                         <span
                           className={
-                            styles.repeatable
+                            styles.available
                           }
                         >
 
