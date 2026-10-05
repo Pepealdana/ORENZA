@@ -155,12 +155,12 @@ function AdminActivitiesPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [showInactive, search, difficulty]);
 
   useEffect(() => {
     const timer = setTimeout(() => loadActivities(1), 200);
     return () => clearTimeout(timer);
-  }, [showInactive, search, difficulty]);
+  }, [loadActivities]);
 
   const resetForm = () => {
     setForm(emptyForm);
