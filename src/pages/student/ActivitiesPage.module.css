@@ -365,7 +365,8 @@
 }
 
 
-.repeatable {
+.available,
+.inProgress {
   display: inline-flex;
 
   align-items: center;
@@ -749,7 +750,7 @@
   .filters { flex-wrap: wrap; overflow-x: visible; }
   .filterButton { flex: 0 1 auto; max-width: 100%; white-space: normal; }
   .cardTop { flex-wrap: wrap; }
-  .repeatable, .completed { white-space: normal; }
+  .available, .inProgress, .completed { white-space: normal; }
   .activityCard { min-width: 0; }
   .startButton { width: 100%; min-width: 0; }
 }
