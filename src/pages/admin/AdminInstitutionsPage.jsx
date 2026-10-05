@@ -30,7 +30,7 @@ function AdminInstitutionsPage() {
     }
   };
 
-  useEffect(() => { load(); }, [showInactive]);
+  useEffect(() => { load(); }, [load]);
 
   const submit = async (event) => {
     event.preventDefault();
