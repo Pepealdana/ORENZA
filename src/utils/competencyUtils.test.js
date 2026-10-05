@@ -27,3 +27,23 @@ test('calcula progreso sin duplicar una actividad repetida', () => {
   assert.equal(stats.completedCount, 1);
   assert.equal(stats.progress, 100);
 });
+
+
+test('los filtros y el progreso usan la competencia principal por defecto', () => {
+  const activities = [
+    { id: 'primary', competencies: { primary: 'autoconocimiento', secondary: [] } },
+    { id: 'secondary', competencies: { primary: 'empatia', secondary: ['autoconocimiento'] } },
+  ];
+
+  assert.equal(getActivitiesForCompetency('autoconocimiento', activities).length, 1);
+
+  const stats = getCompetencyStats(
+    'autoconocimiento',
+    [{ activityId: 'primary' }, { activityId: 'secondary' }],
+    activities
+  );
+
+  assert.equal(stats.totalActivities, 1);
+  assert.equal(stats.completedCount, 1);
+  assert.equal(stats.progress, 100);
+});
