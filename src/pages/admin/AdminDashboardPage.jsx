@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Activity, Building2, Database, Edit3, LoaderCircle, Save, Settings, ShieldCheck, UserPlus, UsersRound, X } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
@@ -39,7 +39,7 @@ function AdminDashboardPage() {
   const [error, setError] = useState('');
   const [userPagination, setUserPagination] = useState({ page: 1, pages: 1, total: 0 });
 
-  const loadData = async (page = 1) => {
+  const loadData = useCallback(async (page = 1) => {
     setLoading(true);
     setError('');
 
