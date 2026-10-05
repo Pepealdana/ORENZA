@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { CircleUserRound, LogOut, Settings, UserRound } from 'lucide-react';
 
-import orenzaLogo from '../../../assets/orenza_hor.png';
+import orenzaLogo from '../../../assets/orenza_hor.svg';
 import { useAuth } from '../../../context/AuthContext';
 import styles from './Header.module.css';
 
