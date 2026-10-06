@@ -92,7 +92,7 @@ function genericResetResponse(res, extra = {}) {
   });
 }
 
-router.post('/register', authRateLimit,, async (req, res, next) => {
+router.post('/register', authRateLimit, async (req, res, next) => {
   try {
     const name = typeof req.body.name === 'string' ? req.body.name.trim() : '';
     const email = normalizeEmail(req.body.email);
@@ -131,7 +131,7 @@ router.post('/register', authRateLimit,, async (req, res, next) => {
   }
 });
 
-router.post('/login', authRateLimit,, async (req, res, next) => {
+router.post('/login', authRateLimit, async (req, res, next) => {
   try {
     const email = normalizeEmail(req.body.email);
     const password = typeof req.body.password === 'string' ? req.body.password : '';
@@ -149,7 +149,7 @@ router.post('/login', authRateLimit,, async (req, res, next) => {
   }
 });
 
-router.post('/request-password-reset', recoveryRateLimit,, async (req, res, next) => {
+router.post('/request-password-reset', recoveryRateLimit, async (req, res, next) => {
   try {
     const email = normalizeEmail(req.body.email);
 
