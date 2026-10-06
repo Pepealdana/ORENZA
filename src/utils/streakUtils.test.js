@@ -1,11 +1,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { calculateCurrentStreak } from './streakUtils.js';
+import { getLocalDateString } from './dateUtils.js';
 
 function dateOffset(days) {
   const date = new Date();
   date.setDate(date.getDate() - days);
-  return date.toISOString().slice(0, 10);
+  return getLocalDateString(date);
 }
 
 test('calcula una racha consecutiva desde hoy', () => {
