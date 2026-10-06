@@ -7,25 +7,40 @@ import Activity from '../models/Activity.js';
 import Institution from '../models/Institution.js';
 import demoActivities from '../data/activities.seed.js';
 
+const requiredSeedEnv = [
+  'SEED_ADMIN_EMAIL',
+  'SEED_ADMIN_PASSWORD',
+  'SEED_COUNSELOR_EMAIL',
+  'SEED_COUNSELOR_PASSWORD',
+  'SEED_STUDENT_EMAIL',
+  'SEED_STUDENT_PASSWORD',
+];
+
+for (const key of requiredSeedEnv) {
+  if (!process.env[key]) {
+    throw new Error(`${key} es obligatorio para ejecutar el seed.`);
+  }
+}
+
 const demoUsers = [
   {
     name: 'Administrador ORENZA',
-    email: process.env.SEED_ADMIN_EMAIL || 'admin@orenza.local',
-    password: process.env.SEED_ADMIN_PASSWORD || 'Admin1234!',
+    email: process.env.SEED_ADMIN_EMAIL,
+    password: process.env.SEED_ADMIN_PASSWORD,
     role: 'admin',
     institution: 'ORENZA Demo',
   },
   {
     name: 'Orientador ORENZA',
-    email: process.env.SEED_COUNSELOR_EMAIL || 'orientador@orenza.local',
-    password: process.env.SEED_COUNSELOR_PASSWORD || 'Orientador1234!',
+    email: process.env.SEED_COUNSELOR_EMAIL,
+    password: process.env.SEED_COUNSELOR_PASSWORD,
     role: 'counselor',
     institution: 'ORENZA Demo',
   },
   {
     name: 'Estudiante Demo',
-    email: process.env.SEED_STUDENT_EMAIL || 'estudiante@orenza.local',
-    password: process.env.SEED_STUDENT_PASSWORD || 'Estudiante1234!',
+    email: process.env.SEED_STUDENT_EMAIL,
+    password: process.env.SEED_STUDENT_PASSWORD,
     role: 'student',
     grade: '10°',
     institution: 'ORENZA Demo',

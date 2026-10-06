@@ -12,6 +12,43 @@ const router = Router();
 const PASSWORD_MIN_LENGTH = 8;
 const RESET_TOKEN_TTL_MS = 15 * 60 * 1000;
 
+const rateLimitStores = new Map();
+
+function createRateLimiter({ windowMs, max, message }) {
+  return (req, res, next) => {
+    const key = req.ip || req.socket?.remoteAddress || "unknown";
+    const now = Date.now();
+    const current = rateLimitStores.get(key);
+
+    if (!current || now - current.startedAt >= windowMs) {
+      rateLimitStores.set(key, { startedAt: now, count: 1 });
+      return next();
+    }
+
+    current.count += 1;
+
+    if (current.count > max) {
+      const retryAfter = Math.ceil((windowMs - (now - current.startedAt)) / 1000);
+      res.setHeader("Retry-After", String(retryAfter));
+      return res.status(429).json({ message });
+    }
+
+    next();
+  };
+}
+
+const authRateLimit = createRateLimiter({
+  windowMs: 15 * 60 * 1000,
+  max: 10,
+  message: "Demasiados intentos. Intenta nuevamente más tarde.",
+});
+
+const recoveryRateLimit = createRateLimiter({
+  windowMs: 15 * 60 * 1000,
+  max: 5,
+  message: "Demasiadas solicitudes de recuperación. Intenta nuevamente más tarde.",
+});
+
 function normalizeEmail(value) {
   return typeof value === 'string' ? value.trim().toLowerCase() : '';
 }
@@ -55,7 +92,7 @@ function genericResetResponse(res, extra = {}) {
   });
 }
 
-router.post('/register', async (req, res, next) => {
+router.post('/register', authRateLimit,, async (req, res, next) => {
   try {
     const name = typeof req.body.name === 'string' ? req.body.name.trim() : '';
     const email = normalizeEmail(req.body.email);
@@ -94,7 +131,7 @@ router.post('/register', async (req, res, next) => {
   }
 });
 
-router.post('/login', async (req, res, next) => {
+router.post('/login', authRateLimit,, async (req, res, next) => {
   try {
     const email = normalizeEmail(req.body.email);
     const password = typeof req.body.password === 'string' ? req.body.password : '';
@@ -112,7 +149,7 @@ router.post('/login', async (req, res, next) => {
   }
 });
 
-router.post('/request-password-reset', async (req, res, next) => {
+router.post('/request-password-reset', recoveryRateLimit,, async (req, res, next) => {
   try {
     const email = normalizeEmail(req.body.email);
 
