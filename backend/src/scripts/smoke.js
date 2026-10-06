@@ -9,6 +9,10 @@ import AuditLog from '../models/AuditLog.js';
 
 const API = process.env.API_URL || 'http://localhost:4000/api';
 
+if (!process.env.SEED_ADMIN_EMAIL || !process.env.SEED_ADMIN_PASSWORD || !process.env.SEED_COUNSELOR_EMAIL || !process.env.SEED_COUNSELOR_PASSWORD) {
+  throw new Error('Las credenciales SEED_ADMIN_* y SEED_COUNSELOR_* son obligatorias para el smoke test.');
+}
+
 async function request(path, options = {}) {
   const response = await fetch(API + path, {
     ...options,
@@ -136,8 +140,8 @@ async function run() {
   const adminLogin = await request('/auth/login', {
     method: 'POST',
     body: JSON.stringify({
-      email: process.env.SEED_ADMIN_EMAIL || 'admin@orenza.local',
-      password: process.env.SEED_ADMIN_PASSWORD || 'Admin1234!',
+      email: process.env.SEED_ADMIN_EMAIL,
+      password: process.env.SEED_ADMIN_PASSWORD,
     }),
   });
   const adminHeaders = { Authorization: `Bearer ${adminLogin.token}` };
@@ -277,8 +281,8 @@ async function run() {
   const counselorLogin = await request('/auth/login', {
     method: 'POST',
     body: JSON.stringify({
-      email: process.env.SEED_COUNSELOR_EMAIL || 'orientador@orenza.local',
-      password: process.env.SEED_COUNSELOR_PASSWORD || 'Orientador1234!',
+      email: process.env.SEED_COUNSELOR_EMAIL,
+      password: process.env.SEED_COUNSELOR_PASSWORD,
     }),
   });
   const counselorHeaders = { Authorization: `Bearer ${counselorLogin.token}` };
