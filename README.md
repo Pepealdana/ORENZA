@@ -236,16 +236,11 @@ El seed prepara:
 
 ### Credenciales de acceso demo
 
-Estas cuentas están destinadas exclusivamente a desarrollo, pruebas y demostración local:
+El seed ya no contiene contraseñas por defecto. Para ejecutar datos demo localmente, define en `backend/.env` las variables:
 
-| Rol | Correo | Contraseña |
-|---|---|---|
-| Estudiante | `estudiante@orenza.local` | `Estudiante1234!` |
-| Orientador | `orientador@orenza.local` | `Orientador1234!` |
-| Administrador | `admin@orenza.local` | `Admin1234!` |
+`SEED_ADMIN_EMAIL`, `SEED_ADMIN_PASSWORD`, `SEED_COUNSELOR_EMAIL`, `SEED_COUNSELOR_PASSWORD`, `SEED_STUDENT_EMAIL` y `SEED_STUDENT_PASSWORD`.
 
-Las credenciales anteriores corresponden al seed de demostración. No deben reutilizarse en un entorno público o de producción. En despliegues públicos deben utilizarse contraseñas propias y un `JWT_SECRET` seguro y diferente.
-
+Usa contraseñas locales propias y no las reutilices en producción.
 ---
 
 ## 8. Scripts
@@ -575,3 +570,22 @@ La revisión del instructor debe tomar como referencia los documentos indicados 
 **MVP preparado para revisión técnica y funcional.**
 
 No se deben interpretar las funcionalidades fuera del alcance como defectos de esta versión.
+
+
+## Seguridad — Fase 1
+
+Se reforzó la configuración del backend para reducir riesgos de exposición y abuso:
+
+- `JWT_SECRET` se exige en el entorno y debe tener al menos 32 caracteres.
+- En producción, `FRONTEND_URL` es obligatorio.
+- Se añadieron encabezados HTTP de seguridad y HSTS en producción.
+- El cuerpo JSON máximo se redujo a 100 KB.
+- Registro, login y recuperación de contraseña incorporan límites básicos por IP.
+- El seed y el smoke test ya no contienen contraseñas de demostración por defecto.
+- Los secretos de seed se suministran únicamente mediante variables de entorno.
+- La API continúa devolviendo mensajes genéricos para errores internos.
+- Se recomienda mantener el token JWT fuera de almacenamiento persistente de mayor exposición cuando la arquitectura futura permita migrar a cookies HttpOnly; por ahora el MVP conserva el esquema Bearer actual.
+
+### Pendientes de seguridad
+
+La siguiente etapa debe considerar rotación/revocación de sesiones, endurecimiento adicional de validación de entradas, pruebas de autorización negativas y análisis CodeQL/Dependabot en CI.
