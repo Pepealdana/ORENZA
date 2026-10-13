@@ -317,6 +317,24 @@ async function run() {
   const stats = await request('/admin/stats', { headers: adminHeaders });
   assert(typeof stats.stats.total === 'number', 'Estadísticas de administrador fallaron');
 
+  let roleTeacherCreationBlocked = false;
+  try {
+    await request('/admin/users', {
+      method: 'POST',
+      headers: adminHeaders,
+      body: JSON.stringify({
+        name: 'Smoke Teacher Not Allowed',
+        email: `smoke-teacher-${unique}@orenza.local`,
+        password: 'Smoke1234!',
+        role: 'teacher',
+        institution: 'ORENZA Demo',
+      }),
+    });
+  } catch (error) {
+    roleTeacherCreationBlocked = error.message.includes('-> 400:');
+  }
+  assert(roleTeacherCreationBlocked, 'No debe permitirse crear usuarios con rol docente en el MVP');
+
   const adminUsersPage = await request('/admin/users?page=1&limit=1&institution=ORENZA%20Demo', { headers: adminHeaders });
   assert(adminUsersPage.pagination?.limit === 1 && typeof adminUsersPage.pagination.total === 'number', 'La paginación y filtros de usuarios fallaron');
 
