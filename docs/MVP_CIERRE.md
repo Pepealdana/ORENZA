@@ -368,8 +368,8 @@ Cualquier evolución posterior —incluido el rol docente— debe tratarse como 
 
 ## 10. Observaciones añadidas el 2026-10-13
 
-La revisión final detectó el aviso GHSA-rq7h-c2jc-7f22 para Vite y la primera auditoría de CI reveló también GHSA-68fv-2mgg-jv7q en `source-map-js 1.2.1`. Vite se actualizó a 8.2.4 y `source-map-js` se fijó en 1.2.2, versión corregida según https://github.com/advisories/GHSA-68fv-2mgg-jv7q. La declaración de cierre de seguridad se mantiene pendiente hasta que la nueva auditoría de CI termine correctamente.
+La revisión final detectó el aviso GHSA-rq7h-c2jc-7f22 para Vite y la primera auditoría de CI reveló también GHSA-68fv-2mgg-jv7q en `source-map-js 1.2.1`. Vite se actualizó a 8.2.4 y `source-map-js` se fijó en 1.2.2, versión corregida según https://github.com/advisories/GHSA-68fv-2mgg-jv7q. La ejecución CI posterior aprobó `npm audit --audit-level=moderate` sin hallazgos moderados o superiores: https://github.com/Pepealdana/ORENZA/actions/runs/38484621396.
 
-Se agregaron al smoke test aserciones para comprobar independencia entre intentos de recuperación e ingreso, bloqueo de acceso administrativo para estudiantes y rechazo de creación duplicada de progreso. La ejecución de esas pruebas exige API y MongoDB disponibles. No se considera aprobada hasta ejecutarse contra la base de datos.
+Se agregaron al smoke test aserciones para comprobar independencia entre intentos de recuperación e ingreso, bloqueo de acceso administrativo para estudiantes, rechazo de creación duplicada de progreso y bloqueo de asignación del rol docente. La ejecución de estas pruebas exige API y MongoDB disponibles. El CI valida la sintaxis del backend, pero no ejecuta este smoke test; por tanto, las verificaciones de integración siguen pendientes de ejecución en un entorno con API y base de datos disponibles.
 
 Las preferencias de apariencia, movimiento y notificaciones se guardan localmente en el navegador. La opción de notificaciones no genera avisos reales en el MVP.
