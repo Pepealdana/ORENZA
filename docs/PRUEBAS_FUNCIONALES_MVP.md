@@ -25,13 +25,13 @@ Su finalidad es que la revisión académica pueda identificar claramente:
 | Estudiante — pruebas funcionales | **PASS** |
 | Orientador — pruebas funcionales | **PASS** |
 | Administrador — pruebas funcionales | **PASS** |
-| Pruebas unitarias frontend | **Nuevos casos agregados; ejecución en CI pendiente** |
+| Pruebas unitarias frontend | **PASS — 12/12** |
 | ESLint frontend | **PASS** |
 | Build frontend | **PASS** |
 | Comprobaciones de sintaxis backend | **PASS en CI** |
 | Smoke test de integración backend | **PASS en las validaciones realizadas** |
-| Seguridad de dependencias | **Vite actualizado a 8.2.4 (versión corregida para GHSA-rq7h-c2jc-7f22); `npm audit` pendiente de ejecución posterior al cambio** |
-| Integración continua | **PASS en la ejecución exitosa sobre `main`** |
+| Seguridad de dependencias | **PASS — `npm audit --audit-level=moderate`, sin hallazgos moderados o superiores** |
+| Integración continua | **PASS en la rama de correcciones** |
 | Rol docente | **FUERA DEL ALCANCE** |
 
 ---
@@ -350,7 +350,7 @@ El CI ejecuta:
 
 Las ejecuciones quedan almacenadas en GitHub Actions.
 
-**Resultado de la ejecución exitosa sobre `main`: PASS.**
+**Resultado de la rama de correcciones: PASS.**
 
 > Nota: el smoke test está disponible como prueba de integración del backend, pero el workflow actual no lo ejecuta automáticamente. La comprobación automática del backend en CI es sintáctica; el smoke test se ejecuta de forma independiente.
 
@@ -385,7 +385,7 @@ Como parte del cierre se verificaron las siguientes correcciones:
 | Código de módulos administrativos | **PASS** |
 | Sintaxis frontend | **PASS** |
 | Lint | **PASS** |
-| Tests frontend | **Ejecución CI de la rama pendiente** |
+| Tests frontend | **PASS** |
 | Build | **Ejecución CI de la rama pendiente** |
 | Aviso de seguridad Vite GHSA-rq7h-c2jc-7f22 | **Vite actualizado a 8.2.4; auditoría posterior al cambio pendiente** |
 | Logo ORENZA | **PASS** |
@@ -416,9 +416,9 @@ La implementación del rol docente queda para una posible evolución posterior y
 
 Con base en las validaciones funcionales, automatizadas y técnicas registradas en este documento:
 
-**ORENZA MVP queda preparado para revisión del instructor después de ejecutar y revisar las validaciones pendientes de esta rama.**
+**El CI de frontend y las comprobaciones de sintaxis del backend están aprobados. El cierre completo de integración queda pendiente hasta que se ejecute el smoke test con API y MongoDB disponibles.**
 
-Los hallazgos del 2026-10-13 se están tratando en la rama de correcciones. No declarar el cierre definitivo hasta que CI pase y el smoke test se ejecute con la base de datos.
+Los hallazgos de seguridad tratados por esta rama tienen una ejecución CI aprobada. No declarar el cierre definitivo de integración hasta que el smoke test se ejecute con la base de datos.
 
 La revisión posterior debe concentrarse en verificar la implementación y la evidencia aquí documentada, sin interpretar las funcionalidades explícitamente excluidas del MVP como defectos.
 
@@ -427,9 +427,9 @@ La revisión posterior debe concentrarse en verificar la implementación y la ev
 
 ### Dependencia frontend
 
-La revisión identificó el aviso **GHSA-rq7h-c2jc-7f22** en Vite y la auditoría CI detectó además **GHSA-68fv-2mgg-jv7q** en `source-map-js 1.2.1`. El manifiesto/lockfile actualiza Vite a **8.2.4** y fuerza `source-map-js` a **1.2.2**, versión corregida para el segundo aviso: https://github.com/vitejs/vite/security/advisories/GHSA-rq7h-c2jc-7f22 y https://github.com/advisories/GHSA-68fv-2mgg-jv7q.
+La revisión identificó el aviso **GHSA-rq7h-c2jc-7f22** en Vite y la auditoría CI encontró además **GHSA-68fv-2mgg-jv7q** en `source-map-js 1.2.1`. Se actualizó Vite a **8.2.4** y se fijó `source-map-js` en **1.2.2**, versión corregida para el segundo aviso: https://github.com/vitejs/vite/security/advisories/GHSA-rq7h-c2jc-7f22 y https://github.com/advisories/GHSA-68fv-2mgg-jv7q.
 
-**Importante:** esta modificación de documentación no sustituye la ejecución de `npm audit`. El estado de auditoría debe quedar confirmado con el resultado real de `npm audit` después de instalar la dependencia actualizada. Tras aplicar la segunda corrección, la auditoría debe ejecutarse de nuevo en CI. Hasta que esa ejecución termine correctamente, no se declara que el árbol completo esté libre de vulnerabilidades.
+**Resultado confirmado:** la ejecución de GitHub Actions https://github.com/Pepealdana/ORENZA/actions/runs/38484621396 pasó `npm ci`, lint, pruebas frontend, build y `npm audit --audit-level=moderate` sin hallazgos moderados o superiores.
 
 ### Nuevos escenarios de prueba
 
