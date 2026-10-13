@@ -427,9 +427,9 @@ La revisión posterior debe concentrarse en verificar la implementación y la ev
 
 ### Dependencia frontend
 
-La revisión identificó la vulnerabilidad **GHSA-rq7h-c2jc-7f22** en Vite. El manifiesto y el lockfile se actualizan a Vite **8.2.4**, versión corregida indicada por el aviso del proveedor: https://github.com/vitejs/vite/security/advisories/GHSA-rq7h-c2jc-7f22.
+La revisión identificó el aviso **GHSA-rq7h-c2jc-7f22** en Vite y la auditoría CI detectó además **GHSA-68fv-2mgg-jv7q** en `source-map-js 1.2.1`. El manifiesto/lockfile actualiza Vite a **8.2.4** y fuerza `source-map-js` a **1.2.2**, versión corregida para el segundo aviso: https://github.com/vitejs/vite/security/advisories/GHSA-rq7h-c2jc-7f22 y https://github.com/advisories/GHSA-68fv-2mgg-jv7q.
 
-**Importante:** esta modificación de documentación no sustituye la ejecución de `npm audit`. El estado de auditoría debe quedar confirmado con el resultado real de `npm audit` después de instalar la dependencia actualizada. Hasta entonces no se declara que el árbol completo esté libre de vulnerabilidades.
+**Importante:** esta modificación de documentación no sustituye la ejecución de `npm audit`. El estado de auditoría debe quedar confirmado con el resultado real de `npm audit` después de instalar la dependencia actualizada. Tras aplicar la segunda corrección, la auditoría debe ejecutarse de nuevo en CI. Hasta que esa ejecución termine correctamente, no se declara que el árbol completo esté libre de vulnerabilidades.
 
 ### Nuevos escenarios de prueba
 
