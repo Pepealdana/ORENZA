@@ -11,7 +11,7 @@ import { writeAudit } from '../utils/audit.js';
 const router = Router();
 router.use(requireAuth, allowRoles('admin'));
 
-const allowedRoles = ['student', 'teacher', 'counselor', 'admin'];
+const allowedRoles = ['student', 'counselor', 'admin'];
 
 function publicUser(user) {
   return {
