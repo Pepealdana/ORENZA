@@ -13,7 +13,7 @@ Su finalidad es que la revisión académica pueda identificar claramente:
 - cuáles fueron los resultados;
 - qué elementos están fuera del alcance.
 
-**Corte de documentación:** 2026-10-05  
+**Corte de documentación:** 2026-10-13  
 **Rama oficial:** `main`
 
 ---
@@ -25,12 +25,12 @@ Su finalidad es que la revisión académica pueda identificar claramente:
 | Estudiante — pruebas funcionales | **PASS** |
 | Orientador — pruebas funcionales | **PASS** |
 | Administrador — pruebas funcionales | **PASS** |
-| Pruebas unitarias frontend | **PASS — 7/7** |
+| Pruebas unitarias frontend | **Validación ampliada en esta rama; ejecución local pendiente** |
 | ESLint frontend | **PASS** |
 | Build frontend | **PASS** |
 | Comprobaciones de sintaxis backend | **PASS en CI** |
 | Smoke test de integración backend | **PASS en las validaciones realizadas** |
-| Seguridad de dependencias | **PASS — 0 vulnerabilidades** |
+| Seguridad de dependencias | **Vite actualizado a 8.2.4 (versión corregida para GHSA-rq7h-c2jc-7f22); `npm audit` pendiente de ejecución posterior al cambio** |
 | Integración continua | **PASS en la ejecución exitosa sobre `main`** |
 | Rol docente | **FUERA DEL ALCANCE** |
 
@@ -421,3 +421,30 @@ Con base en las validaciones funcionales, automatizadas y técnicas registradas 
 No se registran incidencias funcionales abiertas dentro del alcance definido para esta versión.
 
 La revisión posterior debe concentrarse en verificar la implementación y la evidencia aquí documentada, sin interpretar las funcionalidades explícitamente excluidas del MVP como defectos.
+
+
+## 10. Correcciones de la revisión del instructor (2026-10-13)
+
+### Dependencia frontend
+
+La revisión identificó la vulnerabilidad **GHSA-rq7h-c2jc-7f22** en Vite. El manifiesto y el lockfile se actualizan a Vite **8.2.4**, versión corregida indicada por el aviso del proveedor: https://github.com/vitejs/vite/security/advisories/GHSA-rq7h-c2jc-7f22.
+
+**Importante:** esta modificación de documentación no sustituye la ejecución de `npm audit`. El estado de auditoría debe quedar confirmado con el resultado real de `npm audit` después de instalar la dependencia actualizada. Hasta entonces no se declara que el árbol completo esté libre de vulnerabilidades.
+
+### Nuevos escenarios de prueba
+
+Se añadieron casos automatizados para:
+- competencia sin actividades: progreso de 0 %;
+- alias histórico `relaciones-positivas`: identificador visible normalizado a `relaciones`;
+- ausencia de registros emocionales: racha en cero;
+- registros/acciones duplicadas en la misma fecha: no inflan la racha;
+- varios días sin registrar: la racha actual se reinicia;
+- smoke test de backend: la recuperación de contraseña no agota el límite de ingreso;
+- smoke test de backend: un estudiante recibe 403 al solicitar estadísticas administrativas;
+- smoke test de backend: no se admite crear un segundo registro de progreso para la misma actividad.
+
+El smoke test requiere que la API y MongoDB estén ejecutándose y que existan las variables de entorno de credenciales de administración y orientación indicadas en `backend/src/scripts/smoke.js`. No se considera ejecutado solo por haber agregado las aserciones.
+
+### Alcance y preferencias
+
+El rol docente queda deshabilitado para nuevas asignaciones en el backend. Las preferencias de apariencia, movimiento y notificaciones se almacenan en el navegador; la opción de notificaciones no emite avisos reales en esta versión.
