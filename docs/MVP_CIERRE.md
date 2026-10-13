@@ -36,7 +36,7 @@ La documentación se organiza así:
 | Pruebas funcionales de los perfiles implementados | **CERRADA** |
 | Pruebas automatizadas frontend | **CERRADA** |
 | Validación técnica backend | **CERRADA** |
-| Vulnerabilidad de `brace-expansion` | **CERRADA** |
+| Aviso de seguridad de Vite GHSA-rq7h-c2jc-7f22 | **Vite actualizado a 8.2.4 en esta rama; auditoría npm posterior al cambio pendiente de ejecución** |
 | Logotipo ORENZA | **CERRADA** |
 | Rol docente | **FUERA DEL ALCANCE DEL MVP** |
 
@@ -84,7 +84,7 @@ El MVP implementa y valida los siguientes perfiles:
 
 ### Fuera del alcance
 
-El **rol docente no se implementa en este MVP**.
+El **rol docente no se implementa en este MVP**. Además, el backend rechaza asignaciones nuevas de ese rol.
 
 Tampoco forman parte de esta entrega:
 
@@ -364,3 +364,12 @@ No se identifican incidencias funcionales abiertas dentro del alcance actual.
 La única funcionalidad mencionada como no implementada de forma explícita es el **rol docente**, porque fue excluida deliberadamente del alcance de este MVP.
 
 Cualquier evolución posterior —incluido el rol docente— debe tratarse como una nueva etapa del proyecto y no como una corrección pendiente de esta entrega.
+
+
+## 10. Observaciones añadidas el 2026-10-13
+
+La revisión final del instructor detectó un aviso de seguridad para Vite. Se ha actualizado el rango solicitado y el lockfile a Vite 8.2.4, versión corregida según el aviso del proveedor: https://github.com/vitejs/vite/security/advisories/GHSA-rq7h-c2jc-7f22. La declaración de cierre de seguridad se mantiene pendiente hasta ejecutar `npm audit` después de instalar las dependencias actualizadas.
+
+Se agregaron al smoke test aserciones para comprobar independencia entre intentos de recuperación e ingreso, bloqueo de acceso administrativo para estudiantes y rechazo de creación duplicada de progreso. La ejecución de esas pruebas exige API y MongoDB disponibles. No se considera aprobada hasta ejecutarse contra la base de datos.
+
+Las preferencias de apariencia, movimiento y notificaciones se guardan localmente en el navegador. La opción de notificaciones no genera avisos reales en el MVP.
