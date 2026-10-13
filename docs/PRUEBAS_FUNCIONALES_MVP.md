@@ -25,7 +25,7 @@ Su finalidad es que la revisión académica pueda identificar claramente:
 | Estudiante — pruebas funcionales | **PASS** |
 | Orientador — pruebas funcionales | **PASS** |
 | Administrador — pruebas funcionales | **PASS** |
-| Pruebas unitarias frontend | **Validación ampliada en esta rama; ejecución local pendiente** |
+| Pruebas unitarias frontend | **Nuevos casos agregados; ejecución en CI pendiente** |
 | ESLint frontend | **PASS** |
 | Build frontend | **PASS** |
 | Comprobaciones de sintaxis backend | **PASS en CI** |
@@ -156,7 +156,7 @@ skipped 0
 | FE-06 | Permite una racha que comienza ayer | **PASS** |
 | FE-07 | Rompe la racha ante un día ausente | **PASS** |
 
-**Resultado: 7/7 PASS.**
+**Resultado histórico sobre `main`: 7/7 PASS. Esta rama agrega escenarios nuevos; consultar la ejecución CI de la rama antes de declarar el resultado actualizado.**
 
 ---
 
@@ -371,7 +371,7 @@ También se verificaron:
 - JWT;
 - auditoría administrativa.
 
-**Resultado consolidado: PASS.**
+**Resultado consolidado previo a los cambios del 2026-10-13: PASS. Los escenarios nuevos de autorización e independencia de límites quedan pendientes de ejecutarse contra la API y MongoDB.**
 
 ---
 
@@ -385,9 +385,9 @@ Como parte del cierre se verificaron las siguientes correcciones:
 | Código de módulos administrativos | **PASS** |
 | Sintaxis frontend | **PASS** |
 | Lint | **PASS** |
-| Tests frontend | **PASS** |
-| Build | **PASS** |
-| Vulnerabilidad de dependencia | **CORREGIDA** |
+| Tests frontend | **Ejecución CI de la rama pendiente** |
+| Build | **Ejecución CI de la rama pendiente** |
+| Aviso de seguridad Vite GHSA-rq7h-c2jc-7f22 | **Vite actualizado a 8.2.4; auditoría posterior al cambio pendiente** |
 | Logo ORENZA | **PASS** |
 | Sincronización de `main` | **PASS** |
 | Working tree final | **LIMPIO** |
@@ -408,7 +408,7 @@ El MVP se entrega con los perfiles:
 - orientador;
 - administrador.
 
-La implementación del rol docente queda para una posible evolución posterior y no forma parte de los criterios de aprobación de esta versión.
+La implementación del rol docente queda para una posible evolución posterior y no forma parte de los criterios de aprobación de esta versión. Además, no puede asignarse desde el panel administrativo actual.
 
 ---
 
@@ -416,9 +416,9 @@ La implementación del rol docente queda para una posible evolución posterior y
 
 Con base en las validaciones funcionales, automatizadas y técnicas registradas en este documento:
 
-**ORENZA MVP queda preparado para revisión del instructor.**
+**ORENZA MVP queda preparado para revisión del instructor después de ejecutar y revisar las validaciones pendientes de esta rama.**
 
-No se registran incidencias funcionales abiertas dentro del alcance definido para esta versión.
+Los hallazgos del 2026-10-13 se están tratando en la rama de correcciones. No declarar el cierre definitivo hasta que CI pase y el smoke test se ejecute con la base de datos.
 
 La revisión posterior debe concentrarse en verificar la implementación y la evidencia aquí documentada, sin interpretar las funcionalidades explícitamente excluidas del MVP como defectos.
 
