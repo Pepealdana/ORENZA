@@ -29,7 +29,7 @@ Su finalidad es que la revisión académica pueda identificar claramente:
 | ESLint frontend | **PASS** |
 | Build frontend | **PASS** |
 | Comprobaciones de sintaxis backend | **PASS en CI** |
-| Smoke test de integración backend | **PASS en las validaciones realizadas** |
+| Smoke test de integración backend | **PENDIENTE — requiere API y MongoDB disponibles** |
 | Seguridad de dependencias | **PASS — `npm audit --audit-level=moderate`, sin hallazgos moderados o superiores** |
 | Integración continua | **PASS en la rama de correcciones** |
 | Rol docente | **FUERA DEL ALCANCE** |
@@ -429,7 +429,7 @@ La revisión posterior debe concentrarse en verificar la implementación y la ev
 
 La revisión identificó el aviso **GHSA-rq7h-c2jc-7f22** en Vite y la auditoría CI encontró además **GHSA-68fv-2mgg-jv7q** en `source-map-js 1.2.1`. Se actualizó Vite a **8.2.4** y se fijó `source-map-js` en **1.2.2**, versión corregida para el segundo aviso: https://github.com/vitejs/vite/security/advisories/GHSA-rq7h-c2jc-7f22 y https://github.com/advisories/GHSA-68fv-2mgg-jv7q.
 
-**Resultado confirmado:** la ejecución de GitHub Actions https://github.com/Pepealdana/ORENZA/actions/runs/38484621396 pasó `npm ci`, lint, pruebas frontend, build y `npm audit --audit-level=moderate` sin hallazgos moderados o superiores.
+**Resultado confirmado en CI más reciente:** https://github.com/Pepealdana/ORENZA/actions/runs/38484715528 pasó `npm ci`, lint, las 12 pruebas frontend, build y `npm audit --audit-level=moderate` sin hallazgos moderados o superiores. Las comprobaciones de sintaxis del backend también pasaron.
 
 ### Nuevos escenarios de prueba
 
@@ -444,7 +444,7 @@ Se añadieron casos automatizados para:
 - smoke test de backend: el administrador recibe 400 al intentar crear un usuario con rol docente;
 - smoke test de backend: no se admite crear un segundo registro de progreso para la misma actividad.
 
-El smoke test requiere que la API y MongoDB estén ejecutándose y que existan las variables de entorno de credenciales de administración y orientación indicadas en `backend/src/scripts/smoke.js`. No se considera ejecutado solo por haber agregado las aserciones.
+El smoke test requiere que la API y MongoDB estén ejecutándose y que existan las variables de entorno de credenciales de administración y orientación indicadas en `backend/src/scripts/smoke.js`. No se considera ejecutado solo por haber agregado las aserciones. Hasta ejecutar `node src/scripts/smoke.js` con API y MongoDB disponibles, el resultado del smoke test permanece pendiente.
 
 ### Alcance y preferencias
 
