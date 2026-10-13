@@ -441,6 +441,7 @@ Se añadieron casos automatizados para:
 - varios días sin registrar: la racha actual se reinicia;
 - smoke test de backend: la recuperación de contraseña no agota el límite de ingreso;
 - smoke test de backend: un estudiante recibe 403 al solicitar estadísticas administrativas;
+- smoke test de backend: el administrador recibe 400 al intentar crear un usuario con rol docente;
 - smoke test de backend: no se admite crear un segundo registro de progreso para la misma actividad.
 
 El smoke test requiere que la API y MongoDB estén ejecutándose y que existan las variables de entorno de credenciales de administración y orientación indicadas en `backend/src/scripts/smoke.js`. No se considera ejecutado solo por haber agregado las aserciones.
