@@ -72,8 +72,34 @@ async function run() {
   assert(registered.token && registered.user.role === 'student', 'Registro/JWT falló');
 
   const token = registered.token;
+
+  // Cinco solicitudes de recuperación no deben agotar el contador de ingreso.
+  for (let attempt = 0; attempt < 5; attempt += 1) {
+    const response = await request('/auth/request-password-reset', {
+      method: 'POST',
+      body: JSON.stringify({ email: `reset-independent-${unique}-${attempt}@orenza.local` }),
+    });
+    assert(response.message.includes('Si la cuenta existe'), 'La recuperación debe mantener una respuesta válida');
+  }
+
+  const loginAfterRecoveryAttempts = await request('/auth/login', {
+    method: 'POST',
+    body: JSON.stringify({
+      email: studentEmail,
+      password: 'Smoke1234!',
+    }),
+  });
+  assert(loginAfterRecoveryAttempts.token, 'La recuperación no debe bloquear el inicio de sesión');
   const smokeStudentId = registered.user.id;
   const auth = { Authorization: `Bearer ${token}` };
+
+  let studentAdminAccessBlocked = false;
+  try {
+    await request('/admin/stats', { headers: auth });
+  } catch (error) {
+    studentAdminAccessBlocked = error.message.includes('-> 403:');
+  }
+  assert(studentAdminAccessBlocked, 'Un estudiante no debe acceder a funciones administrativas');
 
   const resetRequest = await request('/auth/request-password-reset', {
     method: 'POST',
@@ -240,6 +266,22 @@ async function run() {
     }),
   });
   assert(progress.item.status === 'in-progress', 'Progreso no creado');
+
+  let duplicateProgressRejected = false;
+  try {
+    await request('/student/activities/progress', {
+      method: 'POST',
+      headers: auth,
+      body: JSON.stringify({
+        activityId,
+        status: 'completed',
+        answers: { step1: 'duplicado' },
+      }),
+    });
+  } catch (error) {
+    duplicateProgressRejected = error.message.includes('-> 409:');
+  }
+  assert(duplicateProgressRejected, 'Crear dos registros de progreso para la misma actividad debe rechazarse');
 
   const progressOne = await request(`/student/activities/progress/${activityId}`, { headers: auth });
   assert(progressOne.item.activityId === activityId, 'GET progreso individual falló');
