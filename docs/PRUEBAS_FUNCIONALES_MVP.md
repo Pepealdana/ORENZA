@@ -13,7 +13,7 @@ Su finalidad es que la revisión académica pueda identificar claramente:
 - cuáles fueron los resultados;
 - qué elementos están fuera del alcance.
 
-**Corte de documentación:** 2026-10-13  
+**Corte de documentación:** 2026-10-14  
 **Rama oficial:** `main`
 
 ---
@@ -29,9 +29,9 @@ Su finalidad es que la revisión académica pueda identificar claramente:
 | ESLint frontend | **PASS** |
 | Build frontend | **PASS** |
 | Comprobaciones de sintaxis backend | **PASS en CI** |
-| Smoke test de integración backend | **PENDIENTE — requiere API y MongoDB disponibles** |
+| Smoke test de integración backend | **PASS — CI en `main`, MongoDB efímero** |
 | Seguridad de dependencias | **PASS — `npm audit --audit-level=moderate`, sin hallazgos moderados o superiores** |
-| Integración continua | **PASS en la rama de correcciones** |
+| Integración continua | **PASS en `main`** |
 | Rol docente | **FUERA DEL ALCANCE** |
 
 ---
@@ -156,7 +156,7 @@ skipped 0
 | FE-06 | Permite una racha que comienza ayer | **PASS** |
 | FE-07 | Rompe la racha ante un día ausente | **PASS** |
 
-**Resultado histórico sobre `main`: 7/7 PASS. Esta rama agrega escenarios nuevos; consultar la ejecución CI de la rama antes de declarar el resultado actualizado.**
+**Las 7 pruebas de esta tabla corresponden a la suite base histórica. La suite actual ampliada aprobó 12/12 pruebas en CI sobre `main`: [ver ejecución](https://github.com/Pepealdana/ORENZA/actions/runs/38492034582).**
 
 ---
 
@@ -352,7 +352,7 @@ Las ejecuciones quedan almacenadas en GitHub Actions.
 
 **Resultado de la rama de correcciones: PASS.**
 
-> Nota: el smoke test está disponible como prueba de integración del backend, pero el workflow actual no lo ejecuta automáticamente. La comprobación automática del backend en CI es sintáctica; el smoke test se ejecuta de forma independiente.
+El workflow ejecuta el smoke test en el job `backend-integration` con MongoDB efímero y credenciales generadas para CI. La ejecución aprobada en `main` es [esta](https://github.com/Pepealdana/ORENZA/actions/runs/38492034582); el log registra `Smoke test ORENZA: OK`. La base local del desarrollador no se utiliza.
 
 ---
 
@@ -371,7 +371,7 @@ También se verificaron:
 - JWT;
 - auditoría administrativa.
 
-**Resultado consolidado previo a los cambios del 2026-10-13: PASS. Los escenarios nuevos de autorización e independencia de límites quedan pendientes de ejecutarse contra la API y MongoDB.**
+**Resultado actualizado: PASS. Los escenarios de autorización e independencia de límites se ejecutaron en el smoke test de integración de CI con MongoDB efímero.**
 
 ---
 
@@ -429,7 +429,7 @@ La revisión posterior debe concentrarse en verificar la implementación y la ev
 
 La revisión identificó el aviso **GHSA-rq7h-c2jc-7f22** en Vite y la auditoría CI encontró además **GHSA-68fv-2mgg-jv7q** en `source-map-js 1.2.1`. Se actualizó Vite a **8.2.4** y se fijó `source-map-js` en **1.2.2**, versión corregida para el segundo aviso: https://github.com/vitejs/vite/security/advisories/GHSA-rq7h-c2jc-7f22 y https://github.com/advisories/GHSA-68fv-2mgg-jv7q.
 
-**Resultado confirmado en CI más reciente:** https://github.com/Pepealdana/ORENZA/actions/runs/38484715528 pasó `npm ci`, lint, las 12 pruebas frontend, build y `npm audit --audit-level=moderate` sin hallazgos moderados o superiores. Las comprobaciones de sintaxis del backend también pasaron.
+**Resultado confirmado en `main`:** [CI de ORENZA](https://github.com/Pepealdana/ORENZA/actions/runs/38492034582) pasó instalación, lint, 12 pruebas frontend, build, `npm audit --audit-level=moderate`, sintaxis del backend y smoke test. [CodeQL](https://github.com/Pepealdana/ORENZA/actions/runs/38492034575) también pasó.
 
 ### Nuevos escenarios de prueba
 
@@ -444,7 +444,7 @@ Se añadieron casos automatizados para:
 - smoke test de backend: el administrador recibe 400 al intentar crear un usuario con rol docente;
 - smoke test de backend: no se admite crear un segundo registro de progreso para la misma actividad.
 
-El smoke test se ejecuta automáticamente en CI con una instancia efímera de MongoDB y credenciales generadas en el job. Resultado confirmado: [`Smoke test ORENZA: OK`](https://github.com/Pepealdana/ORENZA/actions/runs/38491732049). Para repetirlo localmente, sí se requieren API, MongoDB y credenciales válidas de administrador y orientador en `backend/.env`; esa ejecución local es independiente de la evidencia CI.
+El smoke test se ejecuta automáticamente en CI con una instancia efímera de MongoDB y credenciales generadas en el job. Resultado confirmado en `main`: [`Smoke test ORENZA: OK`](https://github.com/Pepealdana/ORENZA/actions/runs/38492034582). Para repetirlo localmente se requieren API, MongoDB y credenciales válidas en `backend/.env`; esta ejecución local es independiente de la evidencia CI.
 
 ### Alcance y preferencias
 
