@@ -434,15 +434,15 @@ El comando:
 npm test
 ```
 
-ejecuta las pruebas de utilidades frontend. En la validación actual se obtuvieron **7 pruebas aprobadas y 0 fallidas**, cubriendo:
+ejecuta las pruebas de utilidades frontend. En la validación actual se obtuvieron **12 pruebas aprobadas y 0 fallidas**, cubriendo:
 
 - filtrado por competencia principal y secundaria;
-- normalización de relaciones;
-- cálculo de progreso sin duplicados;
+- normalización de relaciones y alias histórico `relaciones-positivas`;
+- cálculo de progreso sin duplicados y progreso cero cuando no hay actividades;
 - uso de competencia principal por defecto;
-- cálculo de rachas consecutivas;
-- inicio de racha desde el día anterior;
-- ruptura de racha ante un día ausente.
+- cálculo de rachas consecutivas, inicio desde el día anterior y reinicio ante días ausentes;
+- ausencia de check-ins: racha en cero;
+- acciones repetidas en una misma fecha no inflan la racha.
 
 ### 13.3 Validación técnica frontend
 
@@ -608,4 +608,4 @@ La revisión quedó integrada en `main` mediante el PR #15. Se incorporaron corr
 - Las preferencias se guardan en el navegador; la opción de notificaciones todavía no envía avisos.
 - Se ampliaron pruebas unitarias y el smoke test de backend.
 
-**Evidencia CI verificada el 14 de octubre de 2026 en `main`:** [GitHub Actions — CI](https://github.com/Pepealdana/ORENZA/actions/runs/38492034582) aprobó lint, 12 pruebas frontend, build, `npm audit --audit-level=moderate`, sintaxis del backend y smoke test de integración. El smoke test terminó con `Smoke test ORENZA: OK` en una instancia efímera de MongoDB. [CodeQL también pasó en `main`](https://github.com/Pepealdana/ORENZA/actions/runs/38492034575). Esta ejecución no utilizó la base local del desarrollador.
+**Evidencia CI verificada el 14 de octubre de 2026 en `main`:** [GitHub Actions — CI](https://github.com/Pepealdana/ORENZA/actions/runs/38493213386) aprobó lint, 12 pruebas frontend, build, `npm audit --audit-level=moderate`, sintaxis del backend y smoke test de integración. El smoke test se ejecutó con una instancia efímera de MongoDB y credenciales generadas para el job; no utilizó la base local del desarrollador. [CodeQL también pasó en `main`](https://github.com/Pepealdana/ORENZA/actions/runs/38493213364).
