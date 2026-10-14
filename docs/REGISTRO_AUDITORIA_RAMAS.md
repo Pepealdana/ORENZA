@@ -2,7 +2,7 @@
 
 **Fecha de revisión:** 2026-10-13  
 **Rama oficial de entrega:** `main`  
-**Último commit de referencia conocido de `main`:** `5b99ceb90c67a5098619f90a6d22ff55773771b4`  
+**Commit de actualización del registro:** `42dce2962dc58361cdce388f18df7d2725f1407e` (la limpieza de ramas se documenta en el siguiente commit).  
 **Objetivo:** reducir la confusión durante la revisión del instructor, conservar `main` como única rama oficial y retirar ramas obsoletas sin perder cambios útiles ni interferir con solicitudes de integración abiertas.
 
 ## Criterios de decisión
@@ -15,15 +15,15 @@
 
 ## Inventario de ramas
 
-Estado comparativo consultado en GitHub el 2026-10-13. Los conteos indican commits exclusivos de la rama respecto de `main` según la comparación disponible; las ramas divergentes requieren cautela porque contienen historia posterior al punto común.
+Estado comparativo consultado en GitHub el 2026-10-13 y actualizado tras la primera limpieza. Los conteos indican commits exclusivos de la rama respecto de `main` según la comparación disponible; las ramas divergentes requieren cautela porque contienen historia posterior al punto común.
 
 | Rama | Commits exclusivos | PR abierta | Decisión | Motivo |
 |---|---:|---|---|---|
 | `main` | — | No aplica | **CONSERVAR** | Única rama oficial de entrega; CI y CodeQL estaban en verde en el commit de referencia. |
-| `chore/mvp-cierre` | 0 | No | **CANDIDATA A ELIMINACIÓN** | Está detrás de `main` y no aporta commits exclusivos. Verificar ascendencia antes de borrarla. |
-| `feature/backend-mvp` | 0 | No | **CANDIDATA A ELIMINACIÓN** | Está detrás de `main` y no aporta commits exclusivos. Verificar ascendencia antes de borrarla. |
-| `fix/activity-status-labels` | 0 | No | **CANDIDATA A ELIMINACIÓN** | Está detrás de `main` y no aporta commits exclusivos. Verificar ascendencia antes de borrarla. |
-| `fix/mvp-progress-consistency` | 0 | No | **CANDIDATA A ELIMINACIÓN** | Está detrás de `main` y no aporta commits exclusivos. Verificar ascendencia antes de borrarla. |
+| `chore/mvp-cierre` | 0 | No | **ELIMINADA** | Se verificó que su punta era ancestro de `origin/main`; GitHub confirmó la eliminación remota el 2026-10-13. |
+| `feature/backend-mvp` | 0 | No | **ELIMINADA** | Se verificó que su punta era ancestro de `origin/main`; GitHub confirmó la eliminación remota el 2026-10-13. |
+| `fix/activity-status-labels` | 0 | No | **ELIMINADA** | Se verificó que su punta era ancestro de `origin/main`; GitHub confirmó la eliminación remota el 2026-10-13. |
+| `fix/mvp-progress-consistency` | 0 | No | **ELIMINADA** | Se verificó que su punta era ancestro de `origin/main`; GitHub confirmó la eliminación remota el 2026-10-13. |
 | `dependabot/github_actions/actions/checkout-7` | 1 | PR #6 | **CONSERVAR TEMPORALMENTE** | Actualización automatizada pendiente de resolución. No editar su README ni borrar la rama mientras la PR siga abierta. |
 | `dependabot/npm_and_yarn/eslint-plugin-react-refresh-0.5.7` | 1 | PR #7 | **CONSERVAR TEMPORALMENTE** | Actualización automatizada pendiente de resolución. |
 | `dependabot/npm_and_yarn/backend/dotenv-18.0.5` | 1 | PR #8 | **CONSERVAR TEMPORALMENTE** | Actualización automatizada pendiente de resolución. |
@@ -56,11 +56,10 @@ Estado comparativo consultado en GitHub el 2026-10-13. Los conteos indican commi
 
 ## Acciones de limpieza
 
-1. Verificar una última vez que las cuatro ramas marcadas como candidatas tienen cero commits exclusivos y que sus commits son ancestros de `main`.
-2. Eliminar únicamente esas cuatro ramas sin PR abierta después de la comprobación.
-3. No modificar ni borrar las ocho ramas Dependabot mientras sus PR estén abiertas.
-4. Registrar y después retirar `fix/phase1-auth-syntax` y `security/phase1-hardening` una vez confirmado que no se necesita conservarlas como referencia de investigación.
-5. Resolver la discrepancia de `fix/instructor-october-review` antes de cualquier eliminación.
-6. Volver a consultar ramas y PR abiertas, y actualizar este registro con el resultado final.
+1. **Completado:** se ejecutó `git fetch origin --prune`; las cuatro ramas candidatas superaron `git merge-base --is-ancestor origin/<rama> origin/main` y GitHub confirmó su eliminación.
+2. No modificar ni borrar las ocho ramas Dependabot mientras sus PR estén abiertas.
+3. `fix/phase1-auth-syntax` y `security/phase1-hardening` están documentadas como ramas que no deben integrarse; eliminar después de confirmar que no se necesitan como referencia.
+4. Resolver la discrepancia de `fix/instructor-october-review` antes de cualquier eliminación.
+5. Volver a consultar ramas y PR abiertas tras las siguientes acciones de limpieza.
 
-**Nota:** este registro documenta decisiones y candidatas; no afirma que las ramas ya hayan sido eliminadas.
+**Nota de estado:** las cuatro ramas indicadas como `ELIMINADA` fueron retiradas del remoto. Las demás decisiones son recomendaciones pendientes; no se afirma que otras ramas hayan sido eliminadas.
