@@ -370,10 +370,19 @@ La única funcionalidad mencionada como no implementada de forma explícita es e
 Cualquier evolución posterior —incluido el rol docente— debe tratarse como una nueva etapa del proyecto y no como una corrección pendiente de esta entrega.
 
 
-## 10. Observaciones añadidas el 2026-10-13
+## 13. Evidencia de la revisión actual (2026-10-13)
 
-La revisión final detectó el aviso GHSA-rq7h-c2jc-7f22 para Vite y la primera auditoría de CI reveló también GHSA-68fv-2mgg-jv7q en `source-map-js 1.2.1`. Vite se actualizó a 8.2.4 y `source-map-js` se fijó en 1.2.2, versión corregida según https://github.com/advisories/GHSA-68fv-2mgg-jv7q. La ejecución CI posterior aprobó `npm audit --audit-level=moderate` sin hallazgos moderados o superiores: https://github.com/Pepealdana/ORENZA/actions/runs/38493213386.
+La revisión final detectó el aviso GHSA-rq7h-c2jc-7f22 para Vite y la primera auditoría de CI reveló también GHSA-68fv-2mgg-jv7q en `source-map-js 1.2.1`. Vite se actualizó a 8.2.4 y `source-map-js` se fijó en 1.2.2, versión corregida según https://github.com/advisories/GHSA-68fv-2mgg-jv7q. La ejecución de CI sobre el commit `57959103627f7a74648842c1f5ee525fca2dcab1` aprobó el workflow: https://github.com/Pepealdana/ORENZA/actions/runs/38496427613. CodeQL también finalizó correctamente sobre ese mismo commit: https://github.com/Pepealdana/ORENZA/actions/runs/38496427610.
 
-Se agregaron aserciones para comprobar independencia entre los límites de recuperación e ingreso, bloqueo de acceso administrativo para estudiantes, rechazo de progreso duplicado y bloqueo de creación del rol docente. La ejecución de CI https://github.com/Pepealdana/ORENZA/actions/runs/38493213386 pasó el smoke test contra una instancia efímera de MongoDB, con el resultado `Smoke test ORENZA: OK`. Las comprobaciones no alteran la base local del desarrollador.
+Se agregaron aserciones para comprobar independencia entre los límites de recuperación e ingreso, bloqueo de acceso administrativo para estudiantes, rechazo de progreso duplicado y bloqueo de creación del rol docente. La ejecución de CI del commit `57959103627f7a74648842c1f5ee525fca2dcab1` pasó el workflow: https://github.com/Pepealdana/ORENZA/actions/runs/38496427613. La ejecución de CodeQL del mismo commit también pasó: https://github.com/Pepealdana/ORENZA/actions/runs/38496427610. Para el detalle del job `backend-integration`, consultar los jobs y logs de la ejecución CI. Las comprobaciones no alteran la base local del desarrollador.
 
 Las preferencias de apariencia, movimiento y notificaciones se guardan localmente en el navegador. La opción de notificaciones no genera avisos reales en el MVP.
+
+
+## 14. Rama oficial y auditoría de referencias
+
+La única rama oficial de entrega y evaluación es `main`. El commit verificado en esta revisión es [`57959103627f7a74648842c1f5ee525fca2dcab1`](https://github.com/Pepealdana/ORENZA/commit/57959103627f7a74648842c1f5ee525fca2dcab1). Las ejecuciones asociadas a ese commit son [CI](https://github.com/Pepealdana/ORENZA/actions/runs/38496427613) y [CodeQL](https://github.com/Pepealdana/ORENZA/actions/runs/38496427610), ambas con resultado `success`.
+
+La auditoría estática de referencias de `src/` no se declara completa hasta terminar el inventario de imports, referencias dinámicas, entradas de aplicación y recursos enlazados. Hasta ahora se retiró `src/index.css`, que no tenía imports ni contenido funcional; no se eliminarán otros módulos sin evidencia de que estén huérfanos.
+
+El repositorio aún contiene ramas auxiliares y solicitudes de Dependabot. No deben considerarse ramas oficiales de entrega. La limpieza de referencias remotas se realizará solo después de comparar sus commits con `main` y confirmar que no contienen trabajo exclusivo. Por tanto, este documento establece `main` como referencia oficial, pero no afirma que sea la única rama existente.
