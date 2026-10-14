@@ -116,7 +116,7 @@ for (const [index, activity] of demoActivities.entries()) {
 
 console.log('Usuarios demo listos:');
 for (const item of demoUsers) {
-  console.log(`- ${item.role}: ${item.email} / ${item.password}`);
+  console.log(`- ${item.role}: ${item.email}`);
 }
 
 console.log('Actividades demo listas:');
