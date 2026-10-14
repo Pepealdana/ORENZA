@@ -602,4 +602,4 @@ Se está atendiendo una revisión posterior del MVP. La rama `fix/instructor-oct
 - Las preferencias se guardan en el navegador; la opción de notificaciones todavía no envía avisos.
 - Se ampliaron pruebas unitarias y el smoke test de backend.
 
-**Evidencia pendiente antes de afirmar cierre:** ejecutar instalación, pruebas, lint, build, `npm audit` y el smoke test con API y MongoDB disponibles. Revisar los resultados de GitHub Actions asociados a la rama de correcciones. No se debe afirmar que la base de datos fue probada hasta completar el smoke test.
+**Evidencia CI verificada el 14 de octubre de 2026:** [GitHub Actions https://github.com/Pepealdana/ORENZA/actions/runs/38491732049](https://github.com/Pepealdana/ORENZA/actions/runs/38491732049) completó lint, 12 pruebas frontend, build, `npm audit --audit-level=moderate`, comprobaciones de sintaxis del backend y el smoke test de integración. El smoke test terminó con `Smoke test ORENZA: OK` usando una instancia efímera de MongoDB y credenciales generadas para CI; no utilizó la base local del desarrollador. [CodeQL también pasó en esta revisión](https://github.com/Pepealdana/ORENZA/actions/runs/38491738106).
