@@ -386,8 +386,8 @@ Como parte del cierre se verificaron las siguientes correcciones:
 | Sintaxis frontend | **PASS** |
 | Lint | **PASS** |
 | Tests frontend | **PASS** |
-| Build | **Ejecución CI de la rama pendiente** |
-| Aviso de seguridad Vite GHSA-rq7h-c2jc-7f22 | **Vite actualizado a 8.2.4; auditoría posterior al cambio pendiente** |
+| Build | **PASS — CI** |
+| Avisos de seguridad Vite/source-map-js | **PASS — `npm audit --audit-level=moderate` sin hallazgos moderados o superiores** |
 | Logo ORENZA | **PASS** |
 | Sincronización de `main` | **PASS** |
 | Working tree final | **LIMPIO** |
@@ -416,9 +416,9 @@ La implementación del rol docente queda para una posible evolución posterior y
 
 Con base en las validaciones funcionales, automatizadas y técnicas registradas en este documento:
 
-**El CI de frontend y las comprobaciones de sintaxis del backend están aprobados. El cierre completo de integración queda pendiente hasta que se ejecute el smoke test con API y MongoDB disponibles.**
+**PASS — CI de frontend, comprobaciones de sintaxis del backend y smoke test de integración.** El [workflow de GitHub Actions](https://github.com/Pepealdana/ORENZA/actions/runs/38491732049) ejecutó el smoke test con MongoDB efímero y terminó con `Smoke test ORENZA: OK`. La [ejecución de CodeQL](https://github.com/Pepealdana/ORENZA/actions/runs/38491738106) también pasó.
 
-Los hallazgos de seguridad tratados por esta rama tienen una ejecución CI aprobada. No declarar el cierre definitivo de integración hasta que el smoke test se ejecute con la base de datos.
+Esta evidencia valida el entorno de pruebas aislado del workflow; no afirma que se haya ejecutado el smoke test contra la base local del desarrollador.
 
 La revisión posterior debe concentrarse en verificar la implementación y la evidencia aquí documentada, sin interpretar las funcionalidades explícitamente excluidas del MVP como defectos.
 
@@ -444,7 +444,7 @@ Se añadieron casos automatizados para:
 - smoke test de backend: el administrador recibe 400 al intentar crear un usuario con rol docente;
 - smoke test de backend: no se admite crear un segundo registro de progreso para la misma actividad.
 
-El smoke test requiere que la API y MongoDB estén ejecutándose y que existan las variables de entorno de credenciales de administración y orientación indicadas en `backend/src/scripts/smoke.js`. No se considera ejecutado solo por haber agregado las aserciones. Hasta ejecutar `node src/scripts/smoke.js` con API y MongoDB disponibles, el resultado del smoke test permanece pendiente.
+El smoke test se ejecuta automáticamente en CI con una instancia efímera de MongoDB y credenciales generadas en el job. Resultado confirmado: [`Smoke test ORENZA: OK`](https://github.com/Pepealdana/ORENZA/actions/runs/38491732049). Para repetirlo localmente, sí se requieren API, MongoDB y credenciales válidas de administrador y orientador en `backend/.env`; esa ejecución local es independiente de la evidencia CI.
 
 ### Alcance y preferencias
 
