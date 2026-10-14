@@ -1,8 +1,8 @@
 # Registro de auditoría de ramas — ORENZA
 
-**Fecha de revisión:** 2026-10-13  
+**Fecha de revisión:** 2026-10-14  
 **Rama oficial de entrega:** `main`  
-**Commit de actualización del registro:** `42dce2962dc58361cdce388f18df7d2725f1407e` (la limpieza de ramas se documenta en el siguiente commit).  
+**Commit de actualización del registro:** se actualizará con este cambio.  
 **Objetivo:** reducir la confusión durante la revisión del instructor, conservar `main` como única rama oficial y retirar ramas obsoletas sin perder cambios útiles ni interferir con solicitudes de integración abiertas.
 
 ## Criterios de decisión
@@ -15,7 +15,7 @@
 
 ## Inventario de ramas
 
-Estado comparativo consultado en GitHub el 2026-10-13 y actualizado tras la primera limpieza. Los conteos indican commits exclusivos de la rama respecto de `main` según la comparación disponible; las ramas divergentes requieren cautela porque contienen historia posterior al punto común.
+Estado comparativo consultado en GitHub el 2026-10-14, después de eliminar seis ramas descartadas. Los conteos indican commits exclusivos de la rama respecto de `main` según la comparación disponible; las ramas divergentes requieren cautela porque contienen historia posterior al punto común.
 
 | Rama | Commits exclusivos | PR abierta | Decisión | Motivo |
 |---|---:|---|---|---|
@@ -32,8 +32,8 @@ Estado comparativo consultado en GitHub el 2026-10-13 y actualizado tras la prim
 | `dependabot/npm_and_yarn/vitejs/plugin-react-6.1.1` | 1 | PR #11 | **CONSERVAR TEMPORALMENTE** | Actualización automatizada pendiente de resolución. |
 | `dependabot/npm_and_yarn/eslint-10.12.0` | 1 | PR #12 | **CONSERVAR TEMPORALMENTE** | Actualización automatizada pendiente de resolución. |
 | `dependabot/npm_and_yarn/multi-de36fa8f59` | 1 | PR #13 | **CONSERVAR TEMPORALMENTE** | Actualización automatizada de dependencias pendiente de resolución. |
-| `fix/phase1-auth-syntax` | 1 | No | **DESCARTAR; ELIMINABLE TRAS REGISTRO** | Su cambio de autenticación introduce una limitación compartida entre operaciones en lugar de mantener limitadores separados. No integrar. |
-| `security/phase1-hardening` | 9 | No | **DESCARTAR; ELIMINABLE TRAS REGISTRO** | Revisión detectó regresiones: elimina la auditoría npm y el trabajo de integración/smoke del CI, cambia las rutas de limitación de autenticación y contiene errores de sintaxis en las rutas revisadas. También rebaja evidencia en documentación. No integrar. |
+| `fix/phase1-auth-syntax` | 1 (antes de eliminarse) | No | **ELIMINADA** | Su cambio de autenticación introduce una limitación compartida entre operaciones en lugar de mantener limitadores separados. GitHub confirmó la eliminación remota el 2026-10-14. No integrar. |
+| `security/phase1-hardening` | 9 (antes de eliminarse) | No | **ELIMINADA** | Revisión detectó regresiones: elimina la auditoría npm y el trabajo de integración/smoke del CI, cambia las rutas de limitación de autenticación y contiene errores de sintaxis en las rutas revisadas. GitHub confirmó la eliminación remota el 2026-10-14. No integrar. |
 | `fix/instructor-october-review` | 36 | No | **PENDIENTE DE RECONCILIACIÓN** | Se detectaron documentos con datos obsoletos. La comparación actual de GitHub muestra diferencias adicionales en código, CI y dependencias, en desacuerdo con una comparación local anterior. No eliminar hasta resolver esa discrepancia y confirmar que no hay cambios únicos útiles. |
 
 ## PR abiertas que deben resolverse antes de limpiar sus ramas
@@ -56,10 +56,10 @@ Estado comparativo consultado en GitHub el 2026-10-13 y actualizado tras la prim
 
 ## Acciones de limpieza
 
-1. **Completado:** se ejecutó `git fetch origin --prune`; las cuatro ramas candidatas superaron `git merge-base --is-ancestor origin/<rama> origin/main` y GitHub confirmó su eliminación.
+1. **Completado:** seis ramas descartadas fueron eliminadas del remoto. Las primeras cuatro superaron `git merge-base --is-ancestor origin/<rama> origin/main`; las dos ramas de seguridad se eliminaron después de registrar sus regresiones.
 2. No modificar ni borrar las ocho ramas Dependabot mientras sus PR estén abiertas.
-3. `fix/phase1-auth-syntax` y `security/phase1-hardening` están documentadas como ramas que no deben integrarse; eliminar después de confirmar que no se necesitan como referencia.
+3. **Completado:** `fix/phase1-auth-syntax` y `security/phase1-hardening` fueron eliminadas del remoto el 2026-10-14.
 4. Resolver la discrepancia de `fix/instructor-october-review` antes de cualquier eliminación.
 5. Volver a consultar ramas y PR abiertas tras las siguientes acciones de limpieza.
 
-**Nota de estado:** las cuatro ramas indicadas como `ELIMINADA` fueron retiradas del remoto. Las demás decisiones son recomendaciones pendientes; no se afirma que otras ramas hayan sido eliminadas.
+**Nota de estado:** las seis ramas indicadas como `ELIMINADA` fueron retiradas del remoto. `fix/instructor-october-review` sigue pendiente de reconciliación; las ramas Dependabot con PR abiertas se conservan.
