@@ -591,9 +591,9 @@ Se reforzó la configuración del backend para reducir riesgos de exposición y 
 La siguiente etapa debe considerar rotación/revocación de sesiones, endurecimiento adicional de validación de entradas, pruebas de autorización negativas y análisis CodeQL/Dependabot en CI.
 
 
-## Revisión final del instructor — 13 de octubre de 2026
+## Revisión final del instructor — 14 de octubre de 2026
 
-Se está atendiendo una revisión posterior del MVP. La rama `fix/instructor-october-review` agrupa las correcciones y pruebas añadidas sobre seguridad de Vite, independencia de límites de intentos, etiquetas de competencias, progreso, permisos y preferencias.
+La revisión quedó integrada en `main` mediante el PR #15. Se incorporaron correcciones de seguridad, límites de intentos, etiquetas de competencias, progreso, permisos, preferencias, pruebas automatizadas y documentación.
 
 - Vite actualizado en manifiesto y lockfile a **8.2.4**, versión corregida para [GHSA-rq7h-c2jc-7f22](https://github.com/vitejs/vite/security/advisories/GHSA-rq7h-c2jc-7f22).
 - Los límites de registro, inicio de sesión y recuperación tienen contadores separados.
@@ -602,4 +602,4 @@ Se está atendiendo una revisión posterior del MVP. La rama `fix/instructor-oct
 - Las preferencias se guardan en el navegador; la opción de notificaciones todavía no envía avisos.
 - Se ampliaron pruebas unitarias y el smoke test de backend.
 
-**Evidencia CI verificada el 14 de octubre de 2026:** [GitHub Actions https://github.com/Pepealdana/ORENZA/actions/runs/38491732049](https://github.com/Pepealdana/ORENZA/actions/runs/38491732049) completó lint, 12 pruebas frontend, build, `npm audit --audit-level=moderate`, comprobaciones de sintaxis del backend y el smoke test de integración. El smoke test terminó con `Smoke test ORENZA: OK` usando una instancia efímera de MongoDB y credenciales generadas para CI; no utilizó la base local del desarrollador. [CodeQL también pasó en esta revisión](https://github.com/Pepealdana/ORENZA/actions/runs/38491738106).
+**Evidencia CI verificada el 14 de octubre de 2026 en `main`:** [GitHub Actions — CI](https://github.com/Pepealdana/ORENZA/actions/runs/38492034582) aprobó lint, 12 pruebas frontend, build, `npm audit --audit-level=moderate`, sintaxis del backend y smoke test de integración. El smoke test terminó con `Smoke test ORENZA: OK` en una instancia efímera de MongoDB. [CodeQL también pasó en `main`](https://github.com/Pepealdana/ORENZA/actions/runs/38492034575). Esta ejecución no utilizó la base local del desarrollador.
