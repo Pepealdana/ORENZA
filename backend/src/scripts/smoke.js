@@ -73,11 +73,18 @@ async function run() {
 
   // Cinco solicitudes de recuperación no deben agotar el contador de ingreso.
   for (let attempt = 0; attempt < 5; attempt += 1) {
-    const response = await request('/auth/request-password-reset', {
-      method: 'POST',
-      body: JSON.stringify({ email: `reset-independent-${unique}-${attempt}@orenza.local` }),
-    });
-    assert(response.message.includes('Si la cuenta existe'), 'La recuperación debe mantener una respuesta válida');
+    try {
+      const response = await request('/auth/request-password-reset', {
+        method: 'POST',
+        body: JSON.stringify({ email: `reset-independent-${unique}-${attempt}@orenza.local` }),
+      });
+      assert(response.message.includes('Si la cuenta existe'), 'La recuperación debe mantener una respuesta válida');
+    } catch (error) {
+      assert(
+        error.message.includes('-> 429:'),
+        'La recuperación solo debe rechazar solicitudes cuando se alcanza su propio límite'
+      );
+    }
   }
 
   const loginAfterRecoveryAttempts = await request('/auth/login', {
