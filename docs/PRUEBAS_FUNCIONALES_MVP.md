@@ -13,7 +13,7 @@ Su finalidad es que la revisión académica pueda identificar claramente:
 - cuáles fueron los resultados;
 - qué elementos están fuera del alcance.
 
-**Corte de documentación:** 2026-10-14  
+**Corte de documentación:** 2026-10-13  
 **Rama oficial:** `main`
 
 ---
@@ -156,7 +156,7 @@ skipped 0
 | FE-06 | Permite una racha que comienza ayer | **PASS** |
 | FE-07 | Rompe la racha ante un día ausente | **PASS** |
 
-**Las 7 pruebas de esta tabla corresponden a la suite base histórica. La suite actual ampliada aprobó 12/12 pruebas en CI sobre `main`: [ver ejecución](https://github.com/Pepealdana/ORENZA/actions/runs/38493213386).**
+**Las 7 pruebas de esta tabla corresponden a la suite base histórica. La suite actual ampliada aprobó 12/12 pruebas en CI sobre `main`: [ver ejecución](https://github.com/Pepealdana/ORENZA/actions/runs/38496427613).**
 
 ---
 
@@ -350,9 +350,9 @@ El CI ejecuta:
 
 Las ejecuciones quedan almacenadas en GitHub Actions.
 
-**Resultado de la rama de correcciones: PASS.**
+**Resultado de CI sobre el commit `57959103627f7a74648842c1f5ee525fca2dcab1`: PASS.** [CI](https://github.com/Pepealdana/ORENZA/actions/runs/38496427613) · [CodeQL](https://github.com/Pepealdana/ORENZA/actions/runs/38496427610).
 
-El workflow ejecuta el smoke test en el job `backend-integration` con MongoDB efímero y credenciales generadas para CI. La ejecución aprobada en `main` es [esta](https://github.com/Pepealdana/ORENZA/actions/runs/38493213386); el log registra `Smoke test ORENZA: OK`. La base local del desarrollador no se utiliza.
+El workflow ejecuta el smoke test en el job `backend-integration` con MongoDB efímero y credenciales generadas para CI. La ejecución de CI sobre el commit `57959103627f7a74648842c1f5ee525fca2dcab1` está disponible [aquí](https://github.com/Pepealdana/ORENZA/actions/runs/38496427613). La base local del desarrollador no se utiliza.
 
 ---
 
@@ -416,7 +416,7 @@ La implementación del rol docente queda para una posible evolución posterior y
 
 Con base en las validaciones funcionales, automatizadas y técnicas registradas en este documento:
 
-**PASS — CI de frontend, comprobaciones de sintaxis del backend y smoke test de integración.** El [workflow de GitHub Actions](https://github.com/Pepealdana/ORENZA/actions/runs/38493213386) ejecutó el smoke test con MongoDB efímero y terminó con `Smoke test ORENZA: OK`. La [ejecución de CodeQL](https://github.com/Pepealdana/ORENZA/actions/runs/38493213364) también pasó.
+**PASS — CI de frontend, comprobaciones de sintaxis del backend y smoke test de integración.** El [workflow de GitHub Actions](https://github.com/Pepealdana/ORENZA/actions/runs/38493213386) ejecutó el smoke test con MongoDB efímero y terminó con `Smoke test ORENZA: OK`. La [ejecución de CodeQL](https://github.com/Pepealdana/ORENZA/actions/runs/38496427610) también pasó.
 
 Esta evidencia valida el entorno de pruebas aislado del workflow; no afirma que se haya ejecutado el smoke test contra la base local del desarrollador.
 
@@ -449,3 +449,14 @@ El smoke test se ejecuta automáticamente en CI con una instancia efímera de Mo
 ### Alcance y preferencias
 
 El rol docente queda deshabilitado para nuevas asignaciones en el backend. Las preferencias de apariencia, movimiento y notificaciones se almacenan en el navegador; la opción de notificaciones no emite avisos reales en esta versión.
+
+
+---
+
+# 16. Referencia oficial de entrega y alcance de auditoría
+
+La única rama oficial para revisión y evaluación es `main`. El commit comprobado en este corte es [`57959103627f7a74648842c1f5ee525fca2dcab1`](https://github.com/Pepealdana/ORENZA/commit/57959103627f7a74648842c1f5ee525fca2dcab1). La ejecución de [CI](https://github.com/Pepealdana/ORENZA/actions/runs/38496427613) y la de [CodeQL](https://github.com/Pepealdana/ORENZA/actions/runs/38496427610) finalizaron con `success` sobre ese mismo commit.
+
+**Alcance de esta evidencia:** CI y CodeQL verifican el commit indicado; no sustituyen la auditoría estática completa de referencias ni la revisión de ramas auxiliares. La auditoría de imports y recursos de `src/` permanece abierta hasta completar el mapa de referencias. Solo se elimina un archivo cuando la ausencia de referencias está comprobada.
+
+El repositorio conserva ramas auxiliares y solicitudes de Dependabot. No son ramas oficiales de entrega. Su eliminación requiere confirmar que no contienen cambios exclusivos pendientes de integrar; por tanto, no se afirma aquí que `main` sea la única rama existente.
