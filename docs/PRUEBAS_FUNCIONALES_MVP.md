@@ -416,7 +416,7 @@ La implementación del rol docente queda para una posible evolución posterior y
 
 Con base en las validaciones funcionales, automatizadas y técnicas registradas en este documento:
 
-**PASS — CI de frontend, comprobaciones de sintaxis del backend y smoke test de integración.** El [workflow de GitHub Actions](https://github.com/Pepealdana/ORENZA/actions/runs/38491732049) ejecutó el smoke test con MongoDB efímero y terminó con `Smoke test ORENZA: OK`. La [ejecución de CodeQL](https://github.com/Pepealdana/ORENZA/actions/runs/38491738106) también pasó.
+**PASS — CI de frontend, comprobaciones de sintaxis del backend y smoke test de integración.** El [workflow de GitHub Actions](https://github.com/Pepealdana/ORENZA/actions/runs/38493213386) ejecutó el smoke test con MongoDB efímero y terminó con `Smoke test ORENZA: OK`. La [ejecución de CodeQL](https://github.com/Pepealdana/ORENZA/actions/runs/38493213364) también pasó.
 
 Esta evidencia valida el entorno de pruebas aislado del workflow; no afirma que se haya ejecutado el smoke test contra la base local del desarrollador.
 
