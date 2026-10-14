@@ -70,8 +70,25 @@ async function run() {
   assert(registered.token && registered.user.role === 'student', 'Registro/JWT falló');
 
   const token = registered.token;
+  const smokeStudentId = registered.user.id;
+  const auth = { Authorization: `Bearer ${token}` };
 
-  // Cinco solicitudes de recuperación no deben agotar el contador de ingreso.
+  // Comprueba la recuperación antes de agotar su propio límite.
+  const resetRequest = await request('/auth/request-password-reset', {
+    method: 'POST',
+    body: JSON.stringify({ email: studentEmail }),
+  });
+  let loginPassword = 'Smoke1234!';
+  if (resetRequest.demoToken) {
+    loginPassword = 'Smoke1234!New';
+    const resetResponse = await request('/auth/reset-password', {
+      method: 'POST',
+      body: JSON.stringify({ token: resetRequest.demoToken, newPassword: loginPassword }),
+    });
+    assert(resetResponse.message.includes('Contraseña actualizada'), 'Recuperación de contraseña falló');
+  }
+
+  // Cinco solicitudes no deben bloquear el inicio de sesión: el límite de recuperación es independiente.
   for (let attempt = 0; attempt < 5; attempt += 1) {
     try {
       const response = await request('/auth/request-password-reset', {
@@ -91,12 +108,10 @@ async function run() {
     method: 'POST',
     body: JSON.stringify({
       email: studentEmail,
-      password: 'Smoke1234!',
+      password: loginPassword,
     }),
   });
   assert(loginAfterRecoveryAttempts.token, 'La recuperación no debe bloquear el inicio de sesión');
-  const smokeStudentId = registered.user.id;
-  const auth = { Authorization: `Bearer ${token}` };
 
   let studentAdminAccessBlocked = false;
   try {
@@ -105,18 +120,6 @@ async function run() {
     studentAdminAccessBlocked = error.message.includes('-> 403:');
   }
   assert(studentAdminAccessBlocked, 'Un estudiante no debe acceder a funciones administrativas');
-
-  const resetRequest = await request('/auth/request-password-reset', {
-    method: 'POST',
-    body: JSON.stringify({ email: studentEmail }),
-  });
-  if (resetRequest.demoToken) {
-    const resetResponse = await request('/auth/reset-password', {
-      method: 'POST',
-      body: JSON.stringify({ token: resetRequest.demoToken, newPassword: 'Smoke1234!New' }),
-    });
-    assert(resetResponse.message.includes('Contraseña actualizada'), 'Recuperación de contraseña falló');
-  }
 
   const me = await request('/auth/me', { headers: auth });
   assert(me.user.email === studentEmail, 'GET /me falló');
