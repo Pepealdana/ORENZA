@@ -30,7 +30,7 @@ La documentación se organiza así:
 | Gestión de actividades | **CERRADA** |
 | Auditoría administrativa | **CERRADA** |
 | Botones sin acción identificados | **CERRADA** |
-| Auditoría de archivos gráficos duplicados/no utilizados | **PENDIENTE de verificación completa; no eliminar sin confirmar referencias** |
+| Auditoría de archivos gráficos duplicados/no utilizados | **CERRADA — búsqueda en fuentes y documentación; 6 archivos sin referencias eliminados** |
 | Imports/código legacy | **Requiere confirmar con búsqueda completa de referencias antes de retirar archivos** |
 | Correcciones de sintaxis en módulos administrativos | **CERRADA** |
 | Pruebas funcionales de los perfiles implementados | **CERRADA** |
