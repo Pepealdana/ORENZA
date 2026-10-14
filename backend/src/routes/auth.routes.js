@@ -14,9 +14,14 @@ const RESET_TOKEN_TTL_MS = 15 * 60 * 1000;
 
 const rateLimitStores = new Map();
 
-function createRateLimiter({ windowMs, max, message }) {
+function createRateLimiter({ scope, windowMs, max, message }) {
+  if (!scope) {
+    throw new Error('Cada límite de intentos debe declarar un ámbito independiente.');
+  }
+
   return (req, res, next) => {
-    const key = req.ip || req.socket?.remoteAddress || "unknown";
+    const ip = req.ip || req.socket?.remoteAddress || 'unknown';
+    const key = `${scope}:${ip}`;
     const now = Date.now();
     const current = rateLimitStores.get(key);
 
@@ -37,16 +42,25 @@ function createRateLimiter({ windowMs, max, message }) {
   };
 }
 
-const authRateLimit = createRateLimiter({
+const registrationRateLimit = createRateLimiter({
+  scope: 'registration',
   windowMs: 15 * 60 * 1000,
   max: 10,
-  message: "Demasiados intentos. Intenta nuevamente más tarde.",
+  message: 'Demasiados intentos de registro. Intenta nuevamente más tarde.',
+});
+
+const loginRateLimit = createRateLimiter({
+  scope: 'login',
+  windowMs: 15 * 60 * 1000,
+  max: 10,
+  message: 'Demasiados intentos de ingreso. Intenta nuevamente más tarde.',
 });
 
 const recoveryRateLimit = createRateLimiter({
+  scope: 'password-recovery',
   windowMs: 15 * 60 * 1000,
   max: 5,
-  message: "Demasiadas solicitudes de recuperación. Intenta nuevamente más tarde.",
+  message: 'Demasiadas solicitudes de recuperación. Intenta nuevamente más tarde.',
 });
 
 function normalizeEmail(value) {
@@ -92,7 +106,7 @@ function genericResetResponse(res, extra = {}) {
   });
 }
 
-router.post('/register', authRateLimit, async (req, res, next) => {
+router.post('/register', registrationRateLimit, async (req, res, next) => {
   try {
     const name = typeof req.body.name === 'string' ? req.body.name.trim() : '';
     const email = normalizeEmail(req.body.email);
@@ -131,7 +145,7 @@ router.post('/register', authRateLimit, async (req, res, next) => {
   }
 });
 
-router.post('/login', authRateLimit, async (req, res, next) => {
+router.post('/login', loginRateLimit, async (req, res, next) => {
   try {
     const email = normalizeEmail(req.body.email);
     const password = typeof req.body.password === 'string' ? req.body.password : '';

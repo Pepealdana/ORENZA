@@ -36,7 +36,7 @@ La documentación se organiza así:
 | Pruebas funcionales de los perfiles implementados | **CERRADA** |
 | Pruebas automatizadas frontend | **CERRADA** |
 | Validación técnica backend | **CERRADA** |
-| Vulnerabilidad de `brace-expansion` | **CERRADA** |
+| Aviso de seguridad de Vite GHSA-rq7h-c2jc-7f22 | **Vite actualizado a 8.2.4 en esta rama; auditoría npm posterior al cambio pendiente de ejecución** |
 | Logotipo ORENZA | **CERRADA** |
 | Rol docente | **FUERA DEL ALCANCE DEL MVP** |
 
@@ -84,7 +84,7 @@ El MVP implementa y valida los siguientes perfiles:
 
 ### Fuera del alcance
 
-El **rol docente no se implementa en este MVP**.
+El **rol docente no se implementa en este MVP**. Además, el backend rechaza asignaciones nuevas de ese rol.
 
 Tampoco forman parte de esta entrega:
 
@@ -274,7 +274,7 @@ El smoke test valida de forma integrada:
 - desactivación de actividades;
 - rechazo de nuevo progreso sobre actividades inactivas.
 
-El smoke test es una prueba de integración independiente del workflow de CI actual.
+El smoke test se ejecuta en el job `backend-integration` del workflow de CI con MongoDB 7 efímero y datos de demostración aislados. Evidencia aprobada el 14 de octubre de 2026: [ejecución GitHub Actions](https://github.com/Pepealdana/ORENZA/actions/runs/38491732049), resultado `Smoke test ORENZA: OK`. Esta ejecución no utiliza la base local del desarrollador.
 
 ---
 
@@ -364,3 +364,12 @@ No se identifican incidencias funcionales abiertas dentro del alcance actual.
 La única funcionalidad mencionada como no implementada de forma explícita es el **rol docente**, porque fue excluida deliberadamente del alcance de este MVP.
 
 Cualquier evolución posterior —incluido el rol docente— debe tratarse como una nueva etapa del proyecto y no como una corrección pendiente de esta entrega.
+
+
+## 10. Observaciones añadidas el 2026-10-13
+
+La revisión final detectó el aviso GHSA-rq7h-c2jc-7f22 para Vite y la primera auditoría de CI reveló también GHSA-68fv-2mgg-jv7q en `source-map-js 1.2.1`. Vite se actualizó a 8.2.4 y `source-map-js` se fijó en 1.2.2, versión corregida según https://github.com/advisories/GHSA-68fv-2mgg-jv7q. La ejecución CI posterior aprobó `npm audit --audit-level=moderate` sin hallazgos moderados o superiores: https://github.com/Pepealdana/ORENZA/actions/runs/38484621396.
+
+Se agregaron aserciones para comprobar independencia entre los límites de recuperación e ingreso, bloqueo de acceso administrativo para estudiantes, rechazo de progreso duplicado y bloqueo de creación del rol docente. La ejecución de CI https://github.com/Pepealdana/ORENZA/actions/runs/38491732049 pasó el smoke test contra una instancia efímera de MongoDB, con el resultado `Smoke test ORENZA: OK`. Las comprobaciones no alteran la base local del desarrollador.
+
+Las preferencias de apariencia, movimiento y notificaciones se guardan localmente en el navegador. La opción de notificaciones no genera avisos reales en el MVP.

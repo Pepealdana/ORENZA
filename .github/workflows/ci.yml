@@ -2,7 +2,7 @@ name: ORENZA CI
 
 on:
   push:
-    branches: ['feature/backend-mvp', 'main']
+    branches: ['feature/backend-mvp', 'main', 'fix/instructor-october-review']
   pull_request:
     branches: ['feature/backend-mvp', 'main']
 
@@ -19,6 +19,7 @@ jobs:
       - run: npm run lint
       - run: npm test
       - run: npm run build
+      - run: npm audit --audit-level=moderate
 
   backend:
     runs-on: ubuntu-latest
@@ -65,3 +66,60 @@ jobs:
         run: node --check src/scripts/seed.js
       - working-directory: backend
         run: node --check src/scripts/smoke.js
+
+  backend-integration:
+    runs-on: ubuntu-latest
+    services:
+      mongodb:
+        image: mongo:7
+        ports:
+          - 27017:27017
+        options: >-
+          --health-cmd "mongosh --quiet --eval 'db.adminCommand(\"ping\").ok' || exit 1"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      NODE_ENV: test
+      PORT: 4000
+      MONGODB_URI: mongodb://127.0.0.1:27017/orenza_ci
+      FRONTEND_URL: http://localhost:5173
+      API_URL: http://localhost:4000/api
+      SEED_ADMIN_EMAIL: admin@orenza.local
+      SEED_COUNSELOR_EMAIL: orientador@orenza.local
+      SEED_STUDENT_EMAIL: estudiante@orenza.local
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: backend/package-lock.json
+      - working-directory: backend
+        run: npm ci
+      - name: Seed isolated MongoDB and run integration smoke test
+        working-directory: backend
+        shell: bash
+        run: |
+          set -euo pipefail
+          export JWT_SECRET="$(openssl rand -hex 32)"
+          export SEED_ADMIN_PASSWORD="$(openssl rand -hex 24)"
+          export SEED_COUNSELOR_PASSWORD="$(openssl rand -hex 24)"
+          export SEED_STUDENT_PASSWORD="$(openssl rand -hex 24)"
+          npm run seed
+          npm run start > /tmp/orenza-api.log 2>&1 &
+          api_pid=$!
+          trap 'kill "$api_pid" 2>/dev/null || true; wait "$api_pid" 2>/dev/null || true' EXIT
+          ready=0
+          for attempt in {1..30}; do
+            if curl --silent --fail "$API_URL/health" >/dev/null; then
+              ready=1
+              break
+            fi
+            sleep 1
+          done
+          if [ "$ready" -ne 1 ]; then
+            cat /tmp/orenza-api.log
+            exit 1
+          fi
+          npm run test:smoke

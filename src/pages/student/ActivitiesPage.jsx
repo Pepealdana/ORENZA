@@ -11,7 +11,7 @@ import {
 import { Link } from 'react-router-dom';
 
 import { useActivities } from '../../hooks/useActivities';
-import { getActivitiesForCompetency } from '../../utils/competencyUtils';
+import { getActivitiesForCompetency, normalizeCompetencyId } from '../../utils/competencyUtils';
 
 
 import styles from './ActivitiesPage.module.css';
@@ -409,13 +409,12 @@ function ActivitiesPage() {
             {filteredActivities.map(
               (activity) => {
 
-                const primaryCompetency =
-                  activity.competencies?.primary;
+                const primaryCompetency = normalizeCompetencyId(
+                  activity.competencies?.primary
+                );
 
                 const competency =
-                  competencyData[
-                    primaryCompetency
-                  ];
+                  competencyData[primaryCompetency];
 
                 const hasBeenExplored =
                   completedActivityIds.has(
@@ -527,8 +526,7 @@ function ActivitiesPage() {
                           styles.competency
                         }
                       >
-                        {competency?.label ||
-                          'Exploración'}
+                        {competency?.label || 'Competencia no clasificada'}
                       </p>
 
 

@@ -16,7 +16,7 @@
  * para realizar las comparaciones.
  */
 
-function normalizeCompetencyId(
+export function normalizeCompetencyId(
   competencyId
 ) {
   if (

@@ -13,7 +13,7 @@ Su finalidad es que la revisión académica pueda identificar claramente:
 - cuáles fueron los resultados;
 - qué elementos están fuera del alcance.
 
-**Corte de documentación:** 2026-10-05  
+**Corte de documentación:** 2026-10-13  
 **Rama oficial:** `main`
 
 ---
@@ -25,13 +25,13 @@ Su finalidad es que la revisión académica pueda identificar claramente:
 | Estudiante — pruebas funcionales | **PASS** |
 | Orientador — pruebas funcionales | **PASS** |
 | Administrador — pruebas funcionales | **PASS** |
-| Pruebas unitarias frontend | **PASS — 7/7** |
+| Pruebas unitarias frontend | **PASS — 12/12** |
 | ESLint frontend | **PASS** |
 | Build frontend | **PASS** |
 | Comprobaciones de sintaxis backend | **PASS en CI** |
-| Smoke test de integración backend | **PASS en las validaciones realizadas** |
-| Seguridad de dependencias | **PASS — 0 vulnerabilidades** |
-| Integración continua | **PASS en la ejecución exitosa sobre `main`** |
+| Smoke test de integración backend | **PENDIENTE — requiere API y MongoDB disponibles** |
+| Seguridad de dependencias | **PASS — `npm audit --audit-level=moderate`, sin hallazgos moderados o superiores** |
+| Integración continua | **PASS en la rama de correcciones** |
 | Rol docente | **FUERA DEL ALCANCE** |
 
 ---
@@ -156,7 +156,7 @@ skipped 0
 | FE-06 | Permite una racha que comienza ayer | **PASS** |
 | FE-07 | Rompe la racha ante un día ausente | **PASS** |
 
-**Resultado: 7/7 PASS.**
+**Resultado histórico sobre `main`: 7/7 PASS. Esta rama agrega escenarios nuevos; consultar la ejecución CI de la rama antes de declarar el resultado actualizado.**
 
 ---
 
@@ -350,7 +350,7 @@ El CI ejecuta:
 
 Las ejecuciones quedan almacenadas en GitHub Actions.
 
-**Resultado de la ejecución exitosa sobre `main`: PASS.**
+**Resultado de la rama de correcciones: PASS.**
 
 > Nota: el smoke test está disponible como prueba de integración del backend, pero el workflow actual no lo ejecuta automáticamente. La comprobación automática del backend en CI es sintáctica; el smoke test se ejecuta de forma independiente.
 
@@ -371,7 +371,7 @@ También se verificaron:
 - JWT;
 - auditoría administrativa.
 
-**Resultado consolidado: PASS.**
+**Resultado consolidado previo a los cambios del 2026-10-13: PASS. Los escenarios nuevos de autorización e independencia de límites quedan pendientes de ejecutarse contra la API y MongoDB.**
 
 ---
 
@@ -386,8 +386,8 @@ Como parte del cierre se verificaron las siguientes correcciones:
 | Sintaxis frontend | **PASS** |
 | Lint | **PASS** |
 | Tests frontend | **PASS** |
-| Build | **PASS** |
-| Vulnerabilidad de dependencia | **CORREGIDA** |
+| Build | **PASS — CI** |
+| Avisos de seguridad Vite/source-map-js | **PASS — `npm audit --audit-level=moderate` sin hallazgos moderados o superiores** |
 | Logo ORENZA | **PASS** |
 | Sincronización de `main` | **PASS** |
 | Working tree final | **LIMPIO** |
@@ -408,7 +408,7 @@ El MVP se entrega con los perfiles:
 - orientador;
 - administrador.
 
-La implementación del rol docente queda para una posible evolución posterior y no forma parte de los criterios de aprobación de esta versión.
+La implementación del rol docente queda para una posible evolución posterior y no forma parte de los criterios de aprobación de esta versión. Además, no puede asignarse desde el panel administrativo actual.
 
 ---
 
@@ -416,8 +416,36 @@ La implementación del rol docente queda para una posible evolución posterior y
 
 Con base en las validaciones funcionales, automatizadas y técnicas registradas en este documento:
 
-**ORENZA MVP queda preparado para revisión del instructor.**
+**PASS — CI de frontend, comprobaciones de sintaxis del backend y smoke test de integración.** El [workflow de GitHub Actions](https://github.com/Pepealdana/ORENZA/actions/runs/38491732049) ejecutó el smoke test con MongoDB efímero y terminó con `Smoke test ORENZA: OK`. La [ejecución de CodeQL](https://github.com/Pepealdana/ORENZA/actions/runs/38491738106) también pasó.
 
-No se registran incidencias funcionales abiertas dentro del alcance definido para esta versión.
+Esta evidencia valida el entorno de pruebas aislado del workflow; no afirma que se haya ejecutado el smoke test contra la base local del desarrollador.
 
 La revisión posterior debe concentrarse en verificar la implementación y la evidencia aquí documentada, sin interpretar las funcionalidades explícitamente excluidas del MVP como defectos.
+
+
+## 10. Correcciones de la revisión del instructor (2026-10-13)
+
+### Dependencia frontend
+
+La revisión identificó el aviso **GHSA-rq7h-c2jc-7f22** en Vite y la auditoría CI encontró además **GHSA-68fv-2mgg-jv7q** en `source-map-js 1.2.1`. Se actualizó Vite a **8.2.4** y se fijó `source-map-js` en **1.2.2**, versión corregida para el segundo aviso: https://github.com/vitejs/vite/security/advisories/GHSA-rq7h-c2jc-7f22 y https://github.com/advisories/GHSA-68fv-2mgg-jv7q.
+
+**Resultado confirmado en CI más reciente:** https://github.com/Pepealdana/ORENZA/actions/runs/38484715528 pasó `npm ci`, lint, las 12 pruebas frontend, build y `npm audit --audit-level=moderate` sin hallazgos moderados o superiores. Las comprobaciones de sintaxis del backend también pasaron.
+
+### Nuevos escenarios de prueba
+
+Se añadieron casos automatizados para:
+- competencia sin actividades: progreso de 0 %;
+- alias histórico `relaciones-positivas`: identificador visible normalizado a `relaciones`;
+- ausencia de registros emocionales: racha en cero;
+- registros/acciones duplicadas en la misma fecha: no inflan la racha;
+- varios días sin registrar: la racha actual se reinicia;
+- smoke test de backend: la recuperación de contraseña no agota el límite de ingreso;
+- smoke test de backend: un estudiante recibe 403 al solicitar estadísticas administrativas;
+- smoke test de backend: el administrador recibe 400 al intentar crear un usuario con rol docente;
+- smoke test de backend: no se admite crear un segundo registro de progreso para la misma actividad.
+
+El smoke test se ejecuta automáticamente en CI con una instancia efímera de MongoDB y credenciales generadas en el job. Resultado confirmado: [`Smoke test ORENZA: OK`](https://github.com/Pepealdana/ORENZA/actions/runs/38491732049). Para repetirlo localmente, sí se requieren API, MongoDB y credenciales válidas de administrador y orientador en `backend/.env`; esa ejecución local es independiente de la evidencia CI.
+
+### Alcance y preferencias
+
+El rol docente queda deshabilitado para nuevas asignaciones en el backend. Las preferencias de apariencia, movimiento y notificaciones se almacenan en el navegador; la opción de notificaciones no emite avisos reales en esta versión.

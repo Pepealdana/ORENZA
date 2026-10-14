@@ -85,7 +85,7 @@ function SettingsPage() {
         <div className={styles.card}>
           <button type="button" className={styles.option} onClick={() => toggle('notifications')} aria-pressed={preferences.notifications}>
             <span className={styles.icon}><Bell size={20} /></span>
-            <span className={styles.copy}><strong>Notificaciones</strong><small>Recibe avisos relacionados con tu experiencia.</small></span>
+            <span className={styles.copy}><strong>Notificaciones</strong><small>Preferencia guardada en este navegador; todavía no genera avisos reales.</small></span>
             <span className={styles.switch + (preferences.notifications ? ' ' + styles.switchOn : '')} aria-hidden="true"><span /></span>
           </button>
           <button type="button" className={styles.option} onClick={() => toggle('reducedMotion')} aria-pressed={preferences.reducedMotion}>
@@ -149,7 +149,7 @@ function SettingsPage() {
         </div>
       </section>
 
-      <div className={styles.info}><Check size={17} aria-hidden="true" /><p>Las preferencias de esta sección se guardan localmente. Los cambios de contraseña se aplican directamente en la base de datos de la aplicación demo.</p></div>
+      <div className={styles.info}><Check size={17} aria-hidden="true" /><p>Las preferencias de apariencia, movimiento y notificaciones se guardan únicamente en este navegador. La opción de notificaciones todavía no envía avisos reales. Los cambios de contraseña se aplican en la base de datos de la aplicación demo.</p></div>
     </section>
   );
 }

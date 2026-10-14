@@ -5,7 +5,6 @@ import User from '../models/User.js';
 import Activity from '../models/Activity.js';
 import ActivityProgress from '../models/ActivityProgress.js';
 import CheckIn from '../models/CheckIn.js';
-import AuditLog from '../models/AuditLog.js';
 
 const API = process.env.API_URL || 'http://localhost:4000/api';
 
@@ -48,7 +47,6 @@ async function cleanup() {
     }
     await mongoose.connection.collection('institutions').deleteMany({ code: otherInstitutionCode });
     await Activity.deleteMany({ activityId: { $regex: `^smoke-activity-${unique}` } });
-    await AuditLog.deleteMany({ summary: { $regex: new RegExp(`smoke|Smoke`, 'i') } });
   } catch (error) {
     console.error('No fue posible limpiar los datos del smoke test:', error.message);
   } finally {
@@ -75,17 +73,53 @@ async function run() {
   const smokeStudentId = registered.user.id;
   const auth = { Authorization: `Bearer ${token}` };
 
+  // Comprueba la recuperación antes de agotar su propio límite.
   const resetRequest = await request('/auth/request-password-reset', {
     method: 'POST',
     body: JSON.stringify({ email: studentEmail }),
   });
+  let loginPassword = 'Smoke1234!';
   if (resetRequest.demoToken) {
+    loginPassword = 'Smoke1234!New';
     const resetResponse = await request('/auth/reset-password', {
       method: 'POST',
-      body: JSON.stringify({ token: resetRequest.demoToken, newPassword: 'Smoke1234!New' }),
+      body: JSON.stringify({ token: resetRequest.demoToken, newPassword: loginPassword }),
     });
     assert(resetResponse.message.includes('Contraseña actualizada'), 'Recuperación de contraseña falló');
   }
+
+  // Cinco solicitudes no deben bloquear el inicio de sesión: el límite de recuperación es independiente.
+  for (let attempt = 0; attempt < 5; attempt += 1) {
+    try {
+      const response = await request('/auth/request-password-reset', {
+        method: 'POST',
+        body: JSON.stringify({ email: `reset-independent-${unique}-${attempt}@orenza.local` }),
+      });
+      assert(response.message.includes('Si la cuenta existe'), 'La recuperación debe mantener una respuesta válida');
+    } catch (error) {
+      assert(
+        error.message.includes('-> 429:'),
+        'La recuperación solo debe rechazar solicitudes cuando se alcanza su propio límite'
+      );
+    }
+  }
+
+  const loginAfterRecoveryAttempts = await request('/auth/login', {
+    method: 'POST',
+    body: JSON.stringify({
+      email: studentEmail,
+      password: loginPassword,
+    }),
+  });
+  assert(loginAfterRecoveryAttempts.token, 'La recuperación no debe bloquear el inicio de sesión');
+
+  let studentAdminAccessBlocked = false;
+  try {
+    await request('/admin/stats', { headers: auth });
+  } catch (error) {
+    studentAdminAccessBlocked = error.message.includes('-> 403:');
+  }
+  assert(studentAdminAccessBlocked, 'Un estudiante no debe acceder a funciones administrativas');
 
   const me = await request('/auth/me', { headers: auth });
   assert(me.user.email === studentEmail, 'GET /me falló');
@@ -241,6 +275,22 @@ async function run() {
   });
   assert(progress.item.status === 'in-progress', 'Progreso no creado');
 
+  let duplicateProgressRejected = false;
+  try {
+    await request('/student/activities/progress', {
+      method: 'POST',
+      headers: auth,
+      body: JSON.stringify({
+        activityId,
+        status: 'completed',
+        answers: { step1: 'duplicado' },
+      }),
+    });
+  } catch (error) {
+    duplicateProgressRejected = error.message.includes('-> 409:');
+  }
+  assert(duplicateProgressRejected, 'Crear dos registros de progreso para la misma actividad debe rechazarse');
+
   const progressOne = await request(`/student/activities/progress/${activityId}`, { headers: auth });
   assert(progressOne.item.activityId === activityId, 'GET progreso individual falló');
 
@@ -274,6 +324,24 @@ async function run() {
 
   const stats = await request('/admin/stats', { headers: adminHeaders });
   assert(typeof stats.stats.total === 'number', 'Estadísticas de administrador fallaron');
+
+  let roleTeacherCreationBlocked = false;
+  try {
+    await request('/admin/users', {
+      method: 'POST',
+      headers: adminHeaders,
+      body: JSON.stringify({
+        name: 'Smoke Teacher Not Allowed',
+        email: `smoke-teacher-${unique}@orenza.local`,
+        password: 'Smoke1234!',
+        role: 'teacher',
+        institution: 'ORENZA Demo',
+      }),
+    });
+  } catch (error) {
+    roleTeacherCreationBlocked = error.message.includes('-> 400:');
+  }
+  assert(roleTeacherCreationBlocked, 'No debe permitirse crear usuarios con rol docente en el MVP');
 
   const adminUsersPage = await request('/admin/users?page=1&limit=1&institution=ORENZA%20Demo', { headers: adminHeaders });
   assert(adminUsersPage.pagination?.limit === 1 && typeof adminUsersPage.pagination.total === 'number', 'La paginación y filtros de usuarios fallaron');

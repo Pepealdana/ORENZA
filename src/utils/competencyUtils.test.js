@@ -47,3 +47,18 @@ test('los filtros y el progreso usan la competencia principal por defecto', () =
   assert.equal(stats.completedCount, 1);
   assert.equal(stats.progress, 100);
 });
+
+
+test('normaliza variantes históricas de Relaciones positivas para tarjetas', async () => {
+  const { normalizeCompetencyId } = await import('./competencyUtils.js');
+  assert.equal(normalizeCompetencyId('relaciones-positivas'), 'relaciones');
+  assert.equal(normalizeCompetencyId(' relaciones-positivas '), 'relaciones');
+  assert.equal(normalizeCompetencyId('empatia'), 'empatia');
+});
+
+test('una competencia sin actividades tiene progreso cero', () => {
+  const stats = getCompetencyStats('relaciones', [], []);
+  assert.equal(stats.totalActivities, 0);
+  assert.equal(stats.completedCount, 0);
+  assert.equal(stats.progress, 0);
+});

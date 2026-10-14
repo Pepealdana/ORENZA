@@ -16,7 +16,6 @@ const emptyForm = {
 
 const roleLabels = {
   student: 'Estudiante',
-  teacher: 'Docente',
   counselor: 'Orientador',
   admin: 'Administrador',
 };
