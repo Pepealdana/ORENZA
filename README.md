@@ -586,9 +586,15 @@ Se reforzó la configuración del backend para reducir riesgos de exposición y 
 - La API continúa devolviendo mensajes genéricos para errores internos.
 - Se recomienda mantener el token JWT fuera de almacenamiento persistente de mayor exposición cuando la arquitectura futura permita migrar a cookies HttpOnly; por ahora el MVP conserva el esquema Bearer actual.
 
-### Pendientes de seguridad
+### Mejoras de seguridad posteriores al MVP
 
-La siguiente etapa debe considerar rotación/revocación de sesiones, endurecimiento adicional de validación de entradas, pruebas de autorización negativas y análisis CodeQL/Dependabot en CI.
+Las siguientes mejoras son una hoja de ruta y no bloquean las correcciones ya validadas para esta entrega:
+
+- considerar rotación y revocación de sesiones;
+- continuar endureciendo la validación de entradas;
+- ampliar progresivamente las pruebas negativas de autorización más allá de los escenarios automatizados actuales.
+
+CodeQL y Dependabot están configurados en el repositorio; las ejecuciones de CI y CodeQL de la revisión final aprobaron. La auditoría de dependencias del frontend también pasó sin hallazgos moderados o superiores.
 
 
 ## Revisión final del instructor — 14 de octubre de 2026
