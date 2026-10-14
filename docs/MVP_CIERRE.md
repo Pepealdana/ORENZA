@@ -163,24 +163,28 @@ npm test
 obtuvo:
 
 ```
-tests 7
-pass 7
+tests 12
+pass 12
 fail 0
 ```
 
 Casos cubiertos:
 
 1. filtra actividades por competencia principal y secundaria;
-2. normaliza relaciones positivas a relaciones;
-3. calcula progreso sin duplicar una actividad repetida;
-4. usa la competencia principal por defecto para filtros y progreso;
-5. calcula una racha consecutiva desde hoy;
-6. permite una racha que comienza ayer;
-7. rompe la racha ante un día ausente.
+2. normaliza relaciones positivas y el alias histórico `relaciones-positivas`;
+3. calcula progreso sin duplicar una actividad;
+4. usa la competencia principal por defecto;
+5. calcula rachas consecutivas y permite iniciar una racha desde ayer;
+6. rompe la racha ante días ausentes;
+7. mantiene el progreso en 0 % cuando no hay actividades;
+8. devuelve racha cero cuando no hay check-ins;
+9. evita inflar la racha con acciones repetidas en una misma fecha.
+
+La suite actual contiene **12 pruebas automatizadas**; la lista resume los grupos funcionales, no una correspondencia uno-a-uno con cada aserción.
 
 Resultado:
 
-**7/7 pruebas aprobadas.**
+**12/12 pruebas aprobadas.**
 
 ---
 
@@ -274,7 +278,7 @@ El smoke test valida de forma integrada:
 - desactivación de actividades;
 - rechazo de nuevo progreso sobre actividades inactivas.
 
-El smoke test se ejecuta en el job `backend-integration` del workflow de CI con MongoDB 7 efímero y datos de demostración aislados. Evidencia aprobada el 14 de octubre de 2026: [ejecución GitHub Actions](https://github.com/Pepealdana/ORENZA/actions/runs/38491732049), resultado `Smoke test ORENZA: OK`. Esta ejecución no utiliza la base local del desarrollador.
+El smoke test se ejecuta en el job `backend-integration` del workflow de CI con MongoDB 7 efímero y datos de demostración aislados. Evidencia aprobada el 14 de octubre de 2026: [ejecución GitHub Actions](https://github.com/Pepealdana/ORENZA/actions/runs/38493213386), resultado `Smoke test ORENZA: OK`. Esta ejecución no utiliza la base local del desarrollador.
 
 ---
 
@@ -368,8 +372,8 @@ Cualquier evolución posterior —incluido el rol docente— debe tratarse como 
 
 ## 10. Observaciones añadidas el 2026-10-13
 
-La revisión final detectó el aviso GHSA-rq7h-c2jc-7f22 para Vite y la primera auditoría de CI reveló también GHSA-68fv-2mgg-jv7q en `source-map-js 1.2.1`. Vite se actualizó a 8.2.4 y `source-map-js` se fijó en 1.2.2, versión corregida según https://github.com/advisories/GHSA-68fv-2mgg-jv7q. La ejecución CI posterior aprobó `npm audit --audit-level=moderate` sin hallazgos moderados o superiores: https://github.com/Pepealdana/ORENZA/actions/runs/38484621396.
+La revisión final detectó el aviso GHSA-rq7h-c2jc-7f22 para Vite y la primera auditoría de CI reveló también GHSA-68fv-2mgg-jv7q en `source-map-js 1.2.1`. Vite se actualizó a 8.2.4 y `source-map-js` se fijó en 1.2.2, versión corregida según https://github.com/advisories/GHSA-68fv-2mgg-jv7q. La ejecución CI posterior aprobó `npm audit --audit-level=moderate` sin hallazgos moderados o superiores: https://github.com/Pepealdana/ORENZA/actions/runs/38493213386.
 
-Se agregaron aserciones para comprobar independencia entre los límites de recuperación e ingreso, bloqueo de acceso administrativo para estudiantes, rechazo de progreso duplicado y bloqueo de creación del rol docente. La ejecución de CI https://github.com/Pepealdana/ORENZA/actions/runs/38491732049 pasó el smoke test contra una instancia efímera de MongoDB, con el resultado `Smoke test ORENZA: OK`. Las comprobaciones no alteran la base local del desarrollador.
+Se agregaron aserciones para comprobar independencia entre los límites de recuperación e ingreso, bloqueo de acceso administrativo para estudiantes, rechazo de progreso duplicado y bloqueo de creación del rol docente. La ejecución de CI https://github.com/Pepealdana/ORENZA/actions/runs/38493213386 pasó el smoke test contra una instancia efímera de MongoDB, con el resultado `Smoke test ORENZA: OK`. Las comprobaciones no alteran la base local del desarrollador.
 
 Las preferencias de apariencia, movimiento y notificaciones se guardan localmente en el navegador. La opción de notificaciones no genera avisos reales en el MVP.
