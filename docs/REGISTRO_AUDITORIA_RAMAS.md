@@ -2,7 +2,7 @@
 
 **Fecha de revisión:** 2026-10-14  
 **Rama oficial de entrega:** `main`  
-**Commit de actualización del registro:** se actualizará con este cambio.  
+**Commit de actualización del registro:** pendiente de confirmación por GitHub al guardar esta revisión.  
 **Objetivo:** reducir la confusión durante la revisión del instructor, conservar `main` como única rama oficial y retirar ramas obsoletas sin perder cambios útiles ni interferir con solicitudes de integración abiertas.
 
 ## Criterios de decisión
@@ -15,7 +15,7 @@
 
 ## Inventario de ramas
 
-Estado comparativo consultado en GitHub el 2026-10-14, después de eliminar seis ramas descartadas. Los conteos indican commits exclusivos de la rama respecto de `main` según la comparación disponible; las ramas divergentes requieren cautela porque contienen historia posterior al punto común.
+Estado comparativo consultado en GitHub el 2026-10-14, después de eliminar siete ramas descartadas. Los conteos indican commits exclusivos de la rama respecto de `main` según la comparación disponible; las ramas divergentes requieren cautela porque contienen historia posterior al punto común.
 
 | Rama | Commits exclusivos | PR abierta | Decisión | Motivo |
 |---|---:|---|---|---|
@@ -34,7 +34,7 @@ Estado comparativo consultado en GitHub el 2026-10-14, después de eliminar seis
 | `dependabot/npm_and_yarn/multi-de36fa8f59` | 1 | PR #13 | **CONSERVAR TEMPORALMENTE** | Actualización automatizada de dependencias pendiente de resolución. |
 | `fix/phase1-auth-syntax` | 1 (antes de eliminarse) | No | **ELIMINADA** | Su cambio de autenticación introduce una limitación compartida entre operaciones en lugar de mantener limitadores separados. GitHub confirmó la eliminación remota el 2026-10-14. No integrar. |
 | `security/phase1-hardening` | 9 (antes de eliminarse) | No | **ELIMINADA** | Revisión detectó regresiones: elimina la auditoría npm y el trabajo de integración/smoke del CI, cambia las rutas de limitación de autenticación y contiene errores de sintaxis en las rutas revisadas. GitHub confirmó la eliminación remota el 2026-10-14. No integrar. |
-| `fix/instructor-october-review` | 36 | No | **PENDIENTE DE RECONCILIACIÓN** | Se detectaron documentos con datos obsoletos. La comparación actual de GitHub muestra diferencias adicionales en código, CI y dependencias, en desacuerdo con una comparación local anterior. No eliminar hasta resolver esa discrepancia y confirmar que no hay cambios únicos útiles. |
+| `fix/instructor-october-review` | 36 (antes de eliminarse) | No | **ELIMINADA** | Comparación final de 16 archivos entre `main` y la rama: 13 archivos de código, pruebas, CI y dependencias eran idénticos; las diferencias restantes estaban en tres documentos y `main` contenía la documentación más reciente. Se eliminó el remoto el 2026-10-14 sin fusionar la rama. No se identificaron cambios funcionales exclusivos que debieran rescatarse. |
 
 ## PR abiertas que deben resolverse antes de limpiar sus ramas
 
@@ -56,10 +56,10 @@ Estado comparativo consultado en GitHub el 2026-10-14, después de eliminar seis
 
 ## Acciones de limpieza
 
-1. **Completado:** seis ramas descartadas fueron eliminadas del remoto. Las primeras cuatro superaron `git merge-base --is-ancestor origin/<rama> origin/main`; las dos ramas de seguridad se eliminaron después de registrar sus regresiones.
+1. **Completado:** siete ramas descartadas fueron eliminadas del remoto. Las primeras cuatro superaron `git merge-base --is-ancestor origin/<rama> origin/main`; las dos ramas de seguridad se eliminaron después de registrar sus regresiones; `fix/instructor-october-review` se eliminó tras comparar sus 16 archivos modificados contra `main`.
 2. No modificar ni borrar las ocho ramas Dependabot mientras sus PR estén abiertas.
 3. **Completado:** `fix/phase1-auth-syntax` y `security/phase1-hardening` fueron eliminadas del remoto el 2026-10-14.
-4. Resolver la discrepancia de `fix/instructor-october-review` antes de cualquier eliminación.
+4. **Completado:** `fix/instructor-october-review` fue eliminada el 2026-10-14 tras la revisión final de archivos.
 5. Volver a consultar ramas y PR abiertas tras las siguientes acciones de limpieza.
 
-**Nota de estado:** las seis ramas indicadas como `ELIMINADA` fueron retiradas del remoto. `fix/instructor-october-review` sigue pendiente de reconciliación; las ramas Dependabot con PR abiertas se conservan.
+**Nota de estado:** las siete ramas indicadas como `ELIMINADA` fueron retiradas del remoto. Las ocho ramas Dependabot asociadas a PR abiertas se conservan hasta resolver esas solicitudes.
