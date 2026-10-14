@@ -30,13 +30,13 @@ La documentación se organiza así:
 | Gestión de actividades | **CERRADA** |
 | Auditoría administrativa | **CERRADA** |
 | Botones sin acción identificados | **CERRADA** |
-| Archivos duplicados/no utilizados identificados | **CERRADA** |
-| Imports/código legacy identificados | **CERRADA** |
+| Auditoría de archivos gráficos duplicados/no utilizados | **PENDIENTE de verificación completa; no eliminar sin confirmar referencias** |
+| Imports/código legacy | **Requiere confirmar con búsqueda completa de referencias antes de retirar archivos** |
 | Correcciones de sintaxis en módulos administrativos | **CERRADA** |
 | Pruebas funcionales de los perfiles implementados | **CERRADA** |
 | Pruebas automatizadas frontend | **CERRADA** |
 | Validación técnica backend | **CERRADA** |
-| Aviso de seguridad de Vite GHSA-rq7h-c2jc-7f22 | **Vite actualizado a 8.2.4 en esta rama; auditoría npm posterior al cambio pendiente de ejecución** |
+| Avisos de seguridad de Vite y `source-map-js` | **CERRADA — versiones corregidas; auditoría CI aprobada** |
 | Logotipo ORENZA | **CERRADA** |
 | Rol docente | **FUERA DEL ALCANCE DEL MVP** |
 
