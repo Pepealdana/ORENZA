@@ -236,7 +236,7 @@ cd backend
 npm run test:smoke
 ```
 
-El workflow de CI sí ejecuta el smoke test en el job `backend-integration`, usando MongoDB efímero y credenciales generadas para esa ejecución. Evidencia: [CI en `main`](https://github.com/Pepealdana/ORENZA/actions/runs/38492034582).
+El workflow de CI sí ejecuta el smoke test en el job `backend-integration`, usando MongoDB efímero y credenciales generadas para esa ejecución. Evidencia: [CI en `main`](https://github.com/Pepealdana/ORENZA/actions/runs/38493213386).
 
 ---
 
