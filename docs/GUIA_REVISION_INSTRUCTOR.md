@@ -196,12 +196,12 @@ Tampoco forman parte de esta entrega:
 
 | Validación | Resultado |
 |---|---|
-| Tests frontend | **7/7 PASS** |
+| Tests frontend | **12/12 PASS — CI en `main`** |
 | ESLint | **PASS** |
 | Build frontend | **PASS** |
 | Sintaxis backend | **PASS en CI** |
-| Smoke test | **PASS en las validaciones realizadas** |
-| Auditoría de dependencias | **0 vulnerabilidades** |
+| Smoke test | **PASS — MongoDB efímero en CI de `main`** |
+| Auditoría de dependencias | **PASS — sin hallazgos moderados o superiores** |
 
 ---
 
@@ -236,7 +236,7 @@ cd backend
 npm run test:smoke
 ```
 
-El workflow actual no lo ejecuta automáticamente. Esto está documentado deliberadamente para que no exista discrepancia entre la documentación y el comportamiento real del CI.
+El workflow de CI sí ejecuta el smoke test en el job `backend-integration`, usando MongoDB efímero y credenciales generadas para esa ejecución. Evidencia: [CI en `main`](https://github.com/Pepealdana/ORENZA/actions/runs/38492034582).
 
 ---
 
