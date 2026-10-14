@@ -156,7 +156,7 @@ skipped 0
 | FE-06 | Permite una racha que comienza ayer | **PASS** |
 | FE-07 | Rompe la racha ante un día ausente | **PASS** |
 
-**Las 7 pruebas de esta tabla corresponden a la suite base histórica. La suite actual ampliada aprobó 12/12 pruebas en CI sobre `main`: [ver ejecución](https://github.com/Pepealdana/ORENZA/actions/runs/38492034582).**
+**Las 7 pruebas de esta tabla corresponden a la suite base histórica. La suite actual ampliada aprobó 12/12 pruebas en CI sobre `main`: [ver ejecución](https://github.com/Pepealdana/ORENZA/actions/runs/38493213386).**
 
 ---
 
@@ -352,7 +352,7 @@ Las ejecuciones quedan almacenadas en GitHub Actions.
 
 **Resultado de la rama de correcciones: PASS.**
 
-El workflow ejecuta el smoke test en el job `backend-integration` con MongoDB efímero y credenciales generadas para CI. La ejecución aprobada en `main` es [esta](https://github.com/Pepealdana/ORENZA/actions/runs/38492034582); el log registra `Smoke test ORENZA: OK`. La base local del desarrollador no se utiliza.
+El workflow ejecuta el smoke test en el job `backend-integration` con MongoDB efímero y credenciales generadas para CI. La ejecución aprobada en `main` es [esta](https://github.com/Pepealdana/ORENZA/actions/runs/38493213386); el log registra `Smoke test ORENZA: OK`. La base local del desarrollador no se utiliza.
 
 ---
 
@@ -429,7 +429,7 @@ La revisión posterior debe concentrarse en verificar la implementación y la ev
 
 La revisión identificó el aviso **GHSA-rq7h-c2jc-7f22** en Vite y la auditoría CI encontró además **GHSA-68fv-2mgg-jv7q** en `source-map-js 1.2.1`. Se actualizó Vite a **8.2.4** y se fijó `source-map-js` en **1.2.2**, versión corregida para el segundo aviso: https://github.com/vitejs/vite/security/advisories/GHSA-rq7h-c2jc-7f22 y https://github.com/advisories/GHSA-68fv-2mgg-jv7q.
 
-**Resultado confirmado en `main`:** [CI de ORENZA](https://github.com/Pepealdana/ORENZA/actions/runs/38492034582) pasó instalación, lint, 12 pruebas frontend, build, `npm audit --audit-level=moderate`, sintaxis del backend y smoke test. [CodeQL](https://github.com/Pepealdana/ORENZA/actions/runs/38492034575) también pasó.
+**Resultado confirmado en `main`:** [CI de ORENZA](https://github.com/Pepealdana/ORENZA/actions/runs/38493213386) pasó instalación, lint, 12 pruebas frontend, build, `npm audit --audit-level=moderate`, sintaxis del backend y smoke test. [CodeQL](https://github.com/Pepealdana/ORENZA/actions/runs/38493213364) también pasó.
 
 ### Nuevos escenarios de prueba
 
@@ -444,7 +444,7 @@ Se añadieron casos automatizados para:
 - smoke test de backend: el administrador recibe 400 al intentar crear un usuario con rol docente;
 - smoke test de backend: no se admite crear un segundo registro de progreso para la misma actividad.
 
-El smoke test se ejecuta automáticamente en CI con una instancia efímera de MongoDB y credenciales generadas en el job. Resultado confirmado en `main`: [`Smoke test ORENZA: OK`](https://github.com/Pepealdana/ORENZA/actions/runs/38492034582). Para repetirlo localmente se requieren API, MongoDB y credenciales válidas en `backend/.env`; esta ejecución local es independiente de la evidencia CI.
+El smoke test se ejecuta automáticamente en CI con una instancia efímera de MongoDB y credenciales generadas en el job. Resultado confirmado en `main`: [`Smoke test ORENZA: OK`](https://github.com/Pepealdana/ORENZA/actions/runs/38493213386). Para repetirlo localmente se requieren API, MongoDB y credenciales válidas en `backend/.env`; esta ejecución local es independiente de la evidencia CI.
 
 ### Alcance y preferencias
 
