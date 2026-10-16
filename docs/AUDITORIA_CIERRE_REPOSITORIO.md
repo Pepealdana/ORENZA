@@ -2,14 +2,14 @@
 
 **Fecha:** 16 de octubre de 2026  
 **Rama oficial de entrega:** `main`  
-**Commit de código revisado:** [`77c8dfc114b067d4224252f42a3e5fd0a319019c`](https://github.com/Pepealdana/ORENZA/commit/77c8dfc114b067d4224252f42a3e5fd0a319019c)
+**Commit de código revisado:** [`5d45bfee9f2bac6df96aeed6582c643e9bbfe398`](https://github.com/Pepealdana/ORENZA/commit/5d45bfee9f2bac6df96aeed6582c643e9bbfe398)
 
 ## 1. CI y análisis estático
 
 En el commit de código revisado:
 
-- [ORENZA CI](https://github.com/Pepealdana/ORENZA/actions/runs/38827721377): **success**. Frontend: instalación, lint, 12 pruebas, build y `npm audit --audit-level=moderate`; backend: comprobaciones de sintaxis; integración: smoke test con MongoDB 7 efímero y credenciales generadas en el job.
-- [CodeQL](https://github.com/Pepealdana/ORENZA/actions/runs/38827721514): **success**.
+- [ORENZA CI](https://github.com/Pepealdana/ORENZA/actions/runs/38828015947): **success**. Frontend: instalación, lint, 12 pruebas, build y `npm audit --audit-level=moderate`; backend: comprobaciones de sintaxis; integración: smoke test con MongoDB 7 efímero y credenciales generadas en el job.
+- [CodeQL](https://github.com/Pepealdana/ORENZA/actions/runs/38828016001): **en ejecución al registrar esta actualización**; consultar la ejecución más reciente en Actions antes de cerrar la entrega.
 
 La limpieza de módulos y la actualización documental de este informe generan una nueva ejecución de CI. Debe comprobarse su resultado antes de dar por validado el nuevo commit.
 
@@ -53,14 +53,14 @@ Se retiraron en el commit de limpieza por no formar parte del grafo de módulos 
 | [#12](https://github.com/Pepealdana/ORENZA/pull/12) | ESLint 10.12.0 | **Fusionada**; checks aprobados. |
 | [#7](https://github.com/Pepealdana/ORENZA/pull/7) | `eslint-plugin-react-refresh` 0.5.7 | **Fusionada**; checks aprobados. |
 | [#18](https://github.com/Pepealdana/ORENZA/pull/18) | Mongoose 9.11.1 | **Fusionada**; checks aprobados, incluido el smoke test. |
-| [#17](https://github.com/Pepealdana/ORENZA/pull/17) | Express 5.3.0 | **No fusionar todavía**: presentó conflicto tras actualizar dependencias del backend. Se solicitó rebase; deben pasar los checks del nuevo head. |
-| [#13](https://github.com/Pepealdana/ORENZA/pull/13) | React DOM y tipos | **No fusionada**: los checks del head antiguo fallaron; se solicitó rebase y se requieren resultados nuevos. |
-| [#11](https://github.com/Pepealdana/ORENZA/pull/11) | `@vitejs/plugin-react` 6.1.1 | **No fusionar todavía**: los checks del head antiguo fallaron y debe resolverse el estado tras rebase. |
-| [#9](https://github.com/Pepealdana/ORENZA/pull/9) | `react-router-dom` 7.18.4 | **No fusionada**: los checks del head antiguo fallaron; se solicitó rebase y se requieren resultados nuevos. |
+| [#17](https://github.com/Pepealdana/ORENZA/pull/17) | Express 5.3.0 | **Fusionada** después del rebase y de aprobar CI, integración y CodeQL. |
+| [#13](https://github.com/Pepealdana/ORENZA/pull/13) | React DOM y tipos | **Pendiente**: el head rebasado aprobó los checks, pero volvió a quedar desactualizado frente a `main` y GitHub informa conflicto/no mergeable. Requiere nueva actualización y checks sobre la base actual. |
+| [#11](https://github.com/Pepealdana/ORENZA/pull/11) | `@vitejs/plugin-react` 6.1.2 | **Fusionada** después del rebase y de aprobar CI, integración y CodeQL. |
+| [#9](https://github.com/Pepealdana/ORENZA/pull/9) | `react-router-dom` 7.18.4 | **Pendiente**: el head sigue antiguo, sus checks de frontend/backend fallan y GitHub informa conflicto/no mergeable. El rebase solicitado aún no produjo un head validable. |
 
 Los fallos históricos de #13, #11 y #9 muestran un error de análisis de sintaxis (`Unexpected token ,`) en código de sus ramas antiguas y un hallazgo de alta severidad en la instalación de esa revisión. No son resultados actuales de `main`; esas solicitudes necesitan ejecutar nuevamente los checks sobre el código actualizado.
 
-Las cinco fusiones aprobadas se realizaron individualmente. No se fusionaron #17, #13, #11 ni #9 sin una nueva validación.
+Las siete fusiones aprobadas se realizaron individualmente: #16, #6, #12, #7, #18, #17 y #11. No se fusionaron #13 ni #9 porque no están integrables y validados sobre el estado actual de `main`.
 
 ## 6. Protección de `main`
 
