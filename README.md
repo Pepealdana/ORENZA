@@ -19,6 +19,7 @@ Si el objetivo es revisar el estado actual del proyecto, estos son los documento
 | `docs/GUIA_REVISION_INSTRUCTOR.md` | Ruta recomendada para revisar el proyecto sin buscar información en archivos equivocados |
 | `docs/MVP_CIERRE.md` | Cierre técnico y funcional del MVP, observaciones atendidas y alcance definitivo |
 | `docs/PRUEBAS_FUNCIONALES_MVP.md` | Registro consolidado de pruebas funcionales realizadas por perfil y pruebas técnicas automatizadas |
+| `docs/AUDITORIA_CIERRE_REPOSITORIO.md` | Auditoría de imports, recursos, Dependabot, CI y protección de `main` |
 | `.github/workflows/ci.yml` | Definición de las validaciones automáticas ejecutadas por GitHub Actions |
 
 **Para revisar primero:** `docs/GUIA_REVISION_INSTRUCTOR.md`.
