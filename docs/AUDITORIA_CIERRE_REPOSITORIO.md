@@ -9,7 +9,7 @@
 En el commit de código revisado:
 
 - [ORENZA CI](https://github.com/Pepealdana/ORENZA/actions/runs/38828015947): **success**. Frontend: instalación, lint, 12 pruebas, build y `npm audit --audit-level=moderate`; backend: comprobaciones de sintaxis; integración: smoke test con MongoDB 7 efímero y credenciales generadas en el job.
-- [CodeQL](https://github.com/Pepealdana/ORENZA/actions/runs/38828016001): **en ejecución al registrar esta actualización**; consultar la ejecución más reciente en Actions antes de cerrar la entrega.
+- [CodeQL](https://github.com/Pepealdana/ORENZA/actions/runs/38828016001): **success**.
 
 La limpieza de módulos y la actualización documental de este informe generan una nueva ejecución de CI. Debe comprobarse su resultado antes de dar por validado el nuevo commit.
 
