@@ -58,7 +58,7 @@ Se retiraron en el commit de limpieza por no formar parte del grafo de módulos 
 | [#11](https://github.com/Pepealdana/ORENZA/pull/11) | `@vitejs/plugin-react` 6.1.2 | **Fusionada** después del rebase y de aprobar CI, integración y CodeQL. |
 | [#9](https://github.com/Pepealdana/ORENZA/pull/9) | `react-router-dom` 7.18.4 | **Pendiente**: el head sigue antiguo, sus checks de frontend/backend fallan y GitHub informa conflicto/no mergeable. El rebase solicitado aún no produjo un head validable. |
 
-Los fallos históricos de #13, #11 y #9 muestran un error de análisis de sintaxis (`Unexpected token ,`) en código de sus ramas antiguas y un hallazgo de alta severidad en la instalación de esa revisión. No son resultados actuales de `main`; esas solicitudes necesitan ejecutar nuevamente los checks sobre el código actualizado.
+Los fallos históricos de #13, #11 y #9 mostraron un error de análisis de sintaxis (`Unexpected token ,`) en código de ramas antiguas y un hallazgo de alta severidad en la instalación de esa revisión. #11 se rebasó, actualizó a `@vitejs/plugin-react` 6.1.2 y pasó los checks antes de fusionarse. #13 aprobó checks en su head rebasado, pero quedó desactualizada frente a `main` y ahora tiene conflicto; #9 continúa con el head antiguo y checks fallidos. Ninguno de esos resultados históricos debe interpretarse como un fallo de `main`.
 
 Las siete fusiones aprobadas se realizaron individualmente: #16, #6, #12, #7, #18, #17 y #11. No se fusionaron #13 ni #9 porque no están integrables y validados sobre el estado actual de `main`.
 
@@ -78,4 +78,4 @@ Después de crear la regla, comprobar que los checks aparecen con esos nombres e
 
 ## 7. Criterio de cierre
 
-La única rama oficial de entrega sigue siendo `main`. La auditoría estática y de recursos se documenta con las evidencias descritas, y los tres módulos sin referencias identificados fueron retirados. Quedan por cerrar la validación de las cuatro solicitudes de Dependabot aún abiertas y la activación de la protección de `main` con permisos suficientes.
+La única rama oficial de entrega sigue siendo `main`. La auditoría estática y de recursos se documenta con las evidencias descritas, y los tres módulos sin referencias identificados fueron retirados. Quedan por cerrar la validación de las dos solicitudes de Dependabot aún abiertas (#13 y #9) y la activación de la protección de `main` con permisos suficientes.
