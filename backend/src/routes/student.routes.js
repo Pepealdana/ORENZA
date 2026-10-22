@@ -5,6 +5,7 @@ import ActivityProgress from '../models/ActivityProgress.js';
 import Activity from '../models/Activity.js';
 import User from '../models/User.js';
 import { requireAuth, allowRoles } from '../middleware/auth.js';
+import { getCurrentDateString } from '../utils/date.js';
 
 const router = Router();
 router.use(requireAuth, allowRoles('student'));
@@ -101,6 +102,12 @@ router.post('/check-ins', async (req, res, next) => {
     if (validationError) return res.status(400).json({ message: validationError });
 
     const payload = normalizeCheckInPayload(req.body);
+    const today = getCurrentDateString();
+
+    if (payload.date !== today) {
+      return res.status(400).json({ message: 'El registro emocional solo puede corresponder a la fecha de hoy.' });
+    }
+
     const existing = await CheckIn.findOne({ user: req.user._id, date: payload.date });
 
     if (existing) {
@@ -134,6 +141,10 @@ router.patch('/check-ins/:id', async (req, res, next) => {
 
     if (updates.date !== undefined && !validDate(updates.date)) {
       return res.status(400).json({ message: 'La fecha del registro no es válida.' });
+    }
+
+    if (updates.date !== undefined && updates.date !== getCurrentDateString()) {
+      return res.status(400).json({ message: 'El registro emocional solo puede corresponder a la fecha de hoy.' });
     }
 
     if (updates.mood !== undefined && !updates.mood) {
