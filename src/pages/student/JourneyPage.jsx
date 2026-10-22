@@ -19,6 +19,7 @@ import {
 
 import styles from './JourneyPage.module.css';
 import IdentityVisual from '../../components/visual/IdentityVisual';
+import { formatLongDate } from '../../utils/dateUtils';
 
 
 /*
@@ -725,28 +726,6 @@ function formatShortDate(
     parts[2];
 
   return `${day}/${month}`;
-}
-
-
-function formatLongDate(
-  dateString
-) {
-  if (!dateString) return '';
-
-  const date = new Date(dateString);
-
-  if (Number.isNaN(date.getTime())) {
-    return 'Fecha no disponible';
-  }
-
-  return date.toLocaleDateString(
-    'es-CO',
-    {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric',
-    }
-  );
 }
 
 
