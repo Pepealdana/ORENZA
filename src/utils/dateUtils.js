@@ -51,7 +51,7 @@ function formatLongDate(dateString) {
   }
 
   // Solo se aceptan timestamps ISO para campos que representan instantes.
-  if (!/^\\d{4}-\\d{2}-\\d{2}T/.test(dateString)) {
+  if (!/^\d{4}-\d{2}-\d{2}T/.test(dateString)) {
     return 'Fecha no disponible';
   }
 
