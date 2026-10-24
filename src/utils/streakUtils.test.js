@@ -29,7 +29,6 @@ test('rompe la racha ante un día ausente', () => {
   ]), 2);
 });
 
-
 test('sin registros emocionales la racha es cero', () => {
   assert.equal(calculateCurrentStreak([]), 0);
 });
@@ -53,4 +52,12 @@ test('varios días sin registrar reinician la racha actual', () => {
     { date: dateOffset(3) },
     { date: dateOffset(4) },
   ]), 0);
+});
+
+test('calcula días consecutivos como fechas de calendario sin depender de la zona del navegador', () => {
+  assert.equal(calculateCurrentStreak([
+    { date: '2026-10-23' },
+    { date: '2026-10-22' },
+    { date: '2026-10-21' },
+  ], new Date('2026-10-23T16:00:00.000Z')), 3);
 });
