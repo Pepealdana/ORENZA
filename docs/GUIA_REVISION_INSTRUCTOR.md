@@ -196,7 +196,7 @@ Tampoco forman parte de esta entrega:
 
 | Validación | Resultado |
 |---|---|
-| Tests frontend | **12/12 PASS — CI en `main`** |
+| Tests frontend | **17 casos definidos en los archivos de prueba; job frontend PASS en CI reciente** |
 | ESLint | **PASS** |
 | Build frontend | **PASS** |
 | Sintaxis backend | **PASS en CI** |
@@ -297,3 +297,15 @@ La regla para esta entrega es:
 > **Lo que está marcado como PASS fue validado. Lo que está marcado como fuera del alcance no es una incidencia. Las pruebas automáticas deben verificarse en GitHub Actions y las pruebas funcionales deben consultarse en la matriz de pruebas.**
 
 Este criterio busca que la revisión sea directa, reproducible y sin ambigüedades.
+
+
+## 10. Estado remoto verificado — 24 de octubre de 2026
+
+- Commit actual de `main`: `8fec4536c8c2d00915fa8328407a5ebf78c902b5`.
+- [CI — PASS](https://github.com/Pepealdana/ORENZA/actions/runs/40050239517): los jobs frontend, backend y backend-integration aprobaron; el job de integración ejecutó el smoke test contra MongoDB efímero.
+- [CodeQL — PASS](https://github.com/Pepealdana/ORENZA/actions/runs/40050239520).
+- Protección de `main` activa con los checks requeridos `frontend`, `backend`, `backend-integration` y `Analizar JavaScript y TypeScript`.
+- No hay PR abiertas. #19 y #21 se fusionaron; #9, #13, #20, #22 y #23 se cerraron sin fusionar.
+- Los tres archivos de pruebas frontend contienen 17 casos (6 de competencias, 4 de fechas y 7 de rachas). La evidencia de CI valida el commit enlazado; las pruebas funcionales manuales por perfil se conservan como registro histórico y no deben presentarse como ejecutadas automáticamente.
+- La revisión de código respalda la presencia de JWT y control por rol, validación de datos, límites de intentos independientes, aislamiento institucional y exclusión de notas privadas del orientador. El correo productivo para recuperación y las notificaciones reales siguen fuera de la implementación actual; el rol docente está fuera del alcance.
+- El CI no certifica la experiencia visual en todos los dispositivos ni el despliegue productivo: esos puntos requieren evidencia del entorno real.
