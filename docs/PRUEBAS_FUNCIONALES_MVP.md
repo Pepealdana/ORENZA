@@ -479,3 +479,41 @@ El repositorio conserva ramas auxiliares y solicitudes de Dependabot. No son ram
 - Recuperación de contraseña en producción: sigue pendiente integrar el proveedor de correo. Las preferencias de notificación se guardan localmente y no envían avisos reales. El rol docente está fuera del alcance del MVP.
 
 **Límite de la evidencia:** CI y CodeQL respaldan el commit indicado, pero no certifican por sí solos la apariencia visual en todos los tamaños de pantalla ni la configuración de producción del proveedor de despliegue. Esos puntos se registran como evidencia manual/de entorno, no como PASS automático.
+
+
+---
+
+# 17. Evidencia del último corte de entrega — 24 de octubre de 2026
+
+**Commit:** [`4e85772bab414648516699ef5b557c40297284f7`](https://github.com/Pepealdana/ORENZA/commit/4e85772bab414648516699ef5b557c40297284f7)  
+**Ejecución CI:** [ORENZA CI #310 — success](https://github.com/Pepealdana/ORENZA/actions/runs/40059031698)
+
+| Nivel | Qué se ejecutó | Resultado observado en GitHub Actions |
+|---|---|---|
+| Frontend | `npm ci` | PASS |
+| Frontend | `npm run lint` | PASS |
+| Frontend | `npm test` | PASS; consultar log del paso para el número exacto de tests en esta ejecución |
+| Frontend | `npm run build` | PASS |
+| Seguridad de dependencias | `npm audit --audit-level=moderate` | PASS; no se reportó fallo que detuviera el job |
+| Backend | Instalación de dependencias | PASS |
+| Backend | `node --check` en servidor, rutas, configuración, middleware, modelos y scripts listados en `.github/workflows/ci.yml` | PASS |
+| Integración backend | Inicio de MongoDB 7 efímero, seed con credenciales generadas, espera de health check y `npm run test:smoke` | PASS |
+
+### Interpretación de resultados
+
+1. **CI automático:** los pasos de los tres jobs finalizaron con éxito. La evidencia es reproducible desde la ejecución vinculada arriba.
+2. **Pruebas frontend:** los archivos de test incluyen casos de competencia, fechas y rachas. Para reportar un número ejecutado, prevalece el output del paso `npm test` del commit correspondiente; no mezclar los recuentos de cortes históricos.
+3. **Pruebas de integración:** el smoke test usa MongoDB efímero del workflow; no modifica la base local del desarrollador.
+4. **Pruebas funcionales manuales:** las matrices de estudiante, orientador y administrador documentan la validación manual anterior. No se han convertido en tests automáticos por aparecer en esta tabla.
+5. **Seguridad por inspección:** la existencia de JWT, roles, controles de entrada y aislamiento institucional se verifica mediante código y los escenarios cubiertos por el smoke test; no equivale a una auditoría de penetración independiente.
+
+### Pendientes que no bloquean el alcance del MVP
+
+- Integrar proveedor de correo para recuperación de contraseña productiva.
+- Implementar notificaciones reales, si se decide incluirlas en una versión futura.
+- Implementar el rol docente solo si se aprueba una ampliación del alcance.
+- Las pruebas visuales multiplataforma y el despliegue productivo no forman parte de este corte local.
+
+### Correcciones y PR
+
+El registro de cambios debe considerar fusionada una corrección únicamente cuando el PR remoto figure como `merged`. Las PR cerradas sin fusión no representan código incluido en el commit de entrega. El estado consolidado puede consultarse en [Pull requests de ORENZA](https://github.com/Pepealdana/ORENZA/pulls?q=is%3Apr) y el historial en [commits de `main`](https://github.com/Pepealdana/ORENZA/commits/main/).
