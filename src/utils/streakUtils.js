@@ -2,7 +2,16 @@ import {
   getLocalDateString,
 } from './dateUtils.js';
 
-function calculateCurrentStreak(checkIns) {
+function addDaysToDateString(dateString, amount) {
+  const [year, month, day] = dateString.split('-').map(Number);
+  const date = new Date(Date.UTC(year, month - 1, day));
+
+  date.setUTCDate(date.getUTCDate() + amount);
+
+  return date.toISOString().slice(0, 10);
+}
+
+function calculateCurrentStreak(checkIns, now = new Date()) {
   if (!Array.isArray(checkIns) || checkIns.length === 0) {
     return 0;
   }
@@ -13,48 +22,29 @@ function calculateCurrentStreak(checkIns) {
     ),
   ].sort().reverse();
 
-  const today = getLocalDateString();
+  const today = getLocalDateString(now);
+  const yesterday = addDaysToDateString(today, -1);
 
   /*
    * Si el último registro no corresponde a hoy
    * ni a ayer, la continuidad actual es 0.
    */
-  const yesterday = new Date();
-  yesterday.setDate(
-    yesterday.getDate() - 1
-  );
-
-  const yesterdayString =
-    getLocalDateString(yesterday);
-
   if (
     dates[0] !== today &&
-    dates[0] !== yesterdayString
+    dates[0] !== yesterday
   ) {
     return 0;
   }
 
   let streak = 1;
-
-  let currentDate = new Date(
-    `${dates[0]}T12:00:00`
-  );
+  let currentDate = dates[0];
 
   for (let index = 1; index < dates.length; index += 1) {
-    const previousDate = new Date(
-      currentDate
-    );
-
-    previousDate.setDate(
-      previousDate.getDate() - 1
-    );
-
-    const expectedDate =
-      getLocalDateString(previousDate);
+    const expectedDate = addDaysToDateString(currentDate, -1);
 
     if (dates[index] === expectedDate) {
       streak += 1;
-      currentDate = previousDate;
+      currentDate = expectedDate;
     } else {
       break;
     }
