@@ -421,7 +421,7 @@ La ejecución [ORENZA CI #310](https://github.com/Pepealdana/ORENZA/actions/runs
 | `backend` | instalación y `node --check` de archivos críticos | **PASS** |
 | `backend-integration` | MongoDB efímero, seed aislado y smoke test de integración | **PASS** |
 
-El número de tests ejecutados debe tomarse de la salida del comando `npm test` en esa ejecución, no de secciones históricas de este documento que contienen cifras anteriores. La documentación registra 17 tests frontend definidos en el último inventario, pero esa cifra debe contrastarse con el log del job cuando se requiera citar un recuento exacto ejecutado.
+El log del job `frontend` de la ejecución posterior [40102158039](https://github.com/Pepealdana/ORENZA/actions/runs/40102158039) registra exactamente `# tests 17`, `# pass 17` y `# fail 0` para el commit documental más reciente.
 
 ### Estado de los PR
 
@@ -432,7 +432,14 @@ La consulta remota del 24 de octubre devolvió cero PR abiertas. Las solicitudes
 - Las pruebas de UI y flujos por perfil son registros funcionales/manuales previos y fueron informadas por el desarrollador; no son ejecutadas por CI.
 - El smoke test de CI corre contra una instancia efímera de MongoDB y no contra la base local.
 - No se hizo despliegue ni se verificó funcionamiento en producción, según el alcance de la entrega.
-- La integración disponible no permitió leer directamente la protección de rama por un error 403. La protección debe confirmarse desde la configuración de GitHub si se va a mencionar como activa.
+- GitHub devuelve `protected: true` para `main`, confirmando que la rama está protegida. La integración no permite leer el detalle de las reglas ni verificar la lista exacta de checks obligatorios.
 - Recuperación por correo productivo y notificaciones reales no están implementadas; el rol docente permanece fuera del alcance acordado.
 
 **Conclusión del corte:** los checks automatizados definidos en CI pasan para el commit de entrega. La entrega queda documentada para revisión académica, con los límites anteriores explícitos.
+
+
+## 16. Confirmación final posterior a la actualización documental
+
+En el commit `7450630cb97ea93c83c3b852f1e56f24de222817`, [CI](https://github.com/Pepealdana/ORENZA/actions/runs/40102158039) y [CodeQL](https://github.com/Pepealdana/ORENZA/actions/runs/40102157950) terminaron con `success`. El CI aprobó los tres jobs: `frontend`, `backend` y `backend-integration`. El log frontend confirmó 17 pruebas, 17 aprobadas y 0 fallidas.
+
+La consulta de la rama `main` devuelve `protected: true`. No fue posible consultar el detalle de la regla de protección con los permisos de integración disponibles; por tanto, se confirma la existencia de protección, no todos sus parámetros.
