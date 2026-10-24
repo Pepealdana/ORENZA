@@ -460,3 +460,20 @@ La única rama oficial para revisión y evaluación es `main`. El commit comprob
 **Alcance de esta evidencia:** CI y CodeQL verifican el commit indicado; no sustituyen la auditoría estática completa de referencias ni la revisión de ramas auxiliares. La auditoría de imports y recursos de `src/` permanece abierta hasta completar el mapa de referencias. Solo se elimina un archivo cuando la ausencia de referencias está comprobada.
 
 El repositorio conserva ramas auxiliares y solicitudes de Dependabot. No son ramas oficiales de entrega. Su eliminación requiere confirmar que no contienen cambios exclusivos pendientes de integrar; por tanto, no se afirma aquí que `main` sea la única rama existente.
+
+
+---
+
+## 14. Evidencia remota más reciente — 24 de octubre de 2026
+
+La evidencia automatizada vigente para el código funcional de `main` es:
+
+- Commit: `93962d5efcf84d4cb1a5040de865ccf7b8d5549a`.
+- [ORENZA CI — PASS](https://github.com/Pepealdana/ORENZA/actions/runs/40048048185): lint, pruebas frontend, build, auditoría de dependencias, sintaxis backend y smoke test de integración con MongoDB efímero.
+- [CodeQL — PASS](https://github.com/Pepealdana/ORENZA/actions/runs/40048048171).
+
+Esta evidencia es del commit indicado y no debe confundirse con la validación de los heads de Dependabot.
+
+Al 24 de octubre permanecen abiertas las PR #9, #13, #19, #20, #21, #22 y #23. Se solicitó rebase de las siete. La PR #9 tiene CI fallido en la ejecución identificada; las otras tienen ejecuciones verdes históricas sobre una base anterior. Los resultados definitivos deben registrarse después de los rebases y de las nuevas ejecuciones de CI y CodeQL.
+
+Las pruebas funcionales por perfil consignadas en este documento son el registro de la revisión realizada previamente; no son generadas automáticamente por el CI. No se solicita repetirlas para esta revisión documental. La protección actual de `main` tampoco se pudo confirmar por falta de permisos de lectura de esa configuración; consultar Settings → Branches / Rulesets.
