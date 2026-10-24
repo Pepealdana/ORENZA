@@ -476,4 +476,4 @@ Esta evidencia es del commit indicado y no debe confundirse con la validación d
 
 Al 24 de octubre permanecen abiertas las PR #9, #13, #19, #20, #21, #22 y #23. Se solicitó rebase de las siete. La PR #9 tiene CI fallido en la ejecución identificada; las otras tienen ejecuciones verdes históricas sobre una base anterior. Los resultados definitivos deben registrarse después de los rebases y de las nuevas ejecuciones de CI y CodeQL.
 
-Las pruebas funcionales por perfil consignadas en este documento son el registro de la revisión realizada previamente; no son generadas automáticamente por el CI. No se solicita repetirlas para esta revisión documental. La protección actual de `main` tampoco se pudo confirmar por falta de permisos de lectura de esa configuración; consultar Settings → Branches / Rulesets.
+Las pruebas funcionales por perfil consignadas en este documento son el registro de la revisión realizada previamente; no son generadas automáticamente por el CI. No se solicita repetirlas para esta revisión documental. El listado actual de ramas devuelve `protected: false`; la protección de `main` está desactivada. Configurarla en Settings → Branches / Rulesets.
