@@ -50,7 +50,11 @@ function formatLongDate(dateString) {
     });
   }
 
-  // Las fechas de finalización de actividades son instantes ISO.
+  // Solo se aceptan timestamps ISO para campos que representan instantes.
+  if (!/^\\d{4}-\\d{2}-\\d{2}T/.test(dateString)) {
+    return 'Fecha no disponible';
+  }
+
   const instant = new Date(dateString);
   if (Number.isNaN(instant.getTime())) {
     return 'Fecha no disponible';
