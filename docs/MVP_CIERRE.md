@@ -397,7 +397,7 @@ La última validación automatizada del código funcional de `main` corresponde 
 - [ORENZA CI — PASS](https://github.com/Pepealdana/ORENZA/actions/runs/40048048185).
 - [CodeQL — PASS](https://github.com/Pepealdana/ORENZA/actions/runs/40048048171).
 
-Se confirmó que `main` es la rama predeterminada. Esto no demuestra que esté protegida. El último registro de protección (16 de octubre) indicaba `protected: false`; la consulta actual no pudo verificarlo porque GitHub devolvió 403 por permisos insuficientes. La protección debe comprobarse en Settings → Branches / Rulesets.
+Se confirmó que `main` es la rama predeterminada. Esto no demuestra que esté protegida. El último registro de protección (16 de octubre) indicaba `protected: false`; la consulta actual no pudo verificarlo porque GitHub devolvió 403 por permisos insuficientes. El listado actual de ramas devuelve `protected: false`; la protección está desactivada y debe configurarse en Settings → Branches / Rulesets.
 
 La consulta actual encontró siete PR abiertas de Dependabot (#9, #13, #19, #20, #21, #22 y #23). Se solicitaron rebases para actualizarlas. No se consideran cerradas ni integrables hasta revisar los resultados actuales de CI y CodeQL sobre cada head actualizado. La PR #9 tenía CI fallido en la última ejecución identificada; las comprobaciones verdes de las demás corresponden a bases anteriores.
 
