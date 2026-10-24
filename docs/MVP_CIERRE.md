@@ -405,3 +405,34 @@ El repositorio aún contiene ramas auxiliares y solicitudes de Dependabot. No de
 - Recuperación de contraseña en producción: sigue pendiente integrar el proveedor de correo. Las preferencias de notificación se guardan localmente y no envían avisos reales. El rol docente está fuera del alcance del MVP.
 
 **Límite de la evidencia:** CI y CodeQL respaldan el commit indicado, pero no certifican por sí solos la apariencia visual en todos los tamaños de pantalla ni la configuración de producción del proveedor de despliegue. Esos puntos se registran como evidencia manual/de entorno, no como PASS automático.
+
+
+---
+
+## 15. Corte de entrega verificado — 24 de octubre de 2026
+
+**Commit revisado:** [`4e85772bab414648516699ef5b557c40297284f7`](https://github.com/Pepealdana/ORENZA/commit/4e85772bab414648516699ef5b557c40297284f7).
+
+La ejecución [ORENZA CI #310](https://github.com/Pepealdana/ORENZA/actions/runs/40059031698) terminó con conclusión `success` sobre ese commit. Los tres jobs quedaron aprobados:
+
+| Job | Validación | Resultado |
+|---|---|---|
+| `frontend` | instalación limpia, ESLint, `npm test`, build y auditoría de dependencias de severidad moderada o superior | **PASS** |
+| `backend` | instalación y `node --check` de archivos críticos | **PASS** |
+| `backend-integration` | MongoDB efímero, seed aislado y smoke test de integración | **PASS** |
+
+El número de tests ejecutados debe tomarse de la salida del comando `npm test` en esa ejecución, no de secciones históricas de este documento que contienen cifras anteriores. La documentación registra 17 tests frontend definidos en el último inventario, pero esa cifra debe contrastarse con el log del job cuando se requiera citar un recuento exacto ejecutado.
+
+### Estado de los PR
+
+La consulta remota del 24 de octubre devolvió cero PR abiertas. Las solicitudes fusionadas constituyen cambios integrados; las cerradas sin fusionar solo registran una propuesta descartada o reemplazada. Para el detalle vigente, revisar [PR de ORENZA](https://github.com/Pepealdana/ORENZA/pulls?q=is%3Apr) y asociar cada corrección a sus commits/PR efectivamente fusionados.
+
+### Alcance y límites de la validación
+
+- Las pruebas de UI y flujos por perfil son registros funcionales/manuales previos y fueron informadas por el desarrollador; no son ejecutadas por CI.
+- El smoke test de CI corre contra una instancia efímera de MongoDB y no contra la base local.
+- No se hizo despliegue ni se verificó funcionamiento en producción, según el alcance de la entrega.
+- La integración disponible no permitió leer directamente la protección de rama por un error 403. La protección debe confirmarse desde la configuración de GitHub si se va a mencionar como activa.
+- Recuperación por correo productivo y notificaciones reales no están implementadas; el rol docente permanece fuera del alcance acordado.
+
+**Conclusión del corte:** los checks automatizados definidos en CI pasan para el commit de entrega. La entrega queda documentada para revisión académica, con los límites anteriores explícitos.
