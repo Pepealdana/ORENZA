@@ -309,3 +309,27 @@ Este criterio busca que la revisión sea directa, reproducible y sin ambigüedad
 - Los tres archivos de pruebas frontend contienen 17 casos (6 de competencias, 4 de fechas y 7 de rachas). La evidencia de CI valida el commit enlazado; las pruebas funcionales manuales por perfil se conservan como registro histórico y no deben presentarse como ejecutadas automáticamente.
 - La revisión de código respalda la presencia de JWT y control por rol, validación de datos, límites de intentos independientes, aislamiento institucional y exclusión de notas privadas del orientador. El correo productivo para recuperación y las notificaciones reales siguen fuera de la implementación actual; el rol docente está fuera del alcance.
 - El CI no certifica la experiencia visual en todos los dispositivos ni el despliegue productivo: esos puntos requieren evidencia del entorno real.
+
+
+## 11. Corte definitivo de entrega — 24 de octubre de 2026
+
+**Commit de `main`: [`4e85772bab414648516699ef5b557c40297284f7`](https://github.com/Pepealdana/ORENZA/commit/4e85772bab414648516699ef5b557c40297284f7).**
+
+- [CI de la versión de entrega](https://github.com/Pepealdana/ORENZA/actions/runs/40059031698): **success** en los jobs `frontend`, `backend` y `backend-integration`.
+- El job `frontend` ejecutó `npm ci`, ESLint, los tests declarados, build y `npm audit --audit-level=moderate`; todos los pasos terminaron correctamente.
+- El job `backend` terminó correctamente las comprobaciones `node --check` de los archivos críticos.
+- El job `backend-integration` levantó MongoDB efímero, preparó datos y ejecutó `npm run test:smoke`; todos los pasos terminaron correctamente.
+- La rama `main` es la referencia académica. No se encontraron PR abiertas en la consulta remota realizada el 24 de octubre de 2026.
+- Las pruebas manuales por perfil son evidencia documental histórica; CI no las repite automáticamente. No deben confundirse con los tests automáticos.
+- Esta revisión no pudo leer directamente la configuración de protección de rama por limitaciones de permisos de la integración. Consultar GitHub → Settings → Branches / Rulesets para confirmarla.
+
+### PR y cambios de dependencias
+
+Usar el estado remoto de cada PR como fuente final. Una PR fusionada es parte de `main`; una PR cerrada sin fusión es un registro histórico y **no** debe citarse como cambio integrado. Consultar [Pull requests de ORENZA](https://github.com/Pepealdana/ORENZA/pulls?q=is%3Apr).
+
+### Límites funcionales conocidos
+
+- El rol docente está fuera del alcance del MVP.
+- La recuperación de contraseña todavía requiere un proveedor de correo para uso productivo; en desarrollo existe un flujo demo.
+- Las preferencias de notificaciones son locales y no envían avisos reales.
+- Esta entrega es local/académica; no incluye publicación o despliegue en internet.
