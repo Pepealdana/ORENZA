@@ -106,7 +106,7 @@ Esta revisión no declara las siete PR fusionadas ni libres de regresiones. El e
 
 ### Protección de la rama principal
 
-`main` es la rama predeterminada. El registro anterior del 16 de octubre indicaba `protected: false`. La consulta actual de la API de protección devolvió HTTP 403 por permisos insuficientes; por ello, el estado actual no se pudo confirmar desde la integración. Verificar manualmente en GitHub → Settings → Branches / Rulesets y, si no existe regla, crear una para `main` que exija los checks de CI y CodeQL antes de integrar.
+`main` es la rama predeterminada. El registro anterior del 16 de octubre indicaba `protected: false`. El listado actual de ramas devuelve `protected: false` para `main`: la protección está desactivada. Activar una regla en GitHub → Settings → Branches / Rulesets que exija Pull Request y los checks de CI y CodeQL antes de integrar.
 
 ### Criterio actualizado de cierre
 
