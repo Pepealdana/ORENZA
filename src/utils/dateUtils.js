@@ -1,38 +1,67 @@
+const APP_TIME_ZONE = import.meta.env?.VITE_APP_TIMEZONE || 'America/Bogota';
+
+function getDateParts(date, timeZone = APP_TIME_ZONE) {
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).formatToParts(date);
+
+  return Object.fromEntries(
+    parts
+      .filter(({ type }) => ['year', 'month', 'day'].includes(type))
+      .map(({ type, value }) => [type, value])
+  );
+}
+
 function getLocalDateString(date = new Date()) {
-  const year = date.getFullYear();
+  const values = getDateParts(date);
 
-  const month = String(
-    date.getMonth() + 1
-  ).padStart(2, '0');
-
-  const day = String(
-    date.getDate()
-  ).padStart(2, '0');
-
-  return `${year}-${month}-${day}`;
+  return `${values.year}-${values.month}-${values.day}`;
 }
 
 function formatLongDate(dateString) {
-  if (!dateString || !/^\d{4}-\d{2}-\d{2}$/.test(dateString)) {
+  if (typeof dateString !== 'string' || !dateString.trim()) {
     return 'Fecha no disponible';
   }
 
-  const [year, month, day] = dateString.split('-').map(Number);
-  const date = new Date(year, month - 1, day);
+  // Las fechas de calendario (CheckIn.date) no representan instantes UTC.
+  const calendarDate = /^(\d{4})-(\d{2})-(\d{2})$/.exec(dateString);
+  if (calendarDate) {
+    const [, yearText, monthText, dayText] = calendarDate;
+    const year = Number(yearText);
+    const month = Number(monthText);
+    const day = Number(dayText);
+    const date = new Date(year, month - 1, day);
 
-  if (
-    date.getFullYear() !== year ||
-    date.getMonth() !== month - 1 ||
-    date.getDate() !== day
-  ) {
+    if (
+      date.getFullYear() !== year ||
+      date.getMonth() !== month - 1 ||
+      date.getDate() !== day
+    ) {
+      return 'Fecha no disponible';
+    }
+
+    return date.toLocaleDateString('es-CO', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    });
+  }
+
+  // Las fechas de finalización de actividades son instantes ISO.
+  const instant = new Date(dateString);
+  if (Number.isNaN(instant.getTime())) {
     return 'Fecha no disponible';
   }
 
-  return date.toLocaleDateString('es-CO', {
+  return new Intl.DateTimeFormat('es-CO', {
+    timeZone: APP_TIME_ZONE,
     day: 'numeric',
     month: 'long',
     year: 'numeric',
-  });
+  }).format(instant);
 }
 
 function getPreviousDate(date = new Date()) {
