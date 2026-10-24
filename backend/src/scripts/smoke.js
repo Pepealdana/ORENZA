@@ -131,6 +131,9 @@ async function run() {
   const initialCheckIns = await request('/student/check-ins', { headers: auth });
   assert(initialCheckIns.items.length === 0, 'Un estudiante recién registrado no debe tener registros emocionales previos');
 
+  const initialProgress = await request('/student/activities/progress', { headers: auth });
+  assert(initialProgress.items.length === 0, 'Un estudiante recién registrado no debe tener progreso de actividades previo');
+
   const today = getCurrentDateString();
   const yesterdayDate = new Date(`${today}T12:00:00`);
   yesterdayDate.setDate(yesterdayDate.getDate() - 1);
@@ -152,6 +155,27 @@ async function run() {
     pastCheckInRejected = error.message.includes('-> 400:');
   }
   assert(pastCheckInRejected, 'No debe permitirse registrar un momento emocional de un día anterior');
+
+  const tomorrowDate = new Date(`${today}T12:00:00`);
+  tomorrowDate.setDate(tomorrowDate.getDate() + 1);
+  const tomorrow = `${tomorrowDate.getFullYear()}-${String(tomorrowDate.getMonth() + 1).padStart(2, '0')}-${String(tomorrowDate.getDate()).padStart(2, '0')}`;
+
+  let futureCheckInRejected = false;
+  try {
+    await request('/student/check-ins', {
+      method: 'POST',
+      headers: auth,
+      body: JSON.stringify({
+        date: tomorrow,
+        mood: 'good',
+        emotion: 'tranquilidad',
+        intensity: 4,
+      }),
+    });
+  } catch (error) {
+    futureCheckInRejected = error.message.includes('-> 400:');
+  }
+  assert(futureCheckInRejected, 'No debe permitirse registrar un momento emocional de un día futuro');
 
   const updatedProfile = await request('/student/profile', {
     method: 'PATCH',
@@ -176,6 +200,18 @@ async function run() {
 
   const checkInOne = await request(`/student/check-ins/${checkIn.item._id}`, { headers: auth });
   assert(checkInOne.item._id === checkIn.item._id, 'GET check-in individual falló');
+
+  let pastCheckInUpdateRejected = false;
+  try {
+    await request(`/student/check-ins/${checkIn.item._id}`, {
+      method: 'PATCH',
+      headers: auth,
+      body: JSON.stringify({ date: yesterday }),
+    });
+  } catch (error) {
+    pastCheckInUpdateRejected = error.message.includes('-> 400:');
+  }
+  assert(pastCheckInUpdateRejected, 'No debe permitirse cambiar un check-in a una fecha pasada');
 
   const updatedCheckIn = await request(`/student/check-ins/${checkIn.item._id}`, {
     method: 'PATCH',
