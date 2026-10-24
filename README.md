@@ -633,6 +633,6 @@ Consulta el [estado de las PR](https://github.com/Pepealdana/ORENZA/pulls).
 
 ### Protección de `main`
 
-La rama predeterminada está confirmada como `main`. La protección de rama **no está confirmada en esta revisión**: el último registro verificable (16 de octubre) indicaba `protected: false`, y la consulta actual de la API de protección devolvió 403 por permisos insuficientes. No debe afirmarse que `main` está protegida hasta comprobarlo en GitHub → Settings → Branches / Rulesets.
+La rama predeterminada está confirmada como `main`. La protección de `main` está **desactivada**: el listado actual de ramas de GitHub devuelve `protected: false` para `main`. Activarla en GitHub → Settings → Branches / Rulesets, exigiendo PR y los checks requeridos. No afirmar que está protegida hasta verificar el cambio.
 
 La guía de revisión para el instructor es `docs/GUIA_REVISION_INSTRUCTOR.md`. Para el cierre, consulte también `docs/AUDITORIA_CIERRE_REPOSITORIO.md` y `docs/REGISTRO_AUDITORIA_RAMAS.md`.
