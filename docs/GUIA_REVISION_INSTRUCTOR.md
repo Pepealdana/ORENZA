@@ -321,7 +321,7 @@ Este criterio busca que la revisión sea directa, reproducible y sin ambigüedad
 - El job `backend-integration` levantó MongoDB efímero, preparó datos y ejecutó `npm run test:smoke`; todos los pasos terminaron correctamente.
 - La rama `main` es la referencia académica. No se encontraron PR abiertas en la consulta remota realizada el 24 de octubre de 2026.
 - Las pruebas manuales por perfil son evidencia documental histórica; CI no las repite automáticamente. No deben confundirse con los tests automáticos.
-- Esta revisión no pudo leer directamente la configuración de protección de rama por limitaciones de permisos de la integración. Consultar GitHub → Settings → Branches / Rulesets para confirmarla.
+- GitHub devuelve `protected: true` para `main`, por lo que la rama está protegida. La integración no permite leer el detalle de las reglas ni verificar desde aquí la lista exacta de checks obligatorios.
 
 ### PR y cambios de dependencias
 
@@ -333,3 +333,11 @@ Usar el estado remoto de cada PR como fuente final. Una PR fusionada es parte de
 - La recuperación de contraseña todavía requiere un proveedor de correo para uso productivo; en desarrollo existe un flujo demo.
 - Las preferencias de notificaciones son locales y no envían avisos reales.
 - Esta entrega es local/académica; no incluye publicación o despliegue en internet.
+
+
+### Confirmación posterior de checks — 24 de octubre de 2026
+
+- **CI:** [ejecución 40102158039](https://github.com/Pepealdana/ORENZA/actions/runs/40102158039), commit `7450630cb97ea93c83c3b852f1e56f24de222817`: los jobs `frontend`, `backend` y `backend-integration` terminaron en `success`.
+- **CodeQL:** [ejecución 40102157950](https://github.com/Pepealdana/ORENZA/actions/runs/40102157950), mismo commit: `success`.
+- **Tests frontend:** el log de CI registra `# tests 17`, `# pass 17`, `# fail 0`.
+- **Protección de rama:** el endpoint público de la rama devuelve `protected: true`. El detalle de la regla no está disponible con los permisos actuales de la integración.
