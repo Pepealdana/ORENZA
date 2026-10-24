@@ -386,3 +386,19 @@ La única rama oficial de entrega y evaluación es `main`. El commit verificado 
 La auditoría estática de referencias de `src/` no se declara completa hasta terminar el inventario de imports, referencias dinámicas, entradas de aplicación y recursos enlazados. Hasta ahora se retiró `src/index.css`, que no tenía imports ni contenido funcional; no se eliminarán otros módulos sin evidencia de que estén huérfanos.
 
 El repositorio aún contiene ramas auxiliares y solicitudes de Dependabot. No deben considerarse ramas oficiales de entrega. La limpieza de referencias remotas se realizará solo después de comparar sus commits con `main` y confirmar que no contienen trabajo exclusivo. Por tanto, este documento establece `main` como referencia oficial, pero no afirma que sea la única rama existente.
+
+
+---
+
+## 14. Actualización de entrega — 24 de octubre de 2026
+
+La última validación automatizada del código funcional de `main` corresponde al commit `93962d5efcf84d4cb1a5040de865ccf7b8d5549a`:
+
+- [ORENZA CI — PASS](https://github.com/Pepealdana/ORENZA/actions/runs/40048048185).
+- [CodeQL — PASS](https://github.com/Pepealdana/ORENZA/actions/runs/40048048171).
+
+Se confirmó que `main` es la rama predeterminada. Esto no demuestra que esté protegida. El último registro de protección (16 de octubre) indicaba `protected: false`; la consulta actual no pudo verificarlo porque GitHub devolvió 403 por permisos insuficientes. La protección debe comprobarse en Settings → Branches / Rulesets.
+
+La consulta actual encontró siete PR abiertas de Dependabot (#9, #13, #19, #20, #21, #22 y #23). Se solicitaron rebases para actualizarlas. No se consideran cerradas ni integrables hasta revisar los resultados actuales de CI y CodeQL sobre cada head actualizado. La PR #9 tenía CI fallido en la última ejecución identificada; las comprobaciones verdes de las demás corresponden a bases anteriores.
+
+Por tanto, el cierre funcional del MVP está respaldado por la validación de `main`, pero la **limpieza final de PR y la confirmación de protección de rama siguen pendientes**. No requieren repetir pruebas manuales locales: requieren comprobar los resultados remotos y actualizar este registro.
