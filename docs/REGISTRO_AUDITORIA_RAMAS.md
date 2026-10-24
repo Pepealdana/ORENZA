@@ -88,6 +88,6 @@ Se envió a Dependabot la solicitud de rebase para cada una. Hasta comprobar el 
 **CI:** [PASS](https://github.com/Pepealdana/ORENZA/actions/runs/40048048185).  
 **CodeQL:** [PASS](https://github.com/Pepealdana/ORENZA/actions/runs/40048048171).
 
-**Protección de `main`:** no confirmada en la consulta actual. La última verificación registrada (16 de octubre) reportó `protected: false`; la consulta de protección actual devolvió 403 por permisos insuficientes. Confirmar en GitHub → Settings → Branches / Rulesets. No registrar la protección como activa hasta comprobarla.
+**Protección de `main`: DESACTIVADA.** El listado actual de ramas de GitHub devuelve `protected: false` para `main`. Configurar una regla en GitHub → Settings → Branches / Rulesets y verificarla antes de declarar cerrado este punto.
 
 Este addendum sustituye el inventario anterior de PR abiertas cuando exista contradicción. No significa que las siete PR hayan sido integradas.
