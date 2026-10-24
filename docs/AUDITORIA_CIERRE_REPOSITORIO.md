@@ -79,3 +79,39 @@ Después de crear la regla, comprobar que los checks aparecen con esos nombres e
 ## 7. Criterio de cierre
 
 La única rama oficial de entrega sigue siendo `main`. La auditoría estática y de recursos se documenta con las evidencias descritas, y los tres módulos sin referencias identificados fueron retirados. Quedan por cerrar la validación de las dos solicitudes de Dependabot aún abiertas (#13 y #9) y la activación de la protección de `main` con permisos suficientes.
+
+
+---
+
+## 8. Actualización de estado remoto — 24 de octubre de 2026
+
+### Commit funcional y evidencia
+
+El commit de código funcional que se verificó en `main` fue `93962d5efcf84d4cb1a5040de865ccf7b8d5549a`.
+
+- [ORENZA CI — PASS](https://github.com/Pepealdana/ORENZA/actions/runs/40048048185).
+- [CodeQL — PASS](https://github.com/Pepealdana/ORENZA/actions/runs/40048048171).
+
+El CI incluye lint, pruebas y build frontend, auditoría de dependencias, sintaxis backend y smoke test de integración con MongoDB efímero. Esta evidencia no sustituye la validación de los heads de PR que todavía no se han actualizado contra el commit actual.
+
+### PR abiertas y decisión
+
+En la consulta del 24 de octubre aparecen abiertas #9, #13, #19, #20, #21, #22 y #23. Se solicitó a Dependabot rebasar cada una. No se integra ninguna mientras su head no esté actualizado contra `main` y sus comprobaciones actuales no sean satisfactorias.
+
+- #9 — React Router DOM 7.18.4: CI fallido en la ejecución identificada; requiere nueva validación tras rebase.
+- #13 — React DOM y tipos: CI/CodeQL históricos aprobados, pero sobre una base anterior; requiere nueva validación.
+- #19 — dotenv 18.0.8; #20 — Mongoose 9.11.2; #21 — ESLint 10.13.0; #22 — React y tipos; #23 — Vite 8.3.4: CI y CodeQL históricos aprobados en sus heads consultados, pero esos heads parten de una base anterior a las últimas correcciones. Requieren rebase y nuevas comprobaciones antes de decidir la integración.
+
+Esta revisión no declara las siete PR fusionadas ni libres de regresiones. El estado debe actualizarse cuando GitHub termine los rebases y las nuevas ejecuciones.
+
+### Protección de la rama principal
+
+`main` es la rama predeterminada. El registro anterior del 16 de octubre indicaba `protected: false`. La consulta actual de la API de protección devolvió HTTP 403 por permisos insuficientes; por ello, el estado actual no se pudo confirmar desde la integración. Verificar manualmente en GitHub → Settings → Branches / Rulesets y, si no existe regla, crear una para `main` que exija los checks de CI y CodeQL antes de integrar.
+
+### Criterio actualizado de cierre
+
+No declarar el repositorio completamente despejado hasta:
+1. comprobar las nuevas ejecuciones de las siete PR tras rebase;
+2. fusionar solo las actualizaciones con CI/CodeQL verdes y compatibilidad confirmada, o cerrar las PR que se decida no adoptar;
+3. actualizar este registro con el resultado final;
+4. comprobar y documentar la protección de `main`.
