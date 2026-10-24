@@ -63,3 +63,31 @@ Estado comparativo consultado en GitHub el 2026-10-14, después de eliminar siet
 5. Volver a consultar ramas y PR abiertas tras las siguientes acciones de limpieza.
 
 **Nota de estado:** las siete ramas indicadas como `ELIMINADA` fueron retiradas del remoto. Las ocho ramas Dependabot asociadas a PR abiertas se conservan hasta resolver esas solicitudes.
+
+
+---
+
+## Addendum de verificación remota — 24 de octubre de 2026
+
+El inventario anterior quedó desactualizado: la consulta actual de GitHub identifica siete PR abiertas dirigidas a `main`: [#9](https://github.com/Pepealdana/ORENZA/pull/9), [#13](https://github.com/Pepealdana/ORENZA/pull/13), [#19](https://github.com/Pepealdana/ORENZA/pull/19), [#20](https://github.com/Pepealdana/ORENZA/pull/20), [#21](https://github.com/Pepealdana/ORENZA/pull/21), [#22](https://github.com/Pepealdana/ORENZA/pull/22) y [#23](https://github.com/Pepealdana/ORENZA/pull/23).
+
+Se envió a Dependabot la solicitud de rebase para cada una. Hasta comprobar el resultado de esos rebases, no se consideran validadas contra el estado actual de `main`.
+
+| PR | Cambio | Comprobación consultada | Decisión de cierre |
+|---|---|---|---|
+| #9 | react-router-dom 7.18.4 | CI fallido en el head identificado; CodeQL pasó | No fusionar sin rebase y CI/CodeQL verdes |
+| #13 | react-dom y tipos | CI/CodeQL pasaron en head anterior | Revalidar después del rebase |
+| #19 | dotenv 18.0.8 | CI/CodeQL pasaron en head anterior | Revalidar después del rebase |
+| #20 | Mongoose 9.11.2 | CI/CodeQL pasaron en head anterior | Revalidar después del rebase |
+| #21 | ESLint 10.13.0 | CI/CodeQL pasaron en head anterior | Revalidar después del rebase |
+| #22 | React y tipos | CI/CodeQL pasaron en head anterior | Revalidar en conjunto con #13 |
+| #23 | Vite 8.3.4 | CI/CodeQL pasaron en head anterior | Revalidar después del rebase |
+
+**Rama de entrega:** `main`, confirmada como rama predeterminada.  
+**Commit funcional validado:** `93962d5efcf84d4cb1a5040de865ccf7b8d5549a`.  
+**CI:** [PASS](https://github.com/Pepealdana/ORENZA/actions/runs/40048048185).  
+**CodeQL:** [PASS](https://github.com/Pepealdana/ORENZA/actions/runs/40048048171).
+
+**Protección de `main`:** no confirmada en la consulta actual. La última verificación registrada (16 de octubre) reportó `protected: false`; la consulta de protección actual devolvió 403 por permisos insuficientes. Confirmar en GitHub → Settings → Branches / Rulesets. No registrar la protección como activa hasta comprobarla.
+
+Este addendum sustituye el inventario anterior de PR abiertas cuando exista contradicción. No significa que las siete PR hayan sido integradas.
