@@ -156,7 +156,7 @@ skipped 0
 | FE-06 | Permite una racha que comienza ayer | **PASS** |
 | FE-07 | Rompe la racha ante un día ausente | **PASS** |
 
-**Las 7 pruebas de esta tabla corresponden a la suite base histórica. La suite actual ampliada aprobó 12/12 pruebas en CI sobre `main`: [ver ejecución](https://github.com/Pepealdana/ORENZA/actions/runs/38496427613).**
+**Las 7 pruebas de esta tabla corresponden a la suite base histórica. La suite actual ampliada aprobó 12/17 pruebas en CI sobre `main`: [ver ejecución](https://github.com/Pepealdana/ORENZA/actions/runs/38496427613).**
 
 ---
 
@@ -429,7 +429,7 @@ La revisión posterior debe concentrarse en verificar la implementación y la ev
 
 La revisión identificó el aviso **GHSA-rq7h-c2jc-7f22** en Vite y la auditoría CI encontró además **GHSA-68fv-2mgg-jv7q** en `source-map-js 1.2.1`. Se actualizó Vite a **8.2.4** y se fijó `source-map-js` en **1.2.2**, versión corregida para el segundo aviso: https://github.com/vitejs/vite/security/advisories/GHSA-rq7h-c2jc-7f22 y https://github.com/advisories/GHSA-68fv-2mgg-jv7q.
 
-**Resultado confirmado en `main`:** [CI de ORENZA](https://github.com/Pepealdana/ORENZA/actions/runs/38493213386) pasó instalación, lint, 12 pruebas frontend, build, `npm audit --audit-level=moderate`, sintaxis del backend y smoke test. [CodeQL](https://github.com/Pepealdana/ORENZA/actions/runs/38493213364) también pasó.
+**Resultado confirmado en `main`:** [CI de ORENZA](https://github.com/Pepealdana/ORENZA/actions/runs/38493213386) pasó instalación, lint, 17 pruebas frontend, build, `npm audit --audit-level=moderate`, sintaxis del backend y smoke test. [CodeQL](https://github.com/Pepealdana/ORENZA/actions/runs/38493213364) también pasó.
 
 ### Nuevos escenarios de prueba
 
@@ -464,16 +464,18 @@ El repositorio conserva ramas auxiliares y solicitudes de Dependabot. No son ram
 
 ---
 
-## 14. Evidencia remota más reciente — 24 de octubre de 2026
+## Estado de auditoría — 24 de octubre de 2026
 
-La evidencia automatizada vigente para el código funcional de `main` es:
+**Rama:** `main`  
+**Commit remoto verificado:** `8fec4536c8c2d00915fa8328407a5ebf78c902b5`
 
-- Commit: `93962d5efcf84d4cb1a5040de865ccf7b8d5549a`.
-- [ORENZA CI — PASS](https://github.com/Pepealdana/ORENZA/actions/runs/40048048185): lint, pruebas frontend, build, auditoría de dependencias, sintaxis backend y smoke test de integración con MongoDB efímero.
-- [CodeQL — PASS](https://github.com/Pepealdana/ORENZA/actions/runs/40048048171).
+- [CI — PASS](https://github.com/Pepealdana/ORENZA/actions/runs/40050239517): frontend, backend y `backend-integration` completados correctamente. La integración ejecutó el smoke test con MongoDB efímero.
+- [CodeQL — PASS](https://github.com/Pepealdana/ORENZA/actions/runs/40050239520).
+- Protección de `main`: **activa**. GitHub confirma los checks requeridos `frontend`, `backend`, `backend-integration` y `Analizar JavaScript y TypeScript`.
+- PR abiertas: **ninguna**. PR #19 (`dotenv`) y #21 (ESLint) se fusionaron tras checks aprobados. PR #9, #13, #20, #22 y #23 se cerraron sin fusionar; no deben describirse como cambios integrados.
+- Las pruebas automatizadas frontend están definidas en tres archivos de test con **17 casos** en total (6 competencia, 4 fecha y 7 racha). El CI reciente aprobó el job frontend; los checks de integración también aprobaron.
+- Las pruebas funcionales por perfil son registros manuales previos documentados, no pruebas que GitHub Actions vuelva a ejecutar. No se solicita repetirlas si la implementación relevante no cambió.
+- La inspección de código confirma la presencia de middleware JWT/roles, validaciones de payload, límites de intentos separados, aislamiento institucional y exclusión de notas privadas en respuestas del orientador. Estas observaciones por inspección no deben etiquetarse como una prueba dinámica individual salvo cuando estén cubiertas por el smoke test.
+- Recuperación de contraseña en producción: sigue pendiente integrar el proveedor de correo. Las preferencias de notificación se guardan localmente y no envían avisos reales. El rol docente está fuera del alcance del MVP.
 
-Esta evidencia es del commit indicado y no debe confundirse con la validación de los heads de Dependabot.
-
-Al 24 de octubre permanecen abiertas las PR #9, #13, #19, #20, #21, #22 y #23. Se solicitó rebase de las siete. La PR #9 tiene CI fallido en la ejecución identificada; las otras tienen ejecuciones verdes históricas sobre una base anterior. Los resultados definitivos deben registrarse después de los rebases y de las nuevas ejecuciones de CI y CodeQL.
-
-Las pruebas funcionales por perfil consignadas en este documento son el registro de la revisión realizada previamente; no son generadas automáticamente por el CI. No se solicita repetirlas para esta revisión documental. El listado actual de ramas devuelve `protected: false`; la protección de `main` está desactivada. Configurarla en Settings → Branches / Rulesets.
+**Límite de la evidencia:** CI y CodeQL respaldan el commit indicado, pero no certifican por sí solos la apariencia visual en todos los tamaños de pantalla ni la configuración de producción del proveedor de despliegue. Esos puntos se registran como evidencia manual/de entorno, no como PASS automático.
