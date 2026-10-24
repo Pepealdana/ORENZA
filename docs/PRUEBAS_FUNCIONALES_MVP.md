@@ -492,7 +492,7 @@ El repositorio conserva ramas auxiliares y solicitudes de Dependabot. No son ram
 |---|---|---|
 | Frontend | `npm ci` | PASS |
 | Frontend | `npm run lint` | PASS |
-| Frontend | `npm test` | PASS; consultar log del paso para el número exacto de tests en esta ejecución |
+| Frontend | `npm test` | PASS — 17 tests, 17 aprobados, 0 fallidos en la ejecución posterior del commit documental `7450630` |
 | Frontend | `npm run build` | PASS |
 | Seguridad de dependencias | `npm audit --audit-level=moderate` | PASS; no se reportó fallo que detuviera el job |
 | Backend | Instalación de dependencias | PASS |
@@ -517,3 +517,11 @@ El repositorio conserva ramas auxiliares y solicitudes de Dependabot. No son ram
 ### Correcciones y PR
 
 El registro de cambios debe considerar fusionada una corrección únicamente cuando el PR remoto figure como `merged`. Las PR cerradas sin fusión no representan código incluido en el commit de entrega. El estado consolidado puede consultarse en [Pull requests de ORENZA](https://github.com/Pepealdana/ORENZA/pulls?q=is%3Apr) y el historial en [commits de `main`](https://github.com/Pepealdana/ORENZA/commits/main/).
+
+
+## 18. Resultado final de CI y CodeQL — 24 de octubre de 2026
+
+- [CI — commit `7450630`](https://github.com/Pepealdana/ORENZA/actions/runs/40102158039): `success` en `frontend`, `backend` y `backend-integration`.
+- [CodeQL — commit `7450630`](https://github.com/Pepealdana/ORENZA/actions/runs/40102157950): `success`.
+- Log de `npm test`: `# tests 17`, `# pass 17`, `# fail 0`.
+- API de GitHub para la rama `main`: `protected: true`. El detalle de las reglas no pudo leerse con los permisos disponibles, por lo que no se certifican sus parámetros exactos en este informe.
