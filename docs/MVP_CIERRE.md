@@ -180,11 +180,11 @@ Casos cubiertos:
 8. devuelve racha cero cuando no hay check-ins;
 9. evita inflar la racha con acciones repetidas en una misma fecha.
 
-La suite actual contiene **12 pruebas automatizadas**; la lista resume los grupos funcionales, no una correspondencia uno-a-uno con cada aserción.
+La suite actual contiene **17 pruebas automatizadas**; la lista resume los grupos funcionales, no una correspondencia uno-a-uno con cada aserción.
 
 Resultado:
 
-**12/12 pruebas aprobadas.**
+**12/17 pruebas aprobadas.**
 
 ---
 
@@ -390,15 +390,18 @@ El repositorio aún contiene ramas auxiliares y solicitudes de Dependabot. No de
 
 ---
 
-## 14. Actualización de entrega — 24 de octubre de 2026
+## Estado de auditoría — 24 de octubre de 2026
 
-La última validación automatizada del código funcional de `main` corresponde al commit `93962d5efcf84d4cb1a5040de865ccf7b8d5549a`:
+**Rama:** `main`  
+**Commit remoto verificado:** `8fec4536c8c2d00915fa8328407a5ebf78c902b5`
 
-- [ORENZA CI — PASS](https://github.com/Pepealdana/ORENZA/actions/runs/40048048185).
-- [CodeQL — PASS](https://github.com/Pepealdana/ORENZA/actions/runs/40048048171).
+- [CI — PASS](https://github.com/Pepealdana/ORENZA/actions/runs/40050239517): frontend, backend y `backend-integration` completados correctamente. La integración ejecutó el smoke test con MongoDB efímero.
+- [CodeQL — PASS](https://github.com/Pepealdana/ORENZA/actions/runs/40050239520).
+- Protección de `main`: **activa**. GitHub confirma los checks requeridos `frontend`, `backend`, `backend-integration` y `Analizar JavaScript y TypeScript`.
+- PR abiertas: **ninguna**. PR #19 (`dotenv`) y #21 (ESLint) se fusionaron tras checks aprobados. PR #9, #13, #20, #22 y #23 se cerraron sin fusionar; no deben describirse como cambios integrados.
+- Las pruebas automatizadas frontend están definidas en tres archivos de test con **17 casos** en total (6 competencia, 4 fecha y 7 racha). El CI reciente aprobó el job frontend; los checks de integración también aprobaron.
+- Las pruebas funcionales por perfil son registros manuales previos documentados, no pruebas que GitHub Actions vuelva a ejecutar. No se solicita repetirlas si la implementación relevante no cambió.
+- La inspección de código confirma la presencia de middleware JWT/roles, validaciones de payload, límites de intentos separados, aislamiento institucional y exclusión de notas privadas en respuestas del orientador. Estas observaciones por inspección no deben etiquetarse como una prueba dinámica individual salvo cuando estén cubiertas por el smoke test.
+- Recuperación de contraseña en producción: sigue pendiente integrar el proveedor de correo. Las preferencias de notificación se guardan localmente y no envían avisos reales. El rol docente está fuera del alcance del MVP.
 
-Se confirmó que `main` es la rama predeterminada. Esto no demuestra que esté protegida. El último registro de protección (16 de octubre) indicaba `protected: false`; la consulta actual no pudo verificarlo porque GitHub devolvió 403 por permisos insuficientes. El listado actual de ramas devuelve `protected: false`; la protección está desactivada y debe configurarse en Settings → Branches / Rulesets.
-
-La consulta actual encontró siete PR abiertas de Dependabot (#9, #13, #19, #20, #21, #22 y #23). Se solicitaron rebases para actualizarlas. No se consideran cerradas ni integrables hasta revisar los resultados actuales de CI y CodeQL sobre cada head actualizado. La PR #9 tenía CI fallido en la última ejecución identificada; las comprobaciones verdes de las demás corresponden a bases anteriores.
-
-Por tanto, el cierre funcional del MVP está respaldado por la validación de `main`, pero la **limpieza final de PR y la confirmación de protección de rama siguen pendientes**. No requieren repetir pruebas manuales locales: requieren comprobar los resultados remotos y actualizar este registro.
+**Límite de la evidencia:** CI y CodeQL respaldan el commit indicado, pero no certifican por sí solos la apariencia visual en todos los tamaños de pantalla ni la configuración de producción del proveedor de despliegue. Esos puntos se registran como evidencia manual/de entorno, no como PASS automático.
