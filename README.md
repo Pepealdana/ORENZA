@@ -610,3 +610,29 @@ La revisión quedó integrada en `main` mediante el PR #15. Se incorporaron corr
 - Se ampliaron pruebas unitarias y el smoke test de backend.
 
 **Evidencia CI verificada el 14 de octubre de 2026 en `main`:** [GitHub Actions — CI](https://github.com/Pepealdana/ORENZA/actions/runs/38493213386) aprobó lint, 12 pruebas frontend, build, `npm audit --audit-level=moderate`, sintaxis del backend y smoke test de integración. El smoke test se ejecutó con una instancia efímera de MongoDB y credenciales generadas para el job; no utilizó la base local del desarrollador. [CodeQL también pasó en `main`](https://github.com/Pepealdana/ORENZA/actions/runs/38493213364).
+
+
+---
+
+## Estado de entrega — revisión remota del 24 de octubre de 2026
+
+**Rama predeterminada:** `main`.  
+**Commit de código funcional validado:** `93962d5efcf84d4cb1a5040de865ccf7b8d5549a`.
+
+Evidencia sobre ese commit:
+- [ORENZA CI — PASS](https://github.com/Pepealdana/ORENZA/actions/runs/40048048185): frontend (lint, pruebas, build y auditoría de dependencias), sintaxis backend y smoke test de integración con MongoDB efímero.
+- [CodeQL — PASS](https://github.com/Pepealdana/ORENZA/actions/runs/40048048171).
+
+La evidencia anterior corresponde al commit de código indicado; las actualizaciones documentales posteriores pueden generar nuevas ejecuciones de CI.
+
+### Solicitudes de integración de Dependabot
+
+En la revisión remota del 24 de octubre se encontraron abiertas las PR #9, #13, #19, #20, #21, #22 y #23. Se solicitó a Dependabot rebasarlas sobre la base actual. No se deben fusionar hasta comprobar que la rama está actualizada respecto de `main` y que CI y CodeQL pasan sobre el nuevo head. La PR #9 tenía CI fallido en la última ejecución identificada; las comprobaciones verdes de las otras PR corresponden a heads con una base anterior y no equivalen a validación contra el estado actual.
+
+Consulta el [estado de las PR](https://github.com/Pepealdana/ORENZA/pulls).
+
+### Protección de `main`
+
+La rama predeterminada está confirmada como `main`. La protección de rama **no está confirmada en esta revisión**: el último registro verificable (16 de octubre) indicaba `protected: false`, y la consulta actual de la API de protección devolvió 403 por permisos insuficientes. No debe afirmarse que `main` está protegida hasta comprobarlo en GitHub → Settings → Branches / Rulesets.
+
+La guía de revisión para el instructor es `docs/GUIA_REVISION_INSTRUCTOR.md`. Para el cierre, consulte también `docs/AUDITORIA_CIERRE_REPOSITORIO.md` y `docs/REGISTRO_AUDITORIA_RAMAS.md`.
