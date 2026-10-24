@@ -44,7 +44,7 @@ El mapa de imports no encontró referencias estáticas ni dinámicas desde las r
 
 Se retiraron en el commit de limpieza por no formar parte del grafo de módulos utilizado por la aplicación actual. Se conservaron `ProgressBar` y `dateUtils` porque sí tienen referencias activas en otros módulos. No se eliminaron otros archivos por mera apariencia de no uso.
 
-## 5. Revisión de las nueve solicitudes de Dependabot
+## 5. Revisión histórica de las solicitudes de Dependabot (corte anterior al 24 de octubre)
 
 | PR | Actualización | Decisión |
 |---|---|---|
@@ -62,7 +62,7 @@ Los fallos históricos de #13, #11 y #9 mostraron un error de análisis de sinta
 
 Las siete fusiones aprobadas se realizaron individualmente: #16, #6, #12, #7, #18, #17 y #11. No se fusionaron #13 ni #9 porque no están integrables y validados sobre el estado actual de `main`.
 
-## 6. Protección de `main`
+## 6. Protección de `main` — estado histórico al 16 de octubre de 2026
 
 GitHub informó que la rama principal aún no está protegida (`protected: false`). Se intentó consultar la configuración de protección mediante la integración disponible, pero GitHub devolvió **403 Resource not accessible by integration**. Por esta limitación no fue posible activar ni verificar reglas de protección desde esta sesión.
 
@@ -83,35 +83,18 @@ La única rama oficial de entrega sigue siendo `main`. La auditoría estática y
 
 ---
 
-## 8. Actualización de estado remoto — 24 de octubre de 2026
+## Estado de auditoría — 24 de octubre de 2026
 
-### Commit funcional y evidencia
+**Rama:** `main`  
+**Commit remoto verificado:** `8fec4536c8c2d00915fa8328407a5ebf78c902b5`
 
-El commit de código funcional que se verificó en `main` fue `93962d5efcf84d4cb1a5040de865ccf7b8d5549a`.
+- [CI — PASS](https://github.com/Pepealdana/ORENZA/actions/runs/40050239517): frontend, backend y `backend-integration` completados correctamente. La integración ejecutó el smoke test con MongoDB efímero.
+- [CodeQL — PASS](https://github.com/Pepealdana/ORENZA/actions/runs/40050239520).
+- Protección de `main`: **activa**. GitHub confirma los checks requeridos `frontend`, `backend`, `backend-integration` y `Analizar JavaScript y TypeScript`.
+- PR abiertas: **ninguna**. PR #19 (`dotenv`) y #21 (ESLint) se fusionaron tras checks aprobados. PR #9, #13, #20, #22 y #23 se cerraron sin fusionar; no deben describirse como cambios integrados.
+- Las pruebas automatizadas frontend están definidas en tres archivos de test con **17 casos** en total (6 competencia, 4 fecha y 7 racha). El CI reciente aprobó el job frontend; los checks de integración también aprobaron.
+- Las pruebas funcionales por perfil son registros manuales previos documentados, no pruebas que GitHub Actions vuelva a ejecutar. No se solicita repetirlas si la implementación relevante no cambió.
+- La inspección de código confirma la presencia de middleware JWT/roles, validaciones de payload, límites de intentos separados, aislamiento institucional y exclusión de notas privadas en respuestas del orientador. Estas observaciones por inspección no deben etiquetarse como una prueba dinámica individual salvo cuando estén cubiertas por el smoke test.
+- Recuperación de contraseña en producción: sigue pendiente integrar el proveedor de correo. Las preferencias de notificación se guardan localmente y no envían avisos reales. El rol docente está fuera del alcance del MVP.
 
-- [ORENZA CI — PASS](https://github.com/Pepealdana/ORENZA/actions/runs/40048048185).
-- [CodeQL — PASS](https://github.com/Pepealdana/ORENZA/actions/runs/40048048171).
-
-El CI incluye lint, pruebas y build frontend, auditoría de dependencias, sintaxis backend y smoke test de integración con MongoDB efímero. Esta evidencia no sustituye la validación de los heads de PR que todavía no se han actualizado contra el commit actual.
-
-### PR abiertas y decisión
-
-En la consulta del 24 de octubre aparecen abiertas #9, #13, #19, #20, #21, #22 y #23. Se solicitó a Dependabot rebasar cada una. No se integra ninguna mientras su head no esté actualizado contra `main` y sus comprobaciones actuales no sean satisfactorias.
-
-- #9 — React Router DOM 7.18.4: CI fallido en la ejecución identificada; requiere nueva validación tras rebase.
-- #13 — React DOM y tipos: CI/CodeQL históricos aprobados, pero sobre una base anterior; requiere nueva validación.
-- #19 — dotenv 18.0.8; #20 — Mongoose 9.11.2; #21 — ESLint 10.13.0; #22 — React y tipos; #23 — Vite 8.3.4: CI y CodeQL históricos aprobados en sus heads consultados, pero esos heads parten de una base anterior a las últimas correcciones. Requieren rebase y nuevas comprobaciones antes de decidir la integración.
-
-Esta revisión no declara las siete PR fusionadas ni libres de regresiones. El estado debe actualizarse cuando GitHub termine los rebases y las nuevas ejecuciones.
-
-### Protección de la rama principal
-
-`main` es la rama predeterminada. El registro anterior del 16 de octubre indicaba `protected: false`. El listado actual de ramas devuelve `protected: false` para `main`: la protección está desactivada. Activar una regla en GitHub → Settings → Branches / Rulesets que exija Pull Request y los checks de CI y CodeQL antes de integrar.
-
-### Criterio actualizado de cierre
-
-No declarar el repositorio completamente despejado hasta:
-1. comprobar las nuevas ejecuciones de las siete PR tras rebase;
-2. fusionar solo las actualizaciones con CI/CodeQL verdes y compatibilidad confirmada, o cerrar las PR que se decida no adoptar;
-3. actualizar este registro con el resultado final;
-4. comprobar y documentar la protección de `main`.
+**Límite de la evidencia:** CI y CodeQL respaldan el commit indicado, pero no certifican por sí solos la apariencia visual en todos los tamaños de pantalla ni la configuración de producción del proveedor de despliegue. Esos puntos se registran como evidencia manual/de entorno, no como PASS automático.
